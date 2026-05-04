@@ -207,7 +207,11 @@ function AudienceSplit() {
       </motion.div>
       <div className="stakeholder-grid">
         {groups.map(({ label, headline, items }) => (
-          <motion.article className="stakeholder-card" key={label} {...fade}>
+          <motion.article
+            className="stakeholder-card"
+            key={label}
+            {...fade}
+          >
             <span className="stakeholder-label">{label}</span>
             <h3>{headline}</h3>
             <div className="stakeholder-list">

@@ -105,7 +105,7 @@ function TamperEvidenceSection() {
         <h2>Every release decision is traceable.</h2>
         <p>Axis One connects each stage of the capital release lifecycle through a tamper-evident chain. Policy versions, gate evaluations, release clearances, settlement records, and payout entries are linked, making the full decision history auditable end to end.</p>
       </motion.div>
-      <div className="cap-snake">
+      <div className="cap-snake cap-snake-desktop">
         {/* Row 1: 01 → 02 → 03 */}
         <div className="cap-snake-row">
           {row1.map(({ step, label, note }, i) => (
@@ -138,6 +138,24 @@ function TamperEvidenceSection() {
             </React.Fragment>
           ))}
         </div>
+      </div>
+      <div className="cap-snake-mobile">
+        {chain.map(({ step, label, note }, index) => (
+          <React.Fragment key={step}>
+            <motion.div className="cap-snake-mobile-card" {...fade}>
+              <div className="cap-snake-num">{step}</div>
+              <div className="cap-snake-body">
+                <strong>{label}</strong>
+                <p>{note}</p>
+              </div>
+            </motion.div>
+            {index < chain.length - 1 && (
+              <div className="cap-snake-mobile-conn" aria-hidden="true">
+                <ArrowDown size={15} />
+              </div>
+            )}
+          </React.Fragment>
+        ))}
       </div>
     </section>
   );

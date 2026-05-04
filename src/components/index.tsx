@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';
 import {
@@ -136,47 +137,53 @@ export function Header({ onOpenAccess, onOpenContact }: PageProps) {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
 
+  useEffect(() => {
+    document.body.classList.toggle('mobile-nav-open', mobileMenuOpen);
+    return () => document.body.classList.remove('mobile-nav-open');
+  }, [mobileMenuOpen]);
+
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
-    <header className="header">
-      <nav className="nav" aria-label="Primary navigation">
-        <Link to="/" className="logo-link" aria-label="Axis One home"><Logo /></Link>
-        <div className="nav-tag"><span />Non-custodial capital orchestration</div>
-        <div className="nav-links">
-          <NavLink to="/system">System</NavLink>
-          <NavLink to="/capital">Capital</NavLink>
-          <NavLink to="/deployment">Deployment</NavLink>
-          <NavLink to="/founder">Founder</NavLink>
-          <button type="button" onClick={onOpenContact}>Contact</button>
-        </div>
-        <button className="nav-cta" onClick={onOpenAccess} type="button">Request Access <ArrowRight size={13} /></button>
-        <button
-          className="nav-menu-toggle"
-          type="button"
-          aria-label="Open navigation menu"
-          aria-expanded={mobileMenuOpen}
-          aria-controls="mobile-nav-panel"
-          onClick={() => setMobileMenuOpen((current) => !current)}
-        >
-          <Menu size={18} />
-          Menu
-        </button>
-      </nav>
+    <>
+      <header className="header">
+        <nav className="nav" aria-label="Primary navigation">
+          <Link to="/" className="logo-link" aria-label="Axis One home"><Logo /></Link>
+          <div className="nav-tag"><span />Non-custodial capital orchestration</div>
+          <div className="nav-links">
+            <NavLink to="/system">System</NavLink>
+            <NavLink to="/capital">Capital</NavLink>
+            <NavLink to="/deployment">Deployment</NavLink>
+            <NavLink to="/founder">Founder</NavLink>
+            <button type="button" onClick={onOpenContact}>Contact</button>
+          </div>
+          <button className="nav-cta" onClick={onOpenAccess} type="button">Request Access <ArrowRight size={13} /></button>
+          <button
+            className={`nav-menu-toggle${mobileMenuOpen ? ' is-open' : ''}`}
+            type="button"
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-nav-panel"
+            onClick={() => setMobileMenuOpen((current) => !current)}
+          >
+            <span className="nav-menu-icon" aria-hidden="true">
+              <Menu size={18} className="nav-menu-icon-open" />
+              <X size={18} className="nav-menu-icon-close" />
+            </span>
+            <span className="nav-menu-label">{mobileMenuOpen ? 'Close' : 'Menu'}</span>
+          </button>
+        </nav>
+      </header>
       {mobileMenuOpen && (
-        <div className="mobile-nav-backdrop" onMouseDown={closeMobileMenu}>
+        <div className="mobile-nav-backdrop" onClick={closeMobileMenu}>
           <div
             className="mobile-nav-panel"
             id="mobile-nav-panel"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation"
-            onMouseDown={(event) => event.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
           >
-            <div className="mobile-nav-head">
-              <span>Navigation</span>
-              <button type="button" onClick={closeMobileMenu} aria-label="Close navigation menu"><X size={16} /></button>
-            </div>
             <Link to="/system" onClick={closeMobileMenu}>System</Link>
             <Link to="/capital" onClick={closeMobileMenu}>Capital</Link>
             <Link to="/deployment" onClick={closeMobileMenu}>Deployment</Link>
@@ -187,7 +194,7 @@ export function Header({ onOpenAccess, onOpenContact }: PageProps) {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }
 
@@ -300,18 +307,88 @@ export function ModalShell({ children, onClose, className = '', labelledBy }: { 
 
 export function SelectField({ label, options, value, onChange }: { label: string; options: { value: string; label: string }[]; value: string; onChange: (v: string) => void }) {
   const [open, setOpen] = useState(false);
+  const [useNativeSelect, setUseNativeSelect] = useState(false);
+  const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 720px), (pointer: coarse)');
+    const syncMode = () => setUseNativeSelect(mediaQuery.matches);
+
+    syncMode();
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', syncMode);
+      return () => mediaQuery.removeEventListener('change', syncMode);
+    }
+
+    mediaQuery.addListener(syncMode);
+    return () => mediaQuery.removeListener(syncMode);
+  }, []);
+
+  useEffect(() => {
+    if (useNativeSelect) setOpen(false);
+    else setMobileSheetOpen(false);
+  }, [useNativeSelect]);
+
+  useEffect(() => {
+    if (useNativeSelect || !open) return;
+
     const handler = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) setOpen(false);
     };
+
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
-  }, []);
+  }, [open, useNativeSelect]);
+
+  useEffect(() => {
+    if (!mobileSheetOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileSheetOpen(false);
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [mobileSheetOpen]);
+
   const selected = options.find(o => o.value === value);
+
   return (
     <div className="field custom-select" ref={containerRef}>
       <span>{label}</span>
+      {useNativeSelect ? (
+        <>
+          <button type="button" className="select-trigger select-trigger-native" aria-haspopup="dialog" aria-expanded={mobileSheetOpen} onClick={() => setMobileSheetOpen(true)}>
+            {selected?.label ?? 'Select...'}<ChevronDown size={15} className={mobileSheetOpen ? 'up' : ''} />
+          </button>
+          {mobileSheetOpen && typeof document !== 'undefined' && createPortal(
+            <div className="select-sheet-backdrop" onClick={() => setMobileSheetOpen(false)}>
+              <div className="select-sheet" role="dialog" aria-modal="true" aria-label={label} onClick={(event) => event.stopPropagation()}>
+                <div className="select-sheet-head">
+                  <span>{label}</span>
+                  <button type="button" onClick={() => setMobileSheetOpen(false)} aria-label={`Close ${label} selector`}><X size={16} /></button>
+                </div>
+                <div className="select-sheet-options">
+                  {options.map((option) => (
+                    <button
+                      type="button"
+                      key={option.value}
+                      className={option.value === value ? 'selected' : ''}
+                      onClick={() => { onChange(option.value); setMobileSheetOpen(false); }}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>,
+            document.body
+          )}
+        </>
+      ) : (
+        <>
       <button type="button" className="select-trigger" aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen(c => !c)}>
         {selected?.label ?? 'Select...'}<ChevronDown size={15} className={open ? 'up' : ''} />
       </button>
@@ -328,6 +405,8 @@ export function SelectField({ label, options, value, onChange }: { label: string
             </button>
           ))}
         </div>
+      )}
+        </>
       )}
     </div>
   );

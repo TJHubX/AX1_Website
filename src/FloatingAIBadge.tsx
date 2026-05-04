@@ -1,12 +1,15 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Zap, X } from 'lucide-react';
 
 export function FloatingAIBadge() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [footerClearance, setFooterClearance] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelHeadingRef = useRef<HTMLHeadingElement>(null);
   const panelId = useId();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (!isExpanded) return;
@@ -36,14 +39,96 @@ export function FloatingAIBadge() {
     };
   }, [isExpanded]);
 
+  useEffect(() => {
+    let frame = 0;
+    let resizeObserver: ResizeObserver | null = null;
+    let mutationObserver: MutationObserver | null = null;
+
+    const FOOTER_GAP = 12;
+
+    const attachFooterObserver = () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      }
+
+      const footer = document.querySelector<HTMLElement>('footer.footer');
+      if (!footer || typeof ResizeObserver === 'undefined') return;
+
+      resizeObserver = new ResizeObserver(() => {
+        if (frame) return;
+        frame = window.requestAnimationFrame(() => {
+          frame = 0;
+          updateClearance();
+        });
+      });
+
+      resizeObserver.observe(footer);
+    };
+
+    const updateClearance = () => {
+      const badge = containerRef.current;
+      const footer = document.querySelector<HTMLElement>('footer.footer');
+      if (!footer || !badge) {
+        setFooterClearance(0);
+        return;
+      }
+
+      const footerRect = footer.getBoundingClientRect();
+      const badgeRect = badge.getBoundingClientRect();
+      const badgeStyles = getComputedStyle(badge);
+      const baseBottom = Number.parseFloat(badgeStyles.getPropertyValue('--ai-badge-bottom')) || 16;
+
+      const neededClearance = window.innerHeight - baseBottom - footerRect.top + FOOTER_GAP;
+      const next = neededClearance > 0 ? Math.ceil(neededClearance) : 0;
+
+      // If footer is fully below the viewport, force reset to the base position.
+      if (footerRect.top >= window.innerHeight + badgeRect.height) {
+        setFooterClearance(0);
+        return;
+      }
+
+      setFooterClearance((current) => (Math.abs(current - next) > 1 ? next : current));
+    };
+
+    const schedule = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        updateClearance();
+      });
+    };
+
+    updateClearance();
+    attachFooterObserver();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+
+    mutationObserver = new MutationObserver(() => {
+      attachFooterObserver();
+      schedule();
+    });
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      if (frame) window.cancelAnimationFrame(frame);
+      if (resizeObserver) resizeObserver.disconnect();
+      if (mutationObserver) mutationObserver.disconnect();
+    };
+  }, [pathname]);
+
   const toggle = () => setIsExpanded((v) => !v);
   const close = () => {
     setIsExpanded(false);
     toggleRef.current?.focus();
   };
 
+  const badgeStyle = { '--ai-footer-clearance': `${footerClearance}px` } as React.CSSProperties;
+
   return (
-    <div className="floating-ai-badge" ref={containerRef}>
+    <div className="floating-ai-badge" ref={containerRef} style={badgeStyle}>
       <button
         ref={toggleRef}
         type="button"
