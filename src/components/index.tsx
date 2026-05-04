@@ -240,6 +240,7 @@ export function Footer({ onOpenContact }: { onOpenContact: () => void }) {
         </div>
       </div>
       <div className="footer-bottom">© 2026 AX1 Structura Ltd • GLOBAL CAPITAL INFRASTRUCTURE • ALL RIGHTS RESERVED</div>
+      <div className="footer-trademark">™ are trademarks of their respective owner. Product names, interface designs, system concepts, documentation, and visual assets are proprietary. All rights reserved.</div>
     </footer>
   );
 }
