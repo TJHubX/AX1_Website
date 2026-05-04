@@ -41,7 +41,7 @@ export default function TermsPage({ onOpenContact }: PageProps) {
           {
             heading: '5. Intellectual property',
             paragraphs: [
-              'Website content, design, copy, graphics, AX1 marks, Axis One branding, and related materials are owned by or licensed to AX1 Structura Ltd. No right, title, or licence is granted to reproduce or use any materials without written permission.',
+              'Website content, design, copy, graphics, AX1\u2122 marks, Axis One\u2122 branding, and related materials are owned by or licensed to AX1 Structura Ltd. No right, title, or licence is granted to reproduce or use any materials without written permission.',
             ],
           },
           {
