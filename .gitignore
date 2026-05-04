@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+coverage/
+.DS_Store
+*.log
+.env*
+
+build-out.txt
+build-output.txt
+cf-build-check.txt
+lint-out.txt
