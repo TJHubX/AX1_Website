@@ -232,15 +232,15 @@ export function Footer({ onOpenContact }: { onOpenContact: () => void }) {
           <button className="footer-nav-contact" onClick={onOpenContact}>Contact</button>
         </div>
         <div className="footer-legal">
-          <strong>AX1 Structura Ltd</strong>
+          <strong>AX1&#8482; Structura Ltd</strong>
           <span>66 Paul Street, London EC2A 4NA, England</span>
           <span>Registered in England and Wales</span>
           <span>Company Registration No. 17151320</span>
-          <span className="footer-disclaimer">Axis One does not hold, manage, or guarantee capital. All release logic is non-custodial and policy-governed.</span>
+          <span className="footer-disclaimer">Axis One&#8482; does not hold, manage, or guarantee capital. All release logic is non-custodial and policy-governed.</span>
         </div>
       </div>
-      <div className="footer-bottom">© 2026 AX1 Structura Ltd • GLOBAL CAPITAL INFRASTRUCTURE • ALL RIGHTS RESERVED</div>
-      <div className="footer-trademark">™ are trademarks of their respective owner. Product names, interface designs, system concepts, documentation, and visual assets are proprietary. All rights reserved.</div>
+      <div className="footer-bottom">© 2026 AX1&#8482; Structura Ltd • GLOBAL CAPITAL INFRASTRUCTURE • ALL RIGHTS RESERVED</div>
+      <div className="footer-trademark">AX1&#8482; and Axis One&#8482; are trademarks of AX1 Structura Ltd. Product names, interface designs, system concepts, documentation, and visual assets are proprietary. All rights reserved.</div>
     </footer>
   );
 }
