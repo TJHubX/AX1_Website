@@ -9,7 +9,7 @@ export default function AccessibilityPage({ onOpenContact }: PageProps) {
         label="Accessibility"
         title="Accessibility Statement"
         lastUpdated="May 2026"
-        intro="AX1 Structura Ltd is committed to making the Axis One website accessible and usable for as many people as possible."
+        intro="AX1™ Structura Ltd is committed to making the Axis One™ website accessible and usable for as many people as possible."
         sections={[
           {
             heading: '1. Our approach',

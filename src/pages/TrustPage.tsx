@@ -9,7 +9,7 @@ export default function TrustPage({ onOpenContact }: PageProps) {
         label="Trust"
         title="Trust"
         lastUpdated="May 2026"
-        intro="Axis One is designed to support sensitive capital execution workflows through structured governance, role-based visibility, evidence traceability, and tamper-evident lifecycle records."
+        intro="Axis One™ is designed to support sensitive capital execution workflows through structured governance, role-based visibility, evidence traceability, and tamper-evident lifecycle records."
         sections={[
           {
             heading: 'Built for audit readiness, traceability, and governed execution.',

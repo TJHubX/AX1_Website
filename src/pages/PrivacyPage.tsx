@@ -9,7 +9,7 @@ export default function PrivacyPage({ onOpenContact }: PageProps) {
         label="Privacy"
         title="Privacy Policy"
         lastUpdated="May 2026"
-        intro="This Privacy Policy explains how AX1 Structura Ltd collects, uses, stores, and protects personal information submitted through the Axis One website, request-access forms, contact channels, and related pre-launch communications."
+        intro="This Privacy Policy explains how AX1™ Structura Ltd collects, uses, stores, and protects personal information submitted through the Axis One™ website, request-access forms, contact channels, and related pre-launch communications."
         sections={[
           {
             heading: '1. Who we are',

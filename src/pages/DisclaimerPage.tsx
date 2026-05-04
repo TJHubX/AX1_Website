@@ -9,7 +9,7 @@ export default function DisclaimerPage({ onOpenContact }: PageProps) {
         label="Disclaimer"
         title="Disclaimer"
         lastUpdated="May 2026"
-        intro="The information on the Axis One website is provided for general informational purposes only."
+        intro="The information on the Axis One™ website is provided for general informational purposes only."
         sections={[
           {
             heading: '1. No financial, investment, legal, tax, or regulatory advice',

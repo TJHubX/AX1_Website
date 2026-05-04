@@ -9,7 +9,7 @@ export default function CookiesPage({ onOpenContact }: PageProps) {
         label="Cookies"
         title="Cookie Policy"
         lastUpdated="May 2026"
-        intro="This Cookie Policy explains how AX1 Structura Ltd may use cookies and similar technologies on the Axis One website."
+        intro="This Cookie Policy explains how AX1™ Structura Ltd may use cookies and similar technologies on the Axis One™ website."
         sections={[
           {
             heading: '1. What cookies are',

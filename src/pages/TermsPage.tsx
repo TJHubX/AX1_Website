@@ -9,7 +9,7 @@ export default function TermsPage({ onOpenContact }: PageProps) {
         label="Terms"
         title="Terms of Use"
         lastUpdated="May 2026"
-        intro="These Terms of Use govern access to and use of the public Axis One website operated by AX1 Structura Ltd."
+        intro="These Terms of Use govern access to and use of the public Axis One™ website operated by AX1™ Structura Ltd."
         sections={[
           {
             heading: '1. Who we are',
