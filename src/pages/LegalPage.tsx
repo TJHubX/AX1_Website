@@ -10,7 +10,7 @@ export default function LegalPage({ onOpenContact }: PageProps) {
         label="Legal"
         title="Legal Notice"
         lastUpdated="May 2026"
-        intro="This page sets out the formal company information and legal notice for the Axis One website, operated by AX1 Structura Ltd."
+        intro="This page sets out the formal company information and legal notice for the Axis One™ website, operated by AX1™ Structura Ltd."
         sections={[
           {
             heading: 'Company details',
@@ -24,7 +24,7 @@ export default function LegalPage({ onOpenContact }: PageProps) {
           {
             heading: 'Website operator',
             paragraphs: [
-              'This website is operated by AX1 Structura Ltd. Axis One and AX1 are brand and product references used by AX1 Structura Ltd.',
+              'This website is operated by AX1™ Structura Ltd. Axis One™ and AX1™ are brand and product references used by AX1 Structura Ltd.',
             ],
           },
           {
