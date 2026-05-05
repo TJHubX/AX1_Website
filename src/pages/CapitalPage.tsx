@@ -5,16 +5,20 @@ import {
   ArrowLeft,
   ArrowRight,
   CheckCircle2,
+  ChevronDown,
   ClipboardCheck,
   Eye,
   FileCheck2,
   GitBranch,
+  Landmark,
   LockKeyhole,
+  Route as RouteIcon,
   Users,
+  Workflow,
   X,
 } from 'lucide-react';
 import {
-  Badge, Pill, Button, BoundarySection, FinalCTA, Footer,
+  Badge, Pill, Button, FinalCTA, Footer,
   fade, Tone, PageProps,
 } from '../components';
 
@@ -188,11 +192,71 @@ function SettlementVisibilitySection() {
   );
 }
 
+// ─── Capital Performance Section ──────────────────────────────────────────────
+
+function CapitalPerformanceSection() {
+  const rows = [
+    {
+      metric: '10%–15% capex savings',
+      meaning: 'Lower total capital expenditure',
+      impact: '$10M–$15M in potential savings',
+    },
+    {
+      metric: '25% schedule reduction',
+      meaning: 'Faster project completion',
+      impact: '24 months → 18 months',
+    },
+    {
+      metric: '30% reduction in contingency usage',
+      meaning: 'Lower drawdown of reserve budget',
+      impact: 'If contingency reserve is $15M, around $4.5M less may be used',
+    },
+    {
+      metric: '15% value-loss mitigation',
+      meaning: 'Less promised value lost during execution',
+      impact: 'If projected value loss is $30M, around $4.5M may be preserved',
+    },
+  ];
+  return (
+    <section className="section cap-feature-section cap-alt">
+      <motion.div className="cap-feature-head" {...fade}>
+        <Badge>Capital Performance</Badge>
+        <h2>The cost of disconnected capital execution.</h2>
+        <p>Large capital projects often lose value after capital is committed — through fragmented approvals, delayed evidence, unclear ownership, contingency overuse, and release decisions disconnected from verified execution. Axis One is designed to reduce execution risk by linking capital readiness to governed proof.</p>
+      </motion.div>
+      <motion.div className="cap-perf-panel" {...fade}>
+        <p className="cap-perf-table-title">Illustrative capital-performance impact on a $100M project</p>
+        <div className="cap-perf-table-wrap">
+          <table className="cap-perf-table">
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>What it means</th>
+                <th>Illustrative impact on $100M project</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map(({ metric, meaning, impact }) => (
+                <tr key={metric}>
+                  <td><span className="cap-perf-metric">{metric}</span></td>
+                  <td>{meaning}</td>
+                  <td>{impact}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="cap-perf-disclaimer">Illustrative scenario based on capital-project performance improvement benchmarks. Actual outcomes depend on project type, governance quality, execution maturity, stakeholder behavior, and implementation scope. AX1 Structura Ltd does not guarantee savings, returns, or project outcomes.</p>
+      </motion.div>
+    </section>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function CapitalPage({ onOpenAccess, onOpenContact }: PageProps) {
   const states = [
-    ['Validated', 'Release', 'Capital unlocks when execution proof, dependencies and quorum align.'],
+    ['Validated', 'Release', 'Capital becomes release-eligible when execution proof, dependencies, and quorum align.'],
     ['Partial', 'Conditional release', 'Capital may release under capped or weighted readiness conditions.'],
     ['Blocked', 'Hold', 'Dependencies, missing evidence or failed quorum pause release instruction.'],
     ['Protected', 'Holdback', 'Reserved capital remains deferred until policy conditions are satisfied.'],
@@ -207,7 +271,18 @@ export default function CapitalPage({ onOpenAccess, onOpenContact }: PageProps) 
           <div className="actions center-actions"><Button onClick={onOpenAccess}>Request Access</Button><Button variant="secondary" to="/system">View System</Button></div>
         </motion.div>
       </section>
-      <BoundarySection />
+      <section className="section boundary-section">
+        <motion.div className="boundary-panel boundary-panel--full" {...fade}>
+          <div className="boundary-layers">
+            <div className="boundary-layer"><Landmark size={18} /><strong>Investor / licensed provider funds</strong><span>Capital remains outside Axis One custody.</span></div>
+            <ChevronDown className="layer-arrow" size={18} />
+            <div className="boundary-layer highlight"><Workflow size={18} /><strong>Axis One readiness logic</strong><span>Evidence, quorum, dependencies, holdbacks and release conditions.</span></div>
+            <ChevronDown className="layer-arrow" size={18} />
+            <div className="boundary-layer"><RouteIcon size={18} /><strong>Instruction + settlement visibility</strong><span>Release decisions remain reviewable and auditable.</span></div>
+          </div>
+        </motion.div>
+      </section>
+      <CapitalPerformanceSection />
       <section className="section behavior-section">
         <motion.div className="section-head" {...fade}>
           <Badge>Capital Behavior</Badge>

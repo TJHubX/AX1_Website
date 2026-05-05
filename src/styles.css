@@ -884,6 +884,9 @@ body.mobile-nav-open .mobile-nav-backdrop {
 .boundary-panel { padding:36px; display:grid; grid-template-columns:.88fr 1.1fr; gap:36px; align-items:center; }
 .boundary-copy h2 { font-size: clamp(38px, 4.4vw, 60px); }
 .boundary-layers { display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:12px; align-items:stretch; }
+.boundary-panel--full { grid-template-columns:1fr; }
+.boundary-panel--full .boundary-layers { gap:20px; }
+.boundary-panel--full .boundary-layer { min-height:160px; }
 .boundary-layer { padding:18px; min-height:188px; display:flex; flex-direction:column; gap:12px; justify-content:center; }
 .boundary-layer svg { color:var(--ax1-blue-hover); }
 .boundary-layer strong { font-size:16px; line-height:1.22; }
@@ -1815,7 +1818,69 @@ body.mobile-nav-open .mobile-nav-backdrop {
 .touch-scroll-hover .cap-state-card.is-scroll-hover { border-color: var(--ax1-blue-border); background: var(--ax1-blue-soft); }
 .cap-state-card p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.55; }
 
-/* Deployment workflow section */
+/* Capital Performance */
+.cap-perf-panel {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255,255,255,.025);
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cap-perf-table-title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cap-perf-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.cap-perf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 540px;
+}
+.cap-perf-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.cap-perf-table td {
+  padding: 14px 16px;
+  vertical-align: top;
+  color: var(--text);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  line-height: 1.5;
+}
+.cap-perf-table tbody tr:last-child td { border-bottom: none; }
+.cap-perf-table tbody tr:hover td { background: rgba(47,109,224,.06); }
+.cap-perf-metric {
+  font-weight: 650;
+  color: var(--ax1-blue);
+  font-size: 12px;
+}
+.cap-perf-disclaimer {
+  margin: 0;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+  opacity: .7;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+
 /* Founder deterministic philosophy block */
 .founder-deterministic {
   margin: 40px 0;
@@ -2408,6 +2473,7 @@ body.mobile-nav-open .mobile-nav-backdrop {
   .stakeholder-grid, .stakeholder-strip-grid, .coord-signal-grid { grid-template-columns:1fr; }
   .sys-audit-grid { grid-template-columns:1fr; }
   .cap-guard-grid, .cap-actions-grid, .cap-states-grid { grid-template-columns:1fr; }
+  .cap-perf-panel { padding: 20px 16px; }
   .cap-snake-desktop { display: none; }
   .cap-snake-mobile {
     display: grid;

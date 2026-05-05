@@ -37,7 +37,7 @@ function DeploymentWorkflowSection({ onOpenAccess }: { onOpenAccess: () => void 
       icon: Workflow,
       label: 'Milestone-Gated Programs',
       copy: 'Capital programs structured around sequential or parallel milestones. Each milestone carries its own gate, evidence requirements, validator policy, and release formula. Execution moves forward only when conditions are satisfied.',
-      steps: ['Define milestone gates', 'Attach evidence requirements', 'Set validator quorum', 'Gate evaluation triggers release'],
+      steps: ['Define milestone gates', 'Attach evidence requirements', 'Set validator quorum', 'Gate evaluation determines release readiness'],
     },
     {
       icon: Network,
