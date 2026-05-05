@@ -285,7 +285,7 @@ export default function CapitalPage({ onOpenAccess, onOpenContact }: PageProps) 
       <CapitalPerformanceSection />
       <section className="section behavior-section">
         <motion.div className="section-head" {...fade}>
-          <Badge>Capital Behavior</Badge>
+          <Badge>Capital Behavior through AX1</Badge>
           <h2>Capital responds to execution state.</h2>
         </motion.div>
         <div className="behavior-grid">{states.map(([state, behavior, copy]) => <motion.div className="behavior-card" key={state} {...fade}><Pill tone={state === 'Blocked' ? 'amber' : 'blue'}>{state}</Pill><h3>{behavior}</h3><p>{copy}</p></motion.div>)}</div>
