@@ -1322,11 +1322,12 @@ body.mobile-nav-open .mobile-nav-backdrop {
 .contact-modal .badge { margin-bottom: 14px; }
 .contact-modal h2 { line-height: 1.04; }
 .contact-modal > p { color:rgba(255,255,255,.62); line-height:1.65; margin:18px 0 30px; }
-.channel-card { display:grid; grid-template-columns:48px 1fr auto auto; gap:12px; align-items:center; padding:22px; margin-top:16px; background:rgba(255,255,255,.035); }
+.channel-card { display:grid; grid-template-columns:48px 1fr auto; gap:12px; align-items:center; padding:22px; margin-top:16px; background:rgba(255,255,255,.035); }
 .channel-card span { display:block; color:rgba(255,255,255,.6); font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:850; margin-bottom:6px; }
 .channel-card strong { font-size:18px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
-.channel-card button, .channel-card a { min-height:36px; border:0; border-radius:12px; display:inline-flex; align-items:center; gap:8px; padding:0 16px; text-transform:uppercase; letter-spacing:.12em; font-size:11px; font-weight:900; }
-.channel-card button { background:rgba(255,255,255,.08); color:rgba(255,255,255,.7); }
+.channel-actions { display:flex; align-items:center; gap:10px; }
+.channel-card button, .channel-card a { min-height:38px; border:0; border-radius:12px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:0 16px; text-transform:uppercase; letter-spacing:.12em; font-size:11px; font-weight:900; }
+.channel-card button { background:rgba(255,255,255,.08); color:rgba(255,255,255,.74); }
 .channel-card a { background:var(--ax1-blue); color:white; }
 .acknowledge { margin-top:28px; border:1px dashed rgba(255,255,255,.12); border-radius:20px; padding:24px; display:grid; grid-template-columns:20px 1fr; gap:16px; color:rgba(255,255,255,.58); }
 .acknowledge strong { display:block; text-transform:uppercase; letter-spacing:.2em; font-size:11px; margin-bottom:8px; }
@@ -2484,57 +2485,72 @@ body.mobile-nav-open .mobile-nav-backdrop {
   .architecture-card, .deployment-card { min-height:auto; }
   .legal-card, .legal-contact-card { padding: 16px; }
   .legal-nav a { font-size: 12px; }
-  .footer { padding: 42px 0 22px; }
+  .footer { padding: 44px 0 20px; }
   .footer-inner {
-    gap: 28px;
+    gap: 16px;
     align-items: start;
   }
   .footer-brand,
   .footer-nav,
   .footer-legal {
     width: 100%;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,.028), rgba(255,255,255,.012));
+    padding: 16px;
   }
   .footer-brand p {
     max-width: none;
-    margin-bottom: 18px;
-    font-size: 14px;
-    line-height: 1.7;
+    margin-bottom: 14px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: rgba(236,241,252,.9);
   }
-  .footer-links { gap: 6px; }
   .footer-links {
     max-width: none;
-    padding-top: 16px;
-    justify-content: center;
+    padding-top: 14px;
+    justify-content: flex-start;
+    gap: 8px 10px;
+    border-top: 1px solid rgba(255,255,255,.08);
   }
-  .footer-links a { font-size: 13px; }
+  .footer-links span { display: none; }
+  .footer-links a {
+    font-size: 13px;
+    padding: 2px 0;
+  }
   .footer-nav {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 18px;
-    justify-content: center;
-    align-items: start;
-    border-left: 0;
-    border-right: 0;
-    border-top: 1px solid rgba(255,255,255,.06);
-    border-bottom: 1px solid rgba(255,255,255,.06);
-    padding: 18px 0;
-    overflow-x: auto;
-    scrollbar-width: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    border-left: 1px solid rgba(255,255,255,.08);
+    border-right: 1px solid rgba(255,255,255,.08);
+    border-top: 1px solid rgba(255,255,255,.08);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    overflow-x: visible;
   }
-  .footer-nav::-webkit-scrollbar { display: none; }
   .footer-nav a,
   .footer-nav-contact {
-    width: auto;
-    flex: 0 0 auto;
+    width: 100%;
     justify-content: center;
     text-align: center;
-    padding: 0;
-    font-size: 11px;
-    letter-spacing: .12em;
+    padding: 10px 8px;
+    font-size: 10px;
+    letter-spacing: .11em;
     white-space: nowrap;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 10px;
+    background: rgba(255,255,255,.018);
+  }
+  .footer-nav a:hover,
+  .footer-nav a:focus-visible,
+  .footer-nav-contact:hover,
+  .footer-nav-contact:focus-visible {
+    background: rgba(47,109,224,.12);
+    border-color: rgba(47,109,224,.35);
+    color: var(--text);
   }
   .footer-legal {
-    gap: 10px;
+    gap: 9px;
     align-content: start;
     text-align: left;
   }
@@ -2545,17 +2561,26 @@ body.mobile-nav-open .mobile-nav-backdrop {
     margin-top: 4px;
   }
   .footer-bottom {
-    margin-top: 28px;
-    padding-top: 18px;
+    margin-top: 22px;
+    padding-top: 16px;
     text-align: left;
     line-height: 1.6;
-    letter-spacing: .14em;
+    letter-spacing: .12em;
+    width: min(100% - 28px, 1280px);
+  }
+  .footer-trademark {
+    width: min(100% - 28px, 1280px);
+    margin: 10px auto 0;
+    padding-bottom: 22px;
+    line-height: 1.55;
+    letter-spacing: .03em;
   }
   .loop-diagram { min-height:380px; border-radius:30px; }
   .loop-diagram-circle { min-height:380px; border-radius:30px; }
   .loop-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px 18px;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 24px;
   }
   .loop-list-item {
     grid-template-columns: 24px 1fr;
@@ -2595,8 +2620,26 @@ body.mobile-nav-open .mobile-nav-backdrop {
   .engine-step p { margin:0; }
   .line { display:none; }
   .decision-row { grid-template-columns:1fr; }
-  .channel-card { grid-template-columns:48px 1fr; }
-  .channel-card button, .channel-card a { grid-column:span 1; }
+  .channel-card {
+    grid-template-columns:48px 1fr;
+    align-items: start;
+    gap: 12px 14px;
+    padding: 18px;
+  }
+  .channel-actions {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .channel-card button, .channel-card a {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 12px;
+    font-size: 10px;
+    letter-spacing: .11em;
+  }
   .modal-shell { padding:30px 18px 22px; }
   .select-trigger {
     min-height: 52px;
@@ -2619,6 +2662,85 @@ body.mobile-nav-open .mobile-nav-backdrop {
   .countdown-inner { padding: 36px 20px 32px; }
   .countdown-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 100%; }
   .countdown-numeral { font-size: 38px; }
+}
+
+@media (max-width: 360px) {
+  .footer { padding: 38px 0 18px; }
+  .footer-inner { gap: 12px; }
+  .footer-brand,
+  .footer-nav,
+  .footer-legal { padding: 14px; border-radius: 14px; }
+  .footer-brand p {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .footer-links {
+    gap: 6px 8px;
+    padding-top: 12px;
+  }
+  .footer-links a {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .footer-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .footer-nav a,
+  .footer-nav-contact {
+    padding: 10px 6px;
+    font-size: 10px;
+    letter-spacing: .1em;
+  }
+  .footer-legal strong { font-size: 15px; }
+  .footer-legal span {
+    font-size: 11px;
+    line-height: 1.55;
+  }
+  .footer-disclaimer {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+  .footer-bottom {
+    width: min(100% - 24px, 1280px);
+    margin-top: 18px;
+    padding-top: 14px;
+    font-size: 10px;
+    letter-spacing: .1em;
+    line-height: 1.55;
+  }
+  .footer-trademark {
+    width: min(100% - 24px, 1280px);
+    font-size: 9px;
+    line-height: 1.5;
+    padding-bottom: 18px;
+  }
+}
+
+@media (max-width: 320px) {
+  .modal-shell {
+    padding: 22px 14px 16px;
+    max-height: calc(100vh - 16px);
+  }
+  .contact-modal .badge {
+    margin-bottom: 10px;
+    font-size: 10px;
+    letter-spacing: .16em;
+    padding: 8px 12px;
+  }
+  .contact-modal h2 {
+    font-size: 42px;
+    line-height: .92;
+    letter-spacing: -.055em;
+  }
+  .contact-modal > p {
+    margin: 12px 0 16px;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  .channel-card {
+    margin-top: 12px;
+    padding: 14px;
+    gap: 10px 12px;
+  }
 }
 
 /* ── Page Loader ───────────────────────────────────────────────────── */

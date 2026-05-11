@@ -627,8 +627,10 @@ export function ContactChannelsModal({ onClose }: ModalProps) {
           <div className="channel-card" key={email}>
             <div className="channel-icon"><Mail size={20} /></div>
             <div><span>{label}</span><strong>{email}</strong></div>
-            <button type="button" onClick={() => copy(email)}><Copy size={14} />Copy</button>
-            <button type="button" onClick={() => openEmail(email, label)}><Send size={14} />Send</button>
+            <div className="channel-actions">
+              <button type="button" onClick={() => copy(email)}><Copy size={14} />Copy</button>
+              <button type="button" onClick={() => openEmail(email, label)}><Send size={14} />Send</button>
+            </div>
           </div>
         ))}
         <div className="acknowledge"><Globe size={14} /><div><strong>Acknowledge</strong><p>All communications are recorded for institutional coordination, compliance review, and audit continuity where applicable.</p></div></div>
