@@ -44,7 +44,7 @@ export default function TrustPage({ onOpenContact }: PageProps) {
           {
             heading: '5. Tamper-evident lifecycle records',
             paragraphs: [
-              'Axis One can link policy versions, evaluations, release records, settlement states, and payout events through a tamper-evident snapshot chain. This supports reviewability and traceability across the capital execution lifecycle without relying on a blockchain or immutable ledger.',
+              'Axis One can link policy versions, evaluations, evidence snapshots, validator states, and release decisions through a tamper-evident snapshot chain. This supports reviewability and traceability across the capital execution lifecycle without relying on a blockchain or immutable ledger.',
             ],
           },
           {

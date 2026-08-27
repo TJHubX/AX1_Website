@@ -16,6 +16,7 @@ import {
   Route as RouteIcon,
   Send,
   Sparkles,
+  Users,
   Workflow,
   X,
   Zap,
@@ -27,7 +28,7 @@ import logo from '../assets/ax1-logo.png';
 export type Tone = 'blue' | 'green' | 'amber' | 'muted' | 'white';
 export type ModalProps = { onClose: () => void };
 export type PageProps = { onOpenAccess: () => void; onOpenContact: () => void };
-export type AccessErrors = Partial<Record<'fullName' | 'workEmail' | 'organization' | 'briefIntent', string>>;
+export type AccessErrors = Partial<Record<'fullName' | 'workEmail' | 'organization', string>>;
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
@@ -52,37 +53,37 @@ export const deploymentUseCases = [
     title: 'Real Estate Development',
     icon: Building2,
     copy: 'Multi-phase construction with stage-gate capital release.',
-    points: ['$500M+ project value', '12-24 month timelines', 'Multiple investor pools'],
+    points: ['Milestone-linked draws', 'Independent evidence', 'Multi-party approvals'],
   },
   {
     title: 'Infrastructure Projects',
     icon: Globe,
     copy: 'Large-scale public and private infrastructure deployment.',
-    points: ['Government oversight', 'Multi-stakeholder coordination', 'Regulatory compliance'],
+    points: ['Staged capital programs', 'Multi-stakeholder coordination', 'Evidence-led oversight'],
   },
   {
     title: 'Energy & Sustainability',
     icon: Zap,
     copy: 'Renewable energy projects with measurable impact milestones.',
-    points: ['ESG verification', 'Performance-based funding', 'Impact measurement'],
+    points: ['Performance evidence', 'Outcome-linked funding', 'Impact reporting context'],
   },
   {
     title: 'Enterprise Construction',
     icon: Layers3,
     copy: 'Commercial and industrial builds with complex funding structures.',
-    points: ['Private equity backed', 'Institutional grade', 'Multi-tranche releases'],
+    points: ['Complex stakeholder groups', 'Defined validation', 'Multi-tranche decisions'],
   },
   {
     title: 'Startups & Scaleups',
     icon: Rocket,
     copy: 'High-growth ventures with performance-linked funding tranches.',
-    points: ['Milestone-driven rounds', 'Governed tranche readiness', 'Investor-founder alignment'],
+    points: ['Milestone-driven rounds', 'Governed tranche readiness', 'Investor-operator alignment'],
   },
   {
     title: 'Life Sciences & R&D',
     icon: Sparkles,
     copy: 'Deep tech and biotech ventures with rigid clinical or lab-to-market phases.',
-    points: ['Phase-gated capital releases', 'Scientific milestone validation', 'Regulatory milestone-based controls'],
+    points: ['Phase-gated capital decisions', 'Specialist validation', 'Evidence-led checkpoints'],
   },
 ];
 
@@ -142,15 +143,15 @@ export function Header({ onOpenAccess, onOpenContact }: PageProps) {
     <header className="header">
       <nav className="nav" aria-label="Primary navigation">
         <Link to="/" className="logo-link" aria-label="Axis One home"><Logo /></Link>
-        <div className="nav-tag"><span />Non-custodial capital orchestration</div>
+        <div className="nav-tag"><span />Execution proof to capital decision</div>
         <div className="nav-links">
-          <NavLink to="/system">System</NavLink>
-          <NavLink to="/capital">Capital</NavLink>
-          <NavLink to="/deployment">Deployment</NavLink>
-          <NavLink to="/founder">Founder</NavLink>
+          <NavLink to="/system">How It Works</NavLink>
+          <NavLink to="/capital">Capital Governance</NavLink>
+          <NavLink to="/deployment">Pilot &amp; Programs</NavLink>
+          <NavLink to="/trust">Trust</NavLink>
           <button type="button" onClick={onOpenContact}>Contact</button>
         </div>
-        <button className="nav-cta" onClick={onOpenAccess} type="button">Request Access <ArrowRight size={13} /></button>
+        <button className="nav-cta" onClick={onOpenAccess} type="button">Assess Workflow <ArrowRight size={13} /></button>
         <button
           className="nav-menu-toggle"
           type="button"
@@ -177,13 +178,13 @@ export function Header({ onOpenAccess, onOpenContact }: PageProps) {
               <span>Navigation</span>
               <button type="button" onClick={closeMobileMenu} aria-label="Close navigation menu"><X size={16} /></button>
             </div>
-            <Link to="/system" onClick={closeMobileMenu}>System</Link>
-            <Link to="/capital" onClick={closeMobileMenu}>Capital</Link>
-            <Link to="/deployment" onClick={closeMobileMenu}>Deployment</Link>
-            <Link to="/founder" onClick={closeMobileMenu}>Founder</Link>
+            <Link to="/system" onClick={closeMobileMenu}>How It Works</Link>
+            <Link to="/capital" onClick={closeMobileMenu}>Capital Governance</Link>
+            <Link to="/deployment" onClick={closeMobileMenu}>Pilot &amp; Programs</Link>
+            <Link to="/trust" onClick={closeMobileMenu}>Trust</Link>
             <div className="mobile-nav-divider" />
             <button type="button" className="mobile-nav-contact" onClick={() => { closeMobileMenu(); onOpenContact(); }}>Direct Channels</button>
-            <button className="mobile-nav-request" type="button" onClick={() => { closeMobileMenu(); onOpenAccess(); }}>Request Access</button>
+            <button className="mobile-nav-request" type="button" onClick={() => { closeMobileMenu(); onOpenAccess(); }}>Assess a Capital Workflow</button>
           </div>
         </div>
       )}
@@ -198,7 +199,7 @@ export function Footer({ onOpenContact }: { onOpenContact: () => void }) {
         <div className="footer-brand">
           <p>
             <img className="footer-inline-logo" src={logo} alt="Axis One" />
-            is non-custodial capital execution infrastructure for governed release, verified execution, and institutional coordination.
+            provides non-custodial collaboration and decision infrastructure connecting proven execution to governed capital action.
           </p>
           <div className="footer-links">
             <Link to="/privacy">Privacy</Link>
@@ -218,9 +219,10 @@ export function Footer({ onOpenContact }: { onOpenContact: () => void }) {
         </div>
         <div className="footer-nav">
           <Link to="/">HOME</Link>
-          <Link to="/system">System</Link>
-          <Link to="/capital">Capital</Link>
-          <Link to="/deployment">Deployment</Link>
+          <Link to="/system">How It Works</Link>
+          <Link to="/capital">Capital Governance</Link>
+          <Link to="/deployment">Pilot &amp; Programs</Link>
+          <Link to="/trust">Trust</Link>
           <Link to="/founder">Founder</Link>
           <button className="footer-nav-contact" onClick={onOpenContact}>Contact</button>
         </div>
@@ -229,7 +231,7 @@ export function Footer({ onOpenContact }: { onOpenContact: () => void }) {
           <span>66 Paul Street, London EC2A 4NA, England</span>
           <span>Registered in England and Wales</span>
           <span>Company Registration No. 17151320</span>
-          <span className="footer-disclaimer">Axis One does not hold, manage, or guarantee capital. All release logic is non-custodial and policy-governed.</span>
+          <span className="footer-disclaimer">AX1 does not hold, transfer, manage, or guarantee client capital. Authorised external financial providers execute any transfer.</span>
         </div>
       </div>
       <div className="footer-bottom">© 2026 AX1 Structura Ltd • GLOBAL CAPITAL INFRASTRUCTURE • ALL RIGHTS RESERVED</div>
@@ -351,10 +353,8 @@ export const projectValues = [
   { value: '1b+', label: '$1B+' },
 ];
 
-// TODO: Replace local confirmation fallback with API submission endpoint when backend intake is available.
 export function RequestAccessModal({ onClose }: ModalProps) {
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [formData, setFormData] = useState({ industry: 'real-estate', projectValue: '10-50' });
+  const [isPrepared, setIsPrepared] = useState(false);
   const [errors, setErrors] = useState<AccessErrors>({});
   const [summary, setSummary] = useState('');
   const [copied, setCopied] = useState(false);
@@ -362,20 +362,18 @@ export function RequestAccessModal({ onClose }: ModalProps) {
   const fullNameRef = React.useRef<HTMLInputElement>(null);
   const workEmailRef = React.useRef<HTMLInputElement>(null);
   const organizationRef = React.useRef<HTMLInputElement>(null);
-  const briefIntentRef = React.useRef<HTMLTextAreaElement>(null);
-  const successHeadingRef = React.useRef<HTMLHeadingElement>(null);
+  const preparedHeadingRef = React.useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    if (isSuccess && successHeadingRef.current) successHeadingRef.current.focus();
-  }, [isSuccess]);
+    if (isPrepared && preparedHeadingRef.current) preparedHeadingRef.current.focus();
+  }, [isPrepared]);
 
-  const validate = (values: { fullName: string; workEmail: string; organization: string; briefIntent: string }): AccessErrors => {
+  const validate = (values: { fullName: string; workEmail: string; organization: string }): AccessErrors => {
     const next: AccessErrors = {};
     if (!values.fullName) next.fullName = 'Please enter your full name.';
     if (!values.workEmail) next.workEmail = 'Work email is required.';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.workEmail)) next.workEmail = 'Enter a valid work email address.';
     if (!values.organization) next.organization = 'Organization is required.';
-    if (!values.briefIntent) next.briefIntent = 'A brief intent helps us route your request.';
     return next;
   };
 
@@ -397,31 +395,25 @@ export function RequestAccessModal({ onClose }: ModalProps) {
         ['fullName', fullNameRef],
         ['workEmail', workEmailRef],
         ['organization', organizationRef],
-        ['briefIntent', briefIntentRef],
       ];
       const firstInvalid = order.find(([key]) => nextErrors[key]);
       if (firstInvalid && firstInvalid[1].current) firstInvalid[1].current.focus();
       return;
     }
 
-    const industryLabel = industries.find((item) => item.value === formData.industry)?.label ?? formData.industry;
-    const projectValueLabel = projectValues.find((item) => item.value === formData.projectValue)?.label ?? formData.projectValue;
-
     const summaryText = [
-      'AX1 — Request Access Summary',
-      '------------------------------',
+      'AX1 — Capital Workflow Assessment',
+      '---------------------------------',
       `Full Name:     ${values.fullName}`,
       `Work Email:    ${values.workEmail}`,
       `Organization:  ${values.organization}`,
-      `Industry:      ${industryLabel}`,
-      `Project Value: ${projectValueLabel}`,
       '',
-      'Brief Intent:',
-      values.briefIntent,
+      'Workflow or decision to assess:',
+      values.briefIntent || 'To be discussed during the assessment.',
     ].join('\n');
 
     setSummary(summaryText);
-    setIsSuccess(true);
+    setIsPrepared(true);
   };
 
   const handleCopy = async () => {
@@ -435,7 +427,7 @@ export function RequestAccessModal({ onClose }: ModalProps) {
   };
 
   const handleEmailFallback = () => {
-    const subject = encodeURIComponent('AX1 Request Access — Institutional Inquiry');
+    const subject = encodeURIComponent('AX1 Capital Workflow Assessment');
     const body = encodeURIComponent(summary);
     window.location.href = `mailto:info@ax1.capital?subject=${subject}&body=${body}`;
   };
@@ -444,19 +436,19 @@ export function RequestAccessModal({ onClose }: ModalProps) {
 
   return (
     <ModalShell onClose={onClose} labelledBy="request-access-title">
-      {isSuccess ? (
+      {isPrepared ? (
         <div className="access-success">
           <div className="access-success-icon"><CheckCircle2 size={28} /></div>
-          <h3 ref={successHeadingRef} tabIndex={-1}>Request Received</h3>
-          <p>Your request has been prepared for institutional review. Our infrastructure team will respond through the appropriate channel.</p>
+          <h3 ref={preparedHeadingRef} tabIndex={-1}>Assessment request prepared</h3>
+          <p>Send the prepared email so the AX1 team can receive and review your workflow. No request has been transmitted yet.</p>
           <pre className="access-summary" aria-label="Request summary">{summary}</pre>
           <div className="access-fallback-actions">
             <button type="button" className="submit-request" onClick={handleCopy}>
-              {copied ? 'Copied to Clipboard' : 'Copy Request Summary'}
+              {copied ? 'Copied to Clipboard' : 'Copy Assessment Summary'}
               {!copied && <Copy size={15} />}
             </button>
             <button type="button" className="submit-request submit-request-ghost" onClick={handleEmailFallback}>
-              Send via Email
+              Send Assessment by Email
               <Send size={15} />
             </button>
           </div>
@@ -465,8 +457,8 @@ export function RequestAccessModal({ onClose }: ModalProps) {
       ) : (
         <>
           <div className="modal-title">
-            <h2 id="request-access-title">Request Access</h2>
-            <p>Institutional Enrollment</p>
+            <h2 id="request-access-title">Assess a Capital Workflow</h2>
+            <p>Start with one decision process</p>
           </div>
           <form className="access-form" onSubmit={handleSubmit} noValidate aria-labelledby="request-access-title">
             <label className={fieldClass('fullName')}>
@@ -474,7 +466,7 @@ export function RequestAccessModal({ onClose }: ModalProps) {
               <input
                 ref={fullNameRef}
                 name="fullName"
-                placeholder="e.g. Marcus Aurelius"
+                placeholder="Your name"
                 aria-invalid={Boolean(errors.fullName)}
                 aria-describedby={errors.fullName ? 'err-fullName' : undefined}
               />
@@ -497,27 +489,21 @@ export function RequestAccessModal({ onClose }: ModalProps) {
               <input
                 ref={organizationRef}
                 name="organization"
-                placeholder="e.g. Royal Asset Management"
+                placeholder="Your organization"
                 aria-invalid={Boolean(errors.organization)}
                 aria-describedby={errors.organization ? 'err-organization' : undefined}
               />
               {errors.organization && <em id="err-organization" className="field-error">{errors.organization}</em>}
             </label>
-            <SelectField label="Industry" options={industries} value={formData.industry} onChange={v => setFormData(p => ({ ...p, industry: v }))} />
-            <SelectField label="Project Value" options={projectValues} value={formData.projectValue} onChange={v => setFormData(p => ({ ...p, projectValue: v }))} />
-            <label className={`${fieldClass('briefIntent')} field-wide`}>
-              <span>Brief Intent</span>
+            <label className="field field-wide">
+              <span>Workflow or decision to assess <small>(optional)</small></span>
               <textarea
-                ref={briefIntentRef}
                 name="briefIntent"
-                placeholder="Outline your deployment scope..."
-                aria-invalid={Boolean(errors.briefIntent)}
-                aria-describedby={errors.briefIntent ? 'err-briefIntent' : undefined}
+                placeholder="For example: a staged investment tranche, construction draw, or portfolio approval process."
               />
-              {errors.briefIntent && <em id="err-briefIntent" className="field-error">{errors.briefIntent}</em>}
             </label>
             <button className="submit-request" type="submit">
-              Submit Request
+              Prepare Assessment Request
               <Send size={15} />
             </button>
           </form>
@@ -564,16 +550,18 @@ export function BoundarySection() {
     <section className="section boundary-section">
       <motion.div className="boundary-panel" {...fade}>
         <div className="boundary-copy">
-          <Badge>Capital Boundary</Badge>
-          <h2>Governed release. Not custody.</h2>
-          <p>Axis One does not hold investor funds. It governs release through gates, evidence validation, and policy logic tied to verified execution.</p>
+          <Badge>Non-custodial boundary</Badge>
+          <h2>AX1 governs the decision. It never holds the money.</h2>
+          <p>AX1 connects proven execution to release readiness, confirms the applicable authority and preserves the decision record. Custody and transfer remain with authorised external financial providers.</p>
         </div>
         <div className="boundary-layers">
-          <div className="boundary-layer"><Landmark size={18} /><strong>Investor / licensed provider funds</strong><span>Capital remains outside Axis One custody.</span></div>
+          <div className="boundary-layer"><Landmark size={18} /><strong>Bank, custodian or authorised provider</strong><span>Client capital remains outside AX1 custody.</span></div>
           <ChevronDown className="layer-arrow" size={18} />
-          <div className="boundary-layer highlight"><Workflow size={18} /><strong>Axis One readiness logic</strong><span>Evidence, quorum, dependencies, holdbacks and release conditions.</span></div>
+          <div className="boundary-layer highlight"><Workflow size={18} /><strong>AX1 governed execution record</strong><span>Evidence, validation, readiness, responsibility and authority stay connected.</span></div>
           <ChevronDown className="layer-arrow" size={18} />
-          <div className="boundary-layer"><RouteIcon size={18} /><strong>Instruction + settlement visibility</strong><span>Release decisions remain reviewable and auditable.</span></div>
+          <div className="boundary-layer"><Users size={18} /><strong>Authorised stakeholder decision</strong><span>The responsible party approves, holds, rejects or requests more evidence.</span></div>
+          <ChevronDown className="layer-arrow" size={18} />
+          <div className="boundary-layer"><RouteIcon size={18} /><strong>External execution and record</strong><span>The provider executes; AX1 records the status and preserves the audit trail.</span></div>
         </div>
       </motion.div>
     </section>
@@ -600,6 +588,7 @@ export function FinalCTA({
   onOpenAccess,
   heading = "Capital should not move without proof.",
   subcopy = "Axis One aligns governance, evidence, and release policy so capital responds to verified execution.",
+  primaryLabel = "Request Access",
   variant = 'centered',
   secondaryLabel = "View System",
   secondaryTo = "/system",
@@ -609,6 +598,7 @@ export function FinalCTA({
   onOpenAccess: () => void;
   heading?: string;
   subcopy?: string;
+  primaryLabel?: string;
   variant?: 'centered' | 'split' | 'bar';
   secondaryLabel?: string;
   secondaryTo?: string;
@@ -621,7 +611,7 @@ export function FinalCTA({
         <motion.div className="final-cta-bar-inner" {...fade}>
           <h2>{heading}</h2>
           <div className="actions">
-            <Button onClick={onOpenAccess}>Request Access</Button>
+            <Button onClick={onOpenAccess}>{primaryLabel}</Button>
             <Button variant="ghost" to={secondaryTo}>{secondaryLabel}</Button>
           </div>
         </motion.div>
@@ -636,7 +626,7 @@ export function FinalCTA({
             <h2>{heading}</h2>
             {subcopy && <p>{subcopy}</p>}
             <div className="actions">
-              <Button onClick={onOpenAccess}>Request Access</Button>
+              <Button onClick={onOpenAccess}>{primaryLabel}</Button>
               <Button variant="ghost" to={secondaryTo}>{secondaryLabel}</Button>
             </div>
           </div>
@@ -656,7 +646,7 @@ export function FinalCTA({
         <h2>{heading}</h2>
         {subcopy && <p>{subcopy}</p>}
         <div className="actions center-actions">
-          <Button onClick={onOpenAccess}>Request Access</Button>
+          <Button onClick={onOpenAccess}>{primaryLabel}</Button>
           <Button variant="ghost" to={secondaryTo}>{secondaryLabel}</Button>
         </div>
       </motion.div>

@@ -4,7 +4,6 @@ import {
   Activity,
   ClipboardCheck,
   Database,
-  Eye,
   FileCheck2,
   Gauge,
   GitBranch,
@@ -26,20 +25,20 @@ import {
 
 const releaseSteps = [
   'Capital committed',
-  'Milestone gate created',
+  'Execution outcome agreed',
   'Evidence submitted',
-  'Validator quorum',
-  'Readiness score',
-  'Release decision',
-  'Unlocked / held',
+  'Assigned validation',
+  'Release readiness',
+  'Authorised decision',
+  'External execution recorded',
 ];
 
 const systemMetrics = [
-  ['Evidence coverage', '9 / 12', FileCheck2],
-  ['Validator quorum', '2 / 3', Users],
-  ['Dependency state', '1 blocker', GitBranch],
-  ['Protected holdback', '35%', LockKeyhole],
-  ['Settlement visibility', 'Tracked', Eye],
+  ['Evidence state', 'Complete', FileCheck2],
+  ['Validation state', 'Complete', Users],
+  ['Dependency state', 'Clear', GitBranch],
+  ['Decision authority', 'Confirmed', LockKeyhole],
+  ['Decision history', 'Recorded', ClipboardCheck],
   ['Decision status', 'Review required', Activity],
 ];
 
@@ -48,7 +47,6 @@ const decisionQueue = [
   ['Inspect uploaded proof', 'Documents, signatures and validation notes stay attached to the gate.', 'Inspect'],
   ['Confirm validator quorum', 'Two of three validators confirmed. Investor review remains open.', 'Confirm'],
   ['Approve / hold / request evidence', 'Release is eligible only when policy, evidence and dependencies align.', 'Decide'],
-  ['Track settlement state', 'Instruction, settlement and reconciliation remain visible after approval.', 'Monitor'],
 ];
 
 // ─── Sections ─────────────────────────────────────────────────────────────────
@@ -57,7 +55,7 @@ function ReleaseEnginePanel() {
   return (
     <motion.div className="engine-panel" {...fade}>
       <div className="panel-top">
-        <div><span>Capital Release Engine</span><h3>Release logic, not custody.</h3></div>
+        <div><span>Decision Readiness</span><h3>Governed readiness, not custody.</h3></div>
         <Pill tone="blue">illustrative state</Pill>
       </div>
       <div className="engine-flow">
@@ -70,32 +68,32 @@ function ReleaseEnginePanel() {
         ))}
       </div>
       <div className="engine-signals">
-        <div className="signal signal-main"><span>Readiness</span><strong>82%</strong><small>release review required</small></div>
-        <div className="signal"><span>Quorum</span><strong>2 / 3</strong><small>validator confirmations</small></div>
-        <div className="signal"><span>Holdback</span><strong>35%</strong><small>protected until remaining gates pass</small></div>
+        <div className="signal signal-main"><span>Readiness</span><strong>Ready</strong><small>authorised decision required</small></div>
+        <div className="signal"><span>Validation</span><strong>Complete</strong><small>assigned reviews recorded</small></div>
+        <div className="signal"><span>Conditions</span><strong>Satisfied</strong><small>no unresolved mandatory condition</small></div>
         <div className="signal signal-boundary"><LockKeyhole size={16} /><strong>Non-custodial</strong><small>Funds remain with investors or licensed providers.</small></div>
       </div>
-      <div className="boundary-strip"><Landmark size={15} /> Axis One evaluates readiness and coordinates release instructions. It does not hold funds.</div>
+      <div className="boundary-strip"><Landmark size={15} /> AX1 evaluates readiness and records the authorised decision. An external provider executes the transfer.</div>
     </motion.div>
   );
 }
 
 function GateEvaluationSection() {
   const rows = [
-    ['Evidence required', 'Documents, signatures and proof tied to gate'],
-    ['Validator quorum', '2 of 3 confirmations required'],
-    ['Dependency status', '1 blocker open'],
-    ['Readiness threshold', '80% minimum for review'],
-    ['Release formula', 'Tranche weight × readiness score'],
-    ['Holdback rule', '35% held until remaining gates pass'],
-    ['Audit record', 'All evaluations recorded and traceable'],
+    ['Required outcome', 'The execution result agreed for this decision'],
+    ['Evidence requirement', 'The proof that must be supplied and reviewed'],
+    ['Assigned validation', 'The parties responsible for evidence assessment'],
+    ['Dependencies', 'The mandatory conditions that cannot be bypassed'],
+    ['Decision authority', 'The authorised party responsible for the outcome'],
+    ['Decision options', 'Approve, hold, reject, escalate or request evidence'],
+    ['Versioned record', 'The applicable process, evidence and outcome remain linked'],
   ];
   return (
     <section className="section sys-feature-section">
       <motion.div className="sys-feature-head" {...fade}>
         <Badge>Gate Evaluation System</Badge>
-        <h2>Every release begins with a gate.</h2>
-        <p>Axis One structures execution through milestone gates. Each gate defines what must be proven, who must validate it, what dependencies must be cleared, what readiness score is required, and how much capital becomes eligible if the gate passes.</p>
+        <h2>Every capital decision begins with agreed conditions.</h2>
+        <p>AX1 structures the outcome, evidence, validation, dependencies and authority that form the basis of a capital decision. It shows why a workflow is ready or blocked while leaving the final decision with the authorised stakeholder.</p>
       </motion.div>
       <motion.div className="sys-panel" {...fade}>
         <div className="sys-panel-label"><span>Gate Policy</span><Pill tone="amber">review required</Pill></div>
@@ -118,7 +116,7 @@ function EvidenceLayerSection() {
     { label: 'Signature state', value: 'Awaiting 1', state: 'amber' },
     { label: 'Requirement match', value: '9 / 12', state: 'amber' },
     { label: 'Evidence completeness', value: '75%', state: 'amber' },
-    { label: 'Trust score', value: '0.82', state: 'green' },
+    { label: 'Source identity', value: 'Confirmed', state: 'green' },
     { label: 'Audit trail', value: 'Active', state: 'green' },
   ];
   return (
@@ -177,21 +175,21 @@ function ValidatorQuorumSection() {
 
 function RoleGovernanceSection() {
   const roles = [
-    { name: 'Investor',       initials: 'IN', color: '#2F6DE0', desc: 'Release approval authority' },
-    { name: 'Operator',       initials: 'OP', color: '#1e8a6e', desc: 'Execution & delivery' },
-    { name: 'Validator',      initials: 'VA', color: '#7c3aed', desc: 'Evidence confirmation' },
-    { name: 'Execution Lead', initials: 'EL', color: '#b45309', desc: 'Milestone coordination' },
-    { name: 'Partner',        initials: 'PA', color: '#0e7490', desc: 'Cross-org coordination' },
-    { name: 'Project Team',   initials: 'PT', color: '#be185d', desc: 'Task-level delivery' },
-    { name: 'Client',         initials: 'CL', color: '#4d7c0f', desc: 'Visibility & sign-off' },
-    { name: 'Founder',        initials: 'FO', color: '#9f1239', desc: 'Strategic oversight' },
+    { name: 'Investor',       initials: 'IN', color: '#2B63C5', desc: 'Release approval authority' },
+    { name: 'Operator',       initials: 'OP', color: '#37B48B', desc: 'Execution & delivery' },
+    { name: 'Validator',      initials: 'VA', color: '#9789D6', desc: 'Evidence confirmation' },
+    { name: 'Workspace Admin', initials: 'WA', color: '#D8B25B', desc: 'Workspace configuration & control' },
+    { name: 'Partner',        initials: 'PA', color: '#5B9AD8', desc: 'Cross-org coordination' },
+    { name: 'Project Team',    initials: 'PT', color: '#6D79B6', desc: 'Task-level delivery' },
+    { name: 'Client',         initials: 'CL', color: '#94A3B8', desc: 'Visibility & sign-off' },
+    { name: 'Founder',        initials: 'FO', color: '#E06680', desc: 'Strategic oversight' },
   ];
   return (
     <section className="section role-gov-section">
       <motion.div className="role-gov-head" {...fade}>
         <Badge>Role-Based Governance</Badge>
         <h2>Built for multi-stakeholder execution.</h2>
-        <p>Axis One supports role-based visibility and decision authority across investors, operators, validators, execution leads, partners, and project teams. Each participant sees the information and actions relevant to their role.</p>
+        <p>AX1 supports role-based visibility and decision authority across capital providers, operators, validators, Workspace Admins, partners, and Project Teams. Each participant sees the information and actions relevant to their role.</p>
       </motion.div>
       <motion.div className="role-gov-grid" {...fade}>
         {roles.map((role) => (
@@ -222,7 +220,7 @@ function ConnectedCoordinationLayerSection() {
     ['Evidence pack', '12 files / signature packet attached'],
     ['Validator review', '2 of 3 confirmed'],
     ['Meeting link', 'Google / Teams'],
-    ['Owner', 'Execution Lead'],
+    ['Owner', 'Workspace Admin'],
     ['Blocker', 'Pending signature'],
     ['Release state', 'Hold'],
   ];
@@ -293,17 +291,15 @@ function AuditReadinessSection() {
 
 function ClosedLoopSection() {
   const loopItems = [
-    { name: 'Network', summary: 'Captures reality' },
-    { name: 'Core', summary: 'Evaluates it' },
-    { name: 'Capital', summary: 'Acts on it' },
-    { name: 'Exchange', summary: 'Extends it into liquidity' },
+    { name: 'Single Program', summary: 'One dedicated environment for a defined program, its participants, milestones, evidence, and decision gates.' },
+    { name: 'Multi-Program', summary: 'Coordinated governance across multiple programs, with shared standards and portfolio-level visibility.' },
   ];
   return (
     <section className="section closed-loop">
       <motion.div className="closed-copy" {...fade}>
-        <Badge>Unified Logic</Badge>
-        <h2>The Closed-Loop Capital System.</h2>
-        <p>Data informs decisions, decisions trigger capital, and governed release logic keeps positions adaptive over time.</p>
+        <Badge>Deployment Packages</Badge>
+        <h2>Start with one program. Scale across many.</h2>
+        <p>Choose the operating scope that fits today. The governance foundation remains consistent as participation and program complexity grow.</p>
         <div className="loop-list">
           {loopItems.map(({ name, summary }, index) => (
             <div className="loop-list-item" key={name}>
@@ -346,10 +342,10 @@ export default function SystemPage({ onOpenAccess, onOpenContact }: PageProps) {
     <main>
       <section className="section page-hero split-hero">
         <motion.div {...fade}>
-          <Badge>Execution State Engine</Badge>
-          <h1>Operational status for governed capital.</h1>
-          <p>Axis One converts evidence, validator decisions, dependencies, MSI readiness, holdbacks and settlement state into one inspectable execution layer.</p>
-          <div className="actions"><Button onClick={onOpenAccess}>Request Access</Button><Button variant="secondary" to="/capital">Capital Logic</Button></div>
+          <Badge>How AX1 works</Badge>
+          <h1>From live execution evidence to a decision-ready record.</h1>
+          <p>AX1 connects execution evidence, assigned validation, mandatory conditions and decision authority in one inspectable, permissioned record.</p>
+          <div className="actions"><Button onClick={onOpenAccess}>Assess a Capital Workflow</Button><Button variant="secondary" to="/capital">Capital Governance</Button></div>
         </motion.div>
         <ReleaseEnginePanel />
       </section>
@@ -362,7 +358,7 @@ export default function SystemPage({ onOpenAccess, onOpenContact }: PageProps) {
         <motion.div className="cockpit" {...fade}>
           <div className="cockpit-label"><span>Gate Monitor</span><Pill tone="amber">release review required</Pill></div>
           <div className="cockpit-grid">
-            <div className="readiness"><div className="ring"><Gauge size={30} /><strong>82%</strong><span>release readiness</span></div><p>Readiness is calculated from proof, thresholds, validator input, dependencies and holdback logic before any release instruction is authorized.</p></div>
+            <div className="readiness"><div className="ring"><Gauge size={30} /><strong>Ready</strong><span>decision readiness</span></div><p>Readiness updates as evidence, assigned validation and mandatory conditions change. It never replaces the authorised capital decision.</p></div>
             <div className="metric-grid">{systemMetrics.map(([label, value, Icon]) => { const MetricIcon = Icon as typeof FileCheck2; return <div className="metric" key={label as string}><MetricIcon size={16} /><span>{label as string}</span><strong>{value as string}</strong></div>; })}</div>
           </div>
         </motion.div>
@@ -371,10 +367,10 @@ export default function SystemPage({ onOpenAccess, onOpenContact }: PageProps) {
         <motion.div className="section-head center" {...fade}>
           <Badge>Investor Decision Layer</Badge>
           <h2>Capital decisions stay inside the execution workflow.</h2>
-          <p>Decision queues keep release approvals connected to milestone state, evidence quality, validator status and settlement visibility.</p>
+          <p>Decision queues keep release approvals connected to milestone state, evidence quality, validator status, and decision history.</p>
         </motion.div>
         <motion.div className="decision-panel" {...fade}>
-          <div className="decision-header"><span>Decision Queue</span><Pill tone="blue">5 open items</Pill></div>
+          <div className="decision-header"><span>Decision Queue</span><Pill tone="blue">{decisionQueue.length} open items</Pill></div>
           {decisionQueue.map(([title, copy, action]) => <div className="decision-row" key={title}><div><strong>{title}</strong><p>{copy}</p></div><span className="decision-action-label">{action}</span></div>)}
         </motion.div>
       </section>
@@ -388,11 +384,12 @@ export default function SystemPage({ onOpenAccess, onOpenContact }: PageProps) {
       <FinalCTA
         onOpenAccess={onOpenAccess}
         variant="split"
-        heading="See how execution logic becomes release readiness."
-        subcopy="Every gate, evidence item, and validator decision feeds a unified execution state — visible to every authorized party."
-        secondaryLabel="Explore Capital Logic"
+        heading="See how execution evidence becomes decision readiness."
+        subcopy="Every outcome, evidence item, validation and decision remains connected in one permissioned execution state."
+        primaryLabel="Assess a Capital Workflow"
+        secondaryLabel="Explore Capital Governance"
         secondaryTo="/capital"
-        points={['Deterministic gate evaluation', 'Validator quorum tracking', 'Auditable release record']}
+        points={['Defined evidence requirements', 'Assigned validation and authority', 'Audit-ready decision record']}
       />
       <Footer onOpenContact={onOpenContact} />
     </main>

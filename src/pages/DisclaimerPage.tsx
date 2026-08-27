@@ -38,7 +38,7 @@ export default function DisclaimerPage({ onOpenContact }: PageProps) {
           {
             heading: '5. Platform descriptions',
             paragraphs: [
-              'References to gates, release readiness, evidence, validators, settlement visibility, and capital governance are descriptions of platform workflows and product concepts. They are not guarantees of legal, financial, or investment outcomes for any party.',
+              'References to gates, release readiness, evidence, validators, decision records, and capital governance are descriptions of platform workflows and product concepts. They are not guarantees of legal, financial, or investment outcomes for any party.',
             ],
           },
           {

@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { MotionConfig } from 'motion/react';
 import { Header, RequestAccessModal, ContactChannelsModal } from './components';
-import { FloatingAIBadge } from './FloatingAIBadge';
 import './styles.css';
 
 const HomePage = React.lazy(() => import('./pages/HomePage'));
@@ -18,6 +17,34 @@ const DisclaimerPage = React.lazy(() => import('./pages/DisclaimerPage'));
 const TrustPage = React.lazy(() => import('./pages/TrustPage'));
 const LegalPage = React.lazy(() => import('./pages/LegalPage'));
 const AccessibilityPage = React.lazy(() => import('./pages/AccessibilityPage'));
+const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
+
+const PAGE_METADATA: Record<string, { title: string; description: string }> = {
+  '/': {
+    title: 'AX1 | Capital moves when execution is proven',
+    description: 'AX1 connects live execution evidence, validation and decision authority so capital providers can act on proven execution in one permissioned, audit-ready environment.',
+  },
+  '/system': {
+    title: 'How AX1 Works | Execution Proof to Capital Decision',
+    description: 'See how AX1 connects execution, evidence, validation, authority and capital decisions in one governed workflow.',
+  },
+  '/capital': {
+    title: 'Capital Governance | AX1',
+    description: 'Evaluate readiness as execution changes, preserve human decision authority and keep external capital execution traceable.',
+  },
+  '/deployment': {
+    title: 'Pilot & Programs | AX1',
+    description: 'Start with a bounded launch programme, then expand AX1 across a single program or a multi-program portfolio.',
+  },
+  '/trust': {
+    title: 'Trust, Security & Governance | AX1',
+    description: 'Review AX1 product boundaries, permissioned collaboration model, attributable records and non-custodial approach.',
+  },
+  '/founder': {
+    title: 'Founder Story | AX1',
+    description: 'Why AX1 was built to connect proven execution, stakeholder authority and governed capital decisions.',
+  },
+};
 
 function PageLoader() {
   return (
@@ -33,6 +60,28 @@ function ScrollToTop() {
   return null;
 }
 
+function PageMetadata() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const fallback = {
+      title: 'AX1 | Governed Capital Execution',
+      description: 'Non-custodial collaboration and decision infrastructure connecting proven execution to governed capital action.',
+    };
+    const metadata = PAGE_METADATA[pathname] ?? fallback;
+    const canonicalPath = PAGE_METADATA[pathname] ? pathname : '/';
+    const canonicalUrl = `https://ax1-website.pages.dev${canonicalPath === '/' ? '/' : canonicalPath}`;
+    document.title = metadata.title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', metadata.description);
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', canonicalUrl);
+    document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonicalUrl);
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', metadata.title);
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', metadata.description);
+    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', metadata.title);
+    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', metadata.description);
+  }, [pathname]);
+  return null;
+}
+
 function App() {
   const [accessOpen, setAccessOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
@@ -41,6 +90,7 @@ function App() {
     <MotionConfig reducedMotion="user">
       <BrowserRouter>
         <ScrollToTop />
+        <PageMetadata />
         <Header {...pageProps} />
         <Suspense fallback={<PageLoader />}>
           <Routes>
@@ -56,9 +106,9 @@ function App() {
             <Route path="/trust" element={<TrustPage {...pageProps} />} />
             <Route path="/legal" element={<LegalPage {...pageProps} />} />
             <Route path="/accessibility" element={<AccessibilityPage {...pageProps} />} />
+            <Route path="*" element={<NotFoundPage {...pageProps} />} />
           </Routes>
         </Suspense>
-        <FloatingAIBadge />
         {accessOpen && <RequestAccessModal onClose={() => setAccessOpen(false)} />}
         {contactOpen && <ContactChannelsModal onClose={() => setContactOpen(false)} />}
       </BrowserRouter>

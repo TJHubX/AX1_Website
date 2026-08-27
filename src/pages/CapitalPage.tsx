@@ -22,33 +22,33 @@ import {
 
 function ReleaseEnforcementGuardSection() {
   const blocked = [
-    'Quorum threshold not reached',
-    'Outstanding dependency unresolved',
-    'Evidence requirement incomplete',
-    'Readiness score below threshold',
+    'Required validation is incomplete',
+    'A mandatory dependency remains unresolved',
+    'Required evidence is missing or rejected',
+    'The authorised decision has not been made',
   ];
   const eligible = [
-    'All gate conditions satisfied',
-    'Required validator confirmations received',
-    'Evidence reviewed and linked',
-    'Readiness score at or above threshold',
+    'Agreed execution conditions are satisfied',
+    'Assigned validation is complete',
+    'Evidence remains linked to the decision',
+    'Decision authority is confirmed',
   ];
   return (
     <section className="section cap-feature-section cap-alt">
       <motion.div className="cap-feature-head" {...fade}>
-        <Badge>Release Enforcement</Badge>
+        <Badge>Decision Readiness</Badge>
         <h2>Conditions determine eligibility.</h2>
-        <p>Capital release is not manual. It follows the structured conditions attached to each gate. If conditions are not satisfied, the release instruction is not issued. There is no override path outside the defined policy.</p>
+        <p>AX1 continuously evaluates whether the agreed evidence, validation and mandatory conditions are satisfied. If they are not, the workflow remains blocked. When they are, the authorised stakeholder receives a traceable basis for the next decision.</p>
       </motion.div>
       <div className="cap-guard-grid">
         <motion.div className="cap-guard-panel cap-guard-blocked" {...fade}>
-          <div className="cap-guard-label"><Pill tone="amber">Blocked</Pill><span>Release paused</span></div>
+          <div className="cap-guard-label"><Pill tone="amber">Blocked</Pill><span>Decision not ready</span></div>
           <ul className="cap-guard-list">
             {blocked.map(item => <li key={item}><X size={14} />{item}</li>)}
           </ul>
         </motion.div>
         <motion.div className="cap-guard-panel cap-guard-eligible" {...fade}>
-          <div className="cap-guard-label"><Pill tone="green">Eligible</Pill><span>Release conditions met</span></div>
+          <div className="cap-guard-label"><Pill tone="green">Ready</Pill><span>Authorised decision required</span></div>
           <ul className="cap-guard-list">
             {eligible.map(item => <li key={item}><CheckCircle2 size={14} />{item}</li>)}
           </ul>
@@ -60,19 +60,19 @@ function ReleaseEnforcementGuardSection() {
 
 function InvestorDecisionSurfaceSection() {
   const actions = [
-    { icon: Eye, label: 'Milestone visibility', copy: 'View gate status, readiness scores, and dependency states across the execution timeline.' },
-    { icon: ClipboardCheck, label: 'Evidence access', copy: 'Review linked evidence packs, documents, and requirement fulfilment for each gate.' },
-    { icon: Users, label: 'Validator confirmation', copy: 'See which validators have confirmed and whether quorum thresholds have been reached.' },
-    { icon: LockKeyhole, label: 'Release condition audit', copy: 'Inspect the exact conditions that determined whether a release instruction was issued or withheld.' },
-    { icon: GitBranch, label: 'Policy version history', copy: 'Access a record of how governance policy was structured at the time of each gate evaluation.' },
-    { icon: FileCheck2, label: 'Lifecycle record', copy: 'Follow the full audit trail from gate evaluation through to settlement record and payout entry.' },
+    { icon: Eye, label: 'Execution visibility', copy: 'See the current outcome, unresolved blockers and readiness state across the execution timeline.' },
+    { icon: ClipboardCheck, label: 'Connected evidence', copy: 'Review the proof and assessment attached to the decision it supports.' },
+    { icon: Users, label: 'Assigned validation', copy: 'See which assigned reviewers have completed their assessment and what remains open.' },
+    { icon: LockKeyhole, label: 'Condition visibility', copy: 'Understand which agreed requirement is satisfied, missing, disputed or blocking.' },
+    { icon: GitBranch, label: 'Applicable process record', copy: 'Review the process and authority basis that applied when the decision was made.' },
+    { icon: FileCheck2, label: 'Decision lifecycle', copy: 'Follow the attributable history from execution evidence through authorised outcome.' },
   ];
   return (
     <section className="section cap-feature-section">
       <motion.div className="cap-feature-head" {...fade}>
         <Badge>Investor Decision Surface</Badge>
         <h2>Visibility that supports decisions.</h2>
-        <p>Axis One does not replace investor judgement. It provides a structured surface for reviewing execution progress, evidence, validator confirmations, release conditions, and policy state — so decisions are based on verified data, not reported summaries.</p>
+        <p>AX1 does not replace investor judgement. It provides a structured surface for reviewing execution, evidence, validation, unresolved conditions and decision authority—so authorised action is based on a governed record, not a reported summary.</p>
       </motion.div>
       <div className="cap-actions-grid">
         {actions.map(({ icon: Icon, label, copy }) => (
@@ -91,10 +91,10 @@ function TamperEvidenceSection() {
   const chain = [
     { step: '01', label: 'Policy Version', note: 'Gate structure and release rules defined' },
     { step: '02', label: 'Gate Evaluation', note: 'Conditions assessed against evidence and quorum' },
-    { step: '03', label: 'Release Clearance', note: 'Eligibility determined by policy outcome' },
-    { step: '04', label: 'Settlement Record', note: 'Release instruction logged with conditions state' },
-    { step: '05', label: 'Reconciliation', note: 'Tranche amounts mapped to release outcome' },
-    { step: '06', label: 'Payout Record', note: 'Final entry linked to lifecycle chain' },
+    { step: '03', label: 'Evidence Snapshot', note: 'Supporting proof linked to the evaluated gate' },
+    { step: '04', label: 'Validator State', note: 'Confirmation and quorum status recorded' },
+    { step: '05', label: 'Release Clearance', note: 'Eligibility determined by policy outcome' },
+    { step: '06', label: 'Decision Record', note: 'Outcome and decision context linked to the lifecycle' },
   ];
   const row1 = chain.slice(0, 3);
   const row2 = chain.slice(3).reverse(); // [06, 05, 04] — snake flows right→left
@@ -103,7 +103,7 @@ function TamperEvidenceSection() {
       <motion.div className="cap-feature-head" {...fade}>
         <Badge>Tamper-Evident Records</Badge>
         <h2>Every release decision is traceable.</h2>
-        <p>Axis One connects each stage of the capital release lifecycle through a tamper-evident chain. Policy versions, gate evaluations, release clearances, settlement records, and payout entries are linked, making the full decision history auditable end to end.</p>
+        <p>Axis One connects each stage of the release-readiness lifecycle through a tamper-evident chain. Policy versions, gate evaluations, evidence snapshots, validator states, and release decisions are linked, making the decision history auditable end to end.</p>
       </motion.div>
       <div className="cap-snake">
         {/* Row 1: 01 → 02 → 03 */}
@@ -143,20 +143,20 @@ function TamperEvidenceSection() {
   );
 }
 
-function SettlementVisibilitySection() {
+function ReleaseStateSection() {
   const states = [
-    { state: 'Pending', desc: 'Gate evaluation in progress. Release instruction not yet issued.', tone: 'muted' as Tone },
-    { state: 'Eligible', desc: 'All release conditions satisfied. Tranche cleared for instruction.', tone: 'green' as Tone },
-    { state: 'Conditional', desc: 'Partial readiness met. Capped or weighted release permitted by policy.', tone: 'blue' as Tone },
-    { state: 'Withheld', desc: 'Policy condition not satisfied. Release instruction withheld.', tone: 'amber' as Tone },
-    { state: 'Holdback', desc: 'Reserved tranche remains deferred. Awaiting downstream gate conditions.', tone: 'amber' as Tone },
+    { state: 'In review', desc: 'Evidence or assigned validation is still being completed.', tone: 'muted' as Tone },
+    { state: 'Decision ready', desc: 'The agreed conditions are satisfied and authority is confirmed.', tone: 'green' as Tone },
+    { state: 'Decision required', desc: 'An authorised stakeholder must approve, hold, reject or request evidence.', tone: 'blue' as Tone },
+    { state: 'Blocked', desc: 'A mandatory condition is missing, failed, disputed or unresolved.', tone: 'amber' as Tone },
+    { state: 'Externally executed', desc: 'The external provider status is linked back to the decision record.', tone: 'blue' as Tone },
   ];
   return (
     <section className="section cap-feature-section">
       <motion.div className="cap-feature-head" {...fade}>
-        <Badge>Settlement Visibility</Badge>
+        <Badge>Decision States</Badge>
         <h2>Every state has a defined outcome.</h2>
-        <p>Axis One gives capital programs a structured settlement layer. Each tranche moves through defined states, and every state transition is policy-driven and recorded. There are no ambiguous outcomes. Every settlement entry carries an audit trail.</p>
+        <p>AX1 gives capital programs a shared decision-readiness layer. Every state change is attributable, visible to the correct participants and connected to the decision record.</p>
       </motion.div>
       <div className="cap-states-grid">
         {states.map(({ state, desc, tone }) => (
@@ -174,19 +174,19 @@ function SettlementVisibilitySection() {
 
 export default function CapitalPage({ onOpenAccess, onOpenContact }: PageProps) {
   const states = [
-    ['Validated', 'Release', 'Capital unlocks when execution proof, dependencies and quorum align.'],
-    ['Partial', 'Conditional release', 'Capital may release under capped or weighted readiness conditions.'],
-    ['Blocked', 'Hold', 'Dependencies, missing evidence or failed quorum pause release instruction.'],
-    ['Protected', 'Holdback', 'Reserved capital remains deferred until policy conditions are satisfied.'],
+    ['Proven', 'Decision ready', 'Agreed execution evidence and assigned validation are complete.'],
+    ['Authorised', 'Capital action approved', 'The responsible stakeholder records the decision and conditions.'],
+    ['Blocked', 'Capital action withheld', 'Missing evidence or a failed mandatory condition keeps the workflow blocked.'],
+    ['Executed', 'External provider status', 'The bank or authorised provider executes and AX1 preserves the reference.'],
   ];
   return (
     <main>
       <section className="section page-hero">
         <motion.div className="narrow" {...fade}>
-          <Badge>Capital Boundary</Badge>
-          <h1>Governed release. Not custody.</h1>
-          <p>Axis One does not hold investor funds. It governs how capital is released by structuring conditions, validating execution, and coordinating release logic based on verified progress.</p>
-          <div className="actions center-actions"><Button onClick={onOpenAccess}>Request Access</Button><Button variant="secondary" to="/system">View System</Button></div>
+          <Badge>Capital governance</Badge>
+          <h1>Proven execution. Authorised capital action.</h1>
+          <p>AX1 connects execution evidence, validation and decision authority in real time. It governs the basis for action while custody and transfer remain with authorised external providers.</p>
+          <div className="actions center-actions"><Button onClick={onOpenAccess}>Assess a Capital Workflow</Button><Button variant="secondary" to="/system">See How It Works</Button></div>
         </motion.div>
       </section>
       <BoundarySection />
@@ -200,12 +200,13 @@ export default function CapitalPage({ onOpenAccess, onOpenContact }: PageProps) 
       <ReleaseEnforcementGuardSection />
       <InvestorDecisionSurfaceSection />
       <TamperEvidenceSection />
-      <SettlementVisibilitySection />
+      <ReleaseStateSection />
       <FinalCTA
         onOpenAccess={onOpenAccess}
         variant="bar"
-        heading="Review non-custodial release governance."
-        secondaryLabel="View System"
+        heading="Review the decision before the capital action."
+        primaryLabel="Assess a Capital Workflow"
+        secondaryLabel="See How It Works"
         secondaryTo="/system"
       />
       <Footer onOpenContact={onOpenContact} />
