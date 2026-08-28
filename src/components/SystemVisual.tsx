@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import logo from '../assets/ax1-logo.png';
 
 const fade = {
@@ -10,6 +10,7 @@ const fade = {
 };
 
 export default function SystemVisual() {
+  const reduceMotion = useReducedMotion();
   const signals = [
     { top: 18, side: 'left', width: 39, node: 72, delay: 0.12 },
     { top: 27, side: 'left', width: 33, node: 56, delay: 0.22 },
@@ -26,15 +27,22 @@ export default function SystemVisual() {
   ] as const;
 
   return (
-    <motion.div className="loop-diagram system-visual" {...fade} aria-label="Capital Operating System data visualization">
+    <motion.div
+      className="loop-diagram system-visual"
+      initial={reduceMotion ? false : fade.initial}
+      whileInView={fade.whileInView}
+      viewport={fade.viewport}
+      transition={reduceMotion ? { duration: 0 } : fade.transition}
+      aria-label="Animated illustration of execution signals converging into AX1 global decision infrastructure"
+    >
       <div className="system-visual-grid" aria-hidden="true" />
 
       <motion.div
         className="system-axis"
-        initial={{ scaleY: 0 }}
+        initial={reduceMotion ? false : { scaleY: 0 }}
         whileInView={{ scaleY: 1 }}
         viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 1.2, ease: 'easeOut' }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 1.2, ease: 'easeOut' }}
       />
 
       {signals.map((signal, index) => (
@@ -42,26 +50,26 @@ export default function SystemVisual() {
           key={`${signal.side}-${index}`}
           className={`system-signal system-signal-${signal.side}`}
           style={{ top: `${signal.top}%`, width: `${signal.width}%` }}
-          initial={{ scaleX: 0, opacity: 0 }}
+          initial={reduceMotion ? false : { scaleX: 0, opacity: 0 }}
           whileInView={{ scaleX: 1, opacity: 1 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.9, delay: signal.delay, ease: 'easeOut' }}
+          transition={reduceMotion ? { duration: 0 } : { duration: 0.9, delay: signal.delay, ease: 'easeOut' }}
         >
           <motion.span
             className="system-node"
             style={{ left: `${signal.node}%` }}
-            animate={{
+            animate={reduceMotion ? { opacity: 0.72, scale: 1 } : {
               left: ['2%', '98%'],
               opacity: [0, 0.95, 0.95, 0],
               scale: [0.86, 1.08, 1.08, 0.86],
             }}
-            transition={{ duration: 2.6 + index * 0.11, delay: signal.delay, repeat: Infinity, ease: 'linear' }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 2.6 + index * 0.11, delay: signal.delay, repeat: Infinity, ease: 'linear' }}
           />
         </motion.div>
       ))}
 
       <div className="system-brand" aria-hidden="true">
-        <div className="system-brand-label">Capital Operating System</div>
+        <div className="system-brand-label">Global Decision Infrastructure</div>
         <div className="system-brand-row">
           <span />
           <img className="system-brand-logo" src={logo} alt="AX1" />

@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import portrait from '../assets/founder-portrait.webp';
 import { Badge, BoundarySection, Button, FinalCTA, Footer, PageProps, fade } from '../components';
+import SystemVisual from '../components/SystemVisual';
 import { CapitalValueProtectionCalculator } from '../features/capital-value/CapitalValueProtectionCalculator';
 
 function Hero({ onOpenAccess }: { onOpenAccess: () => void }) {
@@ -78,6 +79,19 @@ function DecisionGapSection() {
           </motion.article>
         ))}
       </div>
+    </section>
+  );
+}
+
+function SignalConvergenceSection() {
+  return (
+    <section className="section shift-section signal-illustration-section">
+      <motion.div className="shift-copy" {...fade}>
+        <Badge>Decision infrastructure in motion</Badge>
+        <h2>Disconnected execution signals become one decision-ready record.</h2>
+        <p>The illustration shows the role AX1 plays: evidence, validation, ownership and decision state converge into governed infrastructure that updates as execution changes.</p>
+      </motion.div>
+      <SystemVisual />
     </section>
   );
 }
@@ -253,7 +267,7 @@ function OriginPreview({ onOpenAccess }: { onOpenAccess: () => void }) {
 export default function HomePage({ onOpenAccess, onOpenContact }: PageProps) {
   return (
     <main>
-      <Hero onOpenAccess={onOpenAccess} /><DecisionGapSection /><DecisionFlowSection /><CollaborationSection />
+      <Hero onOpenAccess={onOpenAccess} /><DecisionGapSection /><SignalConvergenceSection /><DecisionFlowSection /><CollaborationSection />
       <LiveDecisionDemo /><OutcomesSection /><CapitalValueProtectionCalculator onOpenAccess={onOpenAccess} /><EngagementSection onOpenAccess={onOpenAccess} />
       <BoundarySection /><TrustProofStrip /><ClaritySection /><OriginPreview onOpenAccess={onOpenAccess} />
       <FinalCTA onOpenAccess={onOpenAccess} heading="Start with the capital decision that creates the most friction." subcopy="Bring us one current workflow. We will identify where proof, authority and coordination break, then define how a controlled pilot would measure the improvement." primaryLabel="Assess a Capital Workflow" secondaryLabel="See How AX1 Works" secondaryTo="/system" />
