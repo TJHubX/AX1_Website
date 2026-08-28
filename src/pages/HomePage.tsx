@@ -1,12 +1,13 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import {
-  Activity, AlertTriangle, Calculator, CheckCircle2, CircleDollarSign,
+  Activity, AlertTriangle, CheckCircle2, CircleDollarSign,
   ClipboardCheck, Clock3, FileCheck2, GitBranch, Landmark, Layers3,
   LockKeyhole, RotateCcw, ShieldCheck, TimerReset, Users, Workflow,
 } from 'lucide-react';
 import portrait from '../assets/founder-portrait.webp';
 import { Badge, BoundarySection, Button, FinalCTA, Footer, PageProps, fade } from '../components';
+import { DecisionValueCalculator } from '../features/DecisionValueCalculator';
 
 function Hero({ onOpenAccess }: { onOpenAccess: () => void }) {
   return (
@@ -204,43 +205,6 @@ function OutcomesSection() {
   );
 }
 
-function DecisionCostEstimator() {
-  const [decisions, setDecisions] = React.useState(6);
-  const [people, setPeople] = React.useState(7);
-  const [hours, setHours] = React.useState(4);
-  const [hourlyCost, setHourlyCost] = React.useState(85);
-  const [currency, setCurrency] = React.useState<'GBP' | 'EUR' | 'USD'>('GBP');
-  const annualHours = decisions * people * hours * 12;
-  const annualCost = annualHours * hourlyCost;
-  const symbols = { GBP: '£', EUR: '€', USD: '$' };
-  const formatNumber = (value: number) => Math.round(value).toLocaleString('en-GB');
-  const formatMoney = (value: number) => new Intl.NumberFormat('en-GB', { style: 'currency', currency, maximumFractionDigits: 0 }).format(value);
-  const fields = [
-    { label: 'Capital decisions / month', value: decisions, setValue: setDecisions, min: 1, max: 100 },
-    { label: 'People involved / decision', value: people, setValue: setPeople, min: 1, max: 100 },
-    { label: 'Preparation hours / person', value: hours, setValue: setHours, min: 1, max: 80 },
-    { label: 'Blended hourly cost', value: hourlyCost, setValue: setHourlyCost, min: 20, max: 1000 },
-  ];
-  return (
-    <section className="section decision-cost-section" id="decision-cost">
-      <motion.div className="decision-cost-shell" {...fade}>
-        <div className="decision-cost-copy"><Badge>Current process cost</Badge><h2>What does it cost to prepare your capital decisions?</h2><p>Estimate the people-time currently spent gathering updates, reconciling evidence, preparing committee material and clarifying decision context.</p>
-          <div className="decision-cost-fields">
-            {fields.map(({ label, value, setValue, min, max }, index) => (
-              <label className="decision-cost-field" key={label}><span>{label}</span><div>{index === 3 && <small>{symbols[currency]}</small>}<input type="number" min={min} max={max} value={value} onChange={(event) => setValue(Math.min(max, Math.max(min, Number(event.target.value) || min)))} /></div></label>
-            ))}
-            <label className="decision-cost-field currency-field"><span>Currency</span><select value={currency} onChange={(event) => setCurrency(event.target.value as 'GBP' | 'EUR' | 'USD')}><option value="GBP">GBP (£)</option><option value="EUR">EUR (€)</option><option value="USD">USD ($)</option></select></label>
-          </div>
-        </div>
-        <div className="decision-cost-result" aria-live="polite"><Calculator size={22} /><span>Estimated annual decision-preparation cost</span><strong>{formatMoney(annualCost)}</strong>
-          <div className="decision-cost-secondary"><span><small>Preparation load</small><strong>{formatNumber(annualHours)} hours / year</strong></span><span><small>Decisions modelled</small><strong>{formatNumber(decisions * 12)} / year</strong></span></div>
-          <p>This estimates the cost of the current preparation process. It does not represent guaranteed AX1 savings, and it excludes the financial impact of delay, disputes or a premature capital action.</p>
-        </div>
-      </motion.div>
-    </section>
-  );
-}
-
 function EngagementSection({ onOpenAccess }: { onOpenAccess: () => void }) {
   const engagements = [
     { number: '01', title: 'Launch Programme', label: 'Recommended first step', copy: 'A bounded 10–12 week implementation proving one real capital-governance workflow with agreed baseline metrics and a final rollout decision.', points: ['One primary and up to one supporting workflow', '5–15 named users', 'Outcome report and rollout recommendation'] },
@@ -290,7 +254,7 @@ export default function HomePage({ onOpenAccess, onOpenContact }: PageProps) {
   return (
     <main>
       <Hero onOpenAccess={onOpenAccess} /><DecisionGapSection /><DecisionFlowSection /><CollaborationSection />
-      <LiveDecisionDemo /><OutcomesSection /><DecisionCostEstimator /><EngagementSection onOpenAccess={onOpenAccess} />
+      <LiveDecisionDemo /><OutcomesSection /><DecisionValueCalculator onOpenAccess={onOpenAccess} /><EngagementSection onOpenAccess={onOpenAccess} />
       <BoundarySection /><TrustProofStrip /><ClaritySection /><OriginPreview onOpenAccess={onOpenAccess} />
       <FinalCTA onOpenAccess={onOpenAccess} heading="Start with the capital decision that creates the most friction." subcopy="Bring us one current workflow. We will identify where proof, authority and coordination break, then define how a controlled pilot would measure the improvement." primaryLabel="Assess a Capital Workflow" secondaryLabel="See How AX1 Works" secondaryTo="/system" />
       <Footer onOpenContact={onOpenContact} />
