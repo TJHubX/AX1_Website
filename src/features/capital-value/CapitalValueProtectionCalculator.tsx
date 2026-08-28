@@ -35,6 +35,7 @@ type NumericInputKey = {
 }[keyof CapitalCalculatorInput];
 
 type NumberFieldProps = {
+  inputId?: string;
   label: string;
   helper: string;
   value: number | null;
@@ -51,6 +52,7 @@ type NumberFieldProps = {
 const CURRENCY_SYMBOLS: Record<CurrencyCode, string> = { GBP: '£', EUR: '€', USD: '$' };
 
 function NumberField({
+  inputId,
   label,
   helper,
   value,
@@ -63,7 +65,8 @@ function NumberField({
   error,
   basis,
 }: NumberFieldProps) {
-  const id = React.useId();
+  const generatedId = React.useId();
+  const id = inputId ?? generatedId;
   const helperId = `${id}-helper`;
   const errorId = `${id}-error`;
 
@@ -248,15 +251,76 @@ export function CapitalValueProtectionCalculator({ onOpenAccess }: { onOpenAcces
     return () => window.clearTimeout(timer);
   }, [result, currency]);
 
+  const scrollToTarget = (targetId: string, focusTarget = false) => {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    if (focusTarget) {
+      window.setTimeout(() => target.focus({ preventScroll: true }), reduceMotion ? 0 : 450);
+    }
+  };
+
   return (
-    <section className="section decision-value-section" id="decision-cost">
-      <div className="decision-value-shell cvp-shell">
+    <section className="section decision-value-section" aria-labelledby="capital-performance-heading">
+      <article className="cvp-story" id="capital-performance">
+        <div className="cvp-story-layout">
+          <div className="cvp-story-copy">
+            <Badge>Capital performance</Badge>
+            <h2 id="capital-performance-heading">Capital is approved once.<br />Its value is won or lost through execution.</h2>
+            <p>The investment decision is only the beginning. Value can continue to erode after approval when milestones, evidence, ownership, risk and capital-release decisions are managed across disconnected processes.</p>
+            <p>Teams spend time reconciling information instead of acting on it. Approvals slow down. Risks remain open without clear ownership. Contingency is consumed without a complete view of execution. Capital decisions can move forward before delivery is sufficiently proven.</p>
+          </div>
+
+          <div className="cvp-story-definition">
+            <span>What is disconnected capital execution?</span>
+            <h3>The gap between capital approval and verified delivery.</h3>
+            <p>It occurs when the people making decisions, the teams executing the work and the evidence proving progress do not operate through the same governed system.</p>
+            <div className="cvp-problem-cards">
+              <article><b>01</b><div><strong>Fragmented evidence</strong><p>Progress information is spread across documents, meetings, emails and disconnected systems.</p></div></article>
+              <article><b>02</b><div><strong>Delayed decisions</strong><p>Decision-makers do not receive complete, current and decision-ready information at the right moment.</p></div></article>
+              <article><b>03</b><div><strong>Unverified capital release</strong><p>Funding, approvals or commitments move forward without a clear connection to verified execution.</p></div></article>
+            </div>
+          </div>
+        </div>
+
+        <div className="cvp-research-bridge">
+          <span>The pattern is documented across the industry</span>
+          <div>
+            <p>Research from McKinsey, BCG, Accenture, PwC, Deloitte and EY examines different aspects of the same capital-performance problem: fragmented information, delayed decisions, weak governance, insufficient evidence and value lost during execution.</p>
+            <strong>The external research demonstrates the scale of the issue. It does not determine the result of your calculation.</strong>
+          </div>
+        </div>
+
+        <div className="cvp-story-transition">
+          <div>
+            <span>From industry context to your exposure</span>
+            <h3>The problem is documented.<br />The estimate should be yours.</h3>
+            <p>Benchmarks cannot tell you what disconnected execution may be costing your organisation. Your capital exposure depends on your portfolio, overruns, delays and financial assumptions.</p>
+          </div>
+          <div className="cvp-story-action">
+            <p>Use your own figures below to estimate:</p>
+            <ul>
+              <li>Value exposed to cost overruns</li>
+              <li>Carrying cost of delayed capital</li>
+              <li>What every 1% reduction could represent</li>
+            </ul>
+            <strong>No consulting benchmark is applied automatically.</strong>
+            <div className="cvp-story-buttons">
+              <Button onClick={() => scrollToTarget('capital-under-execution', true)}>Estimate my capital exposure</Button>
+              <button type="button" onClick={() => scrollToTarget('independent-evidence', true)}>Explore the independent research <ChevronDown size={14} /></button>
+            </div>
+            <small className="cvp-story-privacy"><LockKeyhole size={13} />Calculated in your browser. Your financial inputs are not submitted or stored.</small>
+          </div>
+        </div>
+      </article>
+
+      <div className="decision-value-shell cvp-shell" id="decision-cost">
         <header className="cvp-intro">
           <div className="cvp-intro-copy">
             <Badge>Capital value protection calculator</Badge>
             <h2>What is 1% better<br />capital execution<br />worth to you?</h2>
-            <p>Enter four portfolio figures to estimate the value exposed to overruns and delay. Then test what a reduction in that exposure could be worth. Independent industry benchmarks are shown separately and are never applied automatically.</p>
-            <span className="cvp-privacy"><LockKeyhole size={14} />Calculated in your browser. Your financial inputs are not submitted or stored.</span>
+            <p>Enter four portfolio figures to estimate the value exposed to overruns and delay. Then test what a reduction in that exposure could be worth.</p>
           </div>
           <div className="cvp-intro-actions">
             <label className="cvp-currency">
@@ -291,6 +355,7 @@ export function CapitalValueProtectionCalculator({ onOpenAccess }: { onOpenAcces
               <legend><b>01</b><span><strong>Define the capital exposure</strong><small>Use one programme or one consistent portfolio period.</small></span></legend>
               <div className="cvp-field-grid">
                 <NumberField
+                  inputId="capital-under-execution"
                   label="Capital under execution"
                   helper="Use one programme or one consistent portfolio period."
                   value={inputs.capitalUnderExecution}
@@ -577,7 +642,7 @@ export function CapitalValueProtectionCalculator({ onOpenAccess }: { onOpenAcces
           </div>
         </details>
 
-        <section className="cvp-evidence" aria-labelledby="cvp-evidence-heading">
+        <section className="cvp-evidence" id="independent-evidence" tabIndex={-1} aria-labelledby="cvp-evidence-heading">
           <div className="cvp-evidence-head">
             <div><span>Independent industry evidence</span><h3 id="cvp-evidence-heading">The problem is documented.<br />The estimate is yours.</h3></div>
             <p>Independent research consistently connects capital-project underperformance with fragmented information, delayed decisions, weak governance and inadequate evidence. The calculator above uses the visitor's own data. The research below provides context and is not automatically included in the estimate.</p>
