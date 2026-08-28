@@ -61,11 +61,11 @@ export default function TrustPage({ onOpenContact }: PageProps) {
               'AI-assisted interpretation is intended to help users understand what changed, what requires attention, and what context supports a review. It does not replace validators, investors, operators, legal reviewers, or authorized decision-makers.',
             ],
             bullets: [
-              'Deterministic core — Release readiness follows structured policy logic.',
-              'LLM-assisted interpretation — AI explains evidence, readiness, blockers, and decision context.',
-              'Human review — Validators and authorized stakeholders remain responsible for approval decisions.',
-              'Traceable outputs — AI-assisted narratives can be linked to underlying records and review context.',
-              'AI governance roadmap — Feature classification, prompt/version records, source grounding, vendor governance, and human oversight are part of the trust model.',
+              'Deterministic core: Release readiness follows structured policy logic.',
+              'LLM-assisted interpretation: AI explains evidence, readiness, blockers, and decision context.',
+              'Human review: Validators and authorized stakeholders remain responsible for approval decisions.',
+              'Traceable outputs: AI-assisted narratives can be linked to underlying records and review context.',
+              'AI governance roadmap: Feature classification, prompt/version records, source grounding, vendor governance, and human oversight are part of the trust model.',
             ],
           },
           {

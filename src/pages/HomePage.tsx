@@ -14,7 +14,7 @@ function Hero({ onOpenAccess }: { onOpenAccess: () => void }) {
       <motion.div className="proof-hero-copy" {...fade}>
         <Badge>Global decision infrastructure</Badge>
         <h1>Capital moves when execution is proven.</h1>
-        <p>AX1 is global decision infrastructure for governed capital execution—giving capital providers, operators, validators and advisors one permissioned environment to coordinate execution, validate evidence and make real-time, audit-ready decisions.</p>
+        <p>AX1 is global decision infrastructure for governed capital execution. It gives capital providers, operators, validators and advisors one permissioned environment to coordinate execution, validate evidence and make real-time, audit-ready decisions.</p>
         <div className="actions">
           <Button onClick={onOpenAccess}>Assess a Capital Workflow</Button>
           <a className="button button-ghost" href="#decision-flow">See the Decision Flow</a>
@@ -67,7 +67,7 @@ function DecisionGapSection() {
     <section className="section decision-gap-section">
       <motion.div className="decision-gap-intro" {...fade}>
         <Badge>The structural gap</Badge><h2>Reported progress is not proven execution.</h2>
-        <p>Capital is committed against expected outcomes. Yet the next decision is often prepared through manual reconstruction—leaving investors with delay, operators with repeated reporting, and everyone with a different version of reality.</p>
+        <p>Capital is committed against expected outcomes. Yet the next decision is often prepared through manual reconstruction, leaving investors with delay, operators with repeated reporting, and everyone with a different version of reality.</p>
       </motion.div>
       <div className="decision-gap-grid">
         {gaps.map(({ icon: Icon, title, copy }, index) => (
@@ -96,7 +96,7 @@ function DecisionFlowSection() {
       <div className="section decision-flow-inner">
         <motion.div className="section-head" {...fade}>
           <Badge>How AX1 works</Badge><h2>One governed path from work completed to capital action.</h2>
-          <p>The public model is simple. AX1 keeps the collaboration, evidence, validation and authority behind a capital decision connected—without taking custody of the funds.</p>
+          <p>The public model is simple. AX1 keeps the collaboration, evidence, validation and authority behind a capital decision connected without taking custody of the funds.</p>
         </motion.div>
         <div className="decision-flow-grid">
           {steps.map(({ title, copy, icon: Icon }, index) => (
@@ -125,7 +125,7 @@ function CollaborationSection() {
     <section className="section collaboration-section">
       <motion.div className="section-head" {...fade}>
         <Badge>Shared infrastructure</Badge><h2>One governed environment. Different responsibilities.</h2>
-        <p>AX1 provides global decision infrastructure for capital execution—not a shared folder where everyone sees everything. Each participant receives the context, evidence and actions relevant to their role and authority.</p>
+        <p>AX1 provides global decision infrastructure for capital execution. It is not a shared folder where everyone sees everything. Each participant receives the context, evidence and actions relevant to their role and authority.</p>
       </motion.div>
       <div className="collaboration-layout">
         <div className="stakeholder-role-grid">
@@ -194,7 +194,7 @@ function OutcomesSection() {
   ];
   return (
     <section className="section outcomes-section">
-      <motion.div className="section-head" {...fade}><Badge>Measurable value</Badge><h2>A pilot measures outcomes—not software activity.</h2><p>AX1 establishes a baseline before the workflow begins, then measures whether the governed process became faster, more complete and easier to review.</p></motion.div>
+      <motion.div className="section-head" {...fade}><Badge>Measurable value</Badge><h2>A pilot measures outcomes, not software activity.</h2><p>AX1 establishes a baseline before the workflow begins, then measures whether the governed process became faster, more complete and easier to review.</p></motion.div>
       <div className="outcome-measure-grid">
         {outcomes.map(({ icon: Icon, title, copy }, index) => (
           <motion.article className="outcome-measure-card" key={title} {...fade}><div className="outcome-measure-top"><Icon size={18} /><span>Measure {String(index + 1).padStart(2, '0')}</span></div><h3>{title}</h3><p>{copy}</p></motion.article>
@@ -234,7 +234,7 @@ function DecisionCostEstimator() {
         </div>
         <div className="decision-cost-result" aria-live="polite"><Calculator size={22} /><span>Estimated annual decision-preparation cost</span><strong>{formatMoney(annualCost)}</strong>
           <div className="decision-cost-secondary"><span><small>Preparation load</small><strong>{formatNumber(annualHours)} hours / year</strong></span><span><small>Decisions modelled</small><strong>{formatNumber(decisions * 12)} / year</strong></span></div>
-          <p>This estimates the cost of the current preparation process—not guaranteed AX1 savings. It excludes the financial impact of delay, disputes or a premature capital action.</p>
+          <p>This estimates the cost of the current preparation process. It does not represent guaranteed AX1 savings, and it excludes the financial impact of delay, disputes or a premature capital action.</p>
         </div>
       </motion.div>
     </section>
@@ -249,7 +249,7 @@ function EngagementSection({ onOpenAccess }: { onOpenAccess: () => void }) {
   ];
   return (
     <section className="section engagement-section">
-      <motion.div className="section-head" {...fade}><Badge>Start narrow. Prove value. Expand.</Badge><h2>Bring one capital workflow—not your entire operating model.</h2><p>AX1 is introduced through a controlled engagement with a clear buyer, problem, scope, success criteria and decision date.</p></motion.div>
+      <motion.div className="section-head" {...fade}><Badge>Start narrow. Prove value. Expand.</Badge><h2>Bring one capital workflow, not your entire operating model.</h2><p>AX1 is introduced through a controlled engagement with a clear buyer, problem, scope, success criteria and decision date.</p></motion.div>
       <div className="engagement-grid">
         {engagements.map(({ number, title, label, copy, points }) => (
           <motion.article className={`engagement-card ${number === '01' ? 'featured' : ''}`} key={title} {...fade}><div className="engagement-card-top"><span>{number}</span><small>{label}</small></div><h3>{title}</h3><p>{copy}</p><ul>{points.map(point => <li key={point}><CheckCircle2 size={14} />{point}</li>)}</ul></motion.article>
@@ -277,7 +277,7 @@ function ClaritySection() {
     ['Does AX1 replace project tools or data rooms?', 'No. Those systems manage tasks or files. AX1 connects the evidence, validation, authority and decision logic they leave fragmented.'],
     ['Does AX1 make the investment decision?', 'No. AX1 provides a governed, traceable basis for action. The authorised stakeholder remains responsible for the final capital decision.'],
   ];
-  return <section className="section clarity-section"><motion.div className="section-head" {...fade}><Badge>Clear boundaries</Badge><h2>What AX1 does—and what it does not do.</h2></motion.div><div className="clarity-list">{items.map(([question, answer]) => <motion.details key={question} {...fade}><summary>{question}<span>+</span></summary><p>{answer}</p></motion.details>)}</div></section>;
+  return <section className="section clarity-section"><motion.div className="section-head" {...fade}><Badge>Clear boundaries</Badge><h2>What AX1 does and what it does not do.</h2></motion.div><div className="clarity-list">{items.map(([question, answer]) => <motion.details key={question} {...fade}><summary>{question}<span>+</span></summary><p>{answer}</p></motion.details>)}</div></section>;
 }
 
 function OriginPreview({ onOpenAccess }: { onOpenAccess: () => void }) {
@@ -292,7 +292,7 @@ export default function HomePage({ onOpenAccess, onOpenContact }: PageProps) {
       <Hero onOpenAccess={onOpenAccess} /><DecisionGapSection /><DecisionFlowSection /><CollaborationSection />
       <LiveDecisionDemo /><OutcomesSection /><DecisionCostEstimator /><EngagementSection onOpenAccess={onOpenAccess} />
       <BoundarySection /><TrustProofStrip /><ClaritySection /><OriginPreview onOpenAccess={onOpenAccess} />
-      <FinalCTA onOpenAccess={onOpenAccess} heading="Start with the capital decision that creates the most friction." subcopy="Bring us one current workflow. We will identify where proof, authority and coordination break—and define how a controlled pilot would measure the improvement." primaryLabel="Assess a Capital Workflow" secondaryLabel="See How AX1 Works" secondaryTo="/system" />
+      <FinalCTA onOpenAccess={onOpenAccess} heading="Start with the capital decision that creates the most friction." subcopy="Bring us one current workflow. We will identify where proof, authority and coordination break, then define how a controlled pilot would measure the improvement." primaryLabel="Assess a Capital Workflow" secondaryLabel="See How AX1 Works" secondaryTo="/system" />
       <Footer onOpenContact={onOpenContact} />
     </main>
   );

@@ -27,13 +27,13 @@ export default function FounderPage({ onOpenAccess, onOpenContact }: PageProps) 
           <div className="founder-deterministic">
             <span className="founder-det-label">Architecture Philosophy</span>
             <h3>Why readiness had to be structured and explainable.</h3>
-            <p>Early in the design process, one question shaped every architectural decision: what does it mean for a system to be trustworthy — not in theory, but in practice, under real execution pressure?</p>
+            <p>Early in the design process, one question shaped every architectural decision: what does it mean for a system to be trustworthy, not in theory, but in practice, under real execution pressure?</p>
             <p>The answer was not better reporting. It was not more dashboards, or smarter analytics, or faster communication. Those things exist. They did not solve the problem.</p>
             <p>The problem was that outcomes depended on interpretation. Every report could be read differently. Every milestone could be framed differently. Every delay had an explanation. There was no ground truth.</p>
             <div className="founder-det-callout">
-              <p>A trustworthy governance system evaluates agreed conditions consistently. If required evidence or validation is missing, the workflow remains blocked. If the conditions are satisfied, the system shows that the decision is ready—and the authorised person remains responsible for deciding what happens next.</p>
+              <p>A trustworthy governance system evaluates agreed conditions consistently. If required evidence or validation is missing, the workflow remains blocked. If the conditions are satisfied, the system shows that the decision is ready, and the authorised person remains responsible for deciding what happens next.</p>
             </div>
-            <p>That distinction—between reporting and governed evaluation—is what AX1 is built around. Evidence, validation, responsibility and authority are not loose context. They remain connected to the decision they support.</p>
+            <p>That distinction between reporting and governed evaluation is what AX1 is built around. Evidence, validation, responsibility and authority are not loose context. They remain connected to the decision they support.</p>
             <p>This matters most when pressure is high, when relationships are strained, and when the gap between what was promised and what was delivered becomes visible. In those moments, a process built on scattered interpretation becomes difficult to defend. A structured, attributable record holds its context.</p>
             <p>That is why AX1 had to be structured and explainable. Not to remove human judgement, but to ensure that the conditions informing a capital decision are clear, agreed, attributable and visible when the decision is made.</p>
           </div>
@@ -49,7 +49,7 @@ export default function FounderPage({ onOpenAccess, onOpenContact }: PageProps) 
       <FinalCTA
         onOpenAccess={onOpenAccess}
         heading="Explore the system built from this structural gap."
-        subcopy="AX1 connects execution proof, decision authority and the governed record—while external providers remain responsible for custody and transfer."
+        subcopy="AX1 connects execution proof, decision authority and the governed record, while external providers remain responsible for custody and transfer."
         primaryLabel="Assess a Capital Workflow"
         showLogo={false}
         secondaryLabel="See How AX1 Works"

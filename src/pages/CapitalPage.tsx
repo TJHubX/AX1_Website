@@ -72,7 +72,7 @@ function InvestorDecisionSurfaceSection() {
       <motion.div className="cap-feature-head" {...fade}>
         <Badge>Investor Decision Surface</Badge>
         <h2>Visibility that supports decisions.</h2>
-        <p>AX1 does not replace investor judgement. It provides a structured surface for reviewing execution, evidence, validation, unresolved conditions and decision authority—so authorised action is based on a governed record, not a reported summary.</p>
+        <p>AX1 does not replace investor judgement. It provides a structured surface for reviewing execution, evidence, validation, unresolved conditions and decision authority, so authorised action is based on a governed record, not a reported summary.</p>
       </motion.div>
       <div className="cap-actions-grid">
         {actions.map(({ icon: Icon, label, copy }) => (
@@ -97,7 +97,7 @@ function TamperEvidenceSection() {
     { step: '06', label: 'Decision Record', note: 'Outcome and decision context linked to the lifecycle' },
   ];
   const row1 = chain.slice(0, 3);
-  const row2 = chain.slice(3).reverse(); // [06, 05, 04] — snake flows right→left
+  const row2 = chain.slice(3).reverse(); // [06, 05, 04]: snake flows right to left
   return (
     <section className="section cap-feature-section cap-alt">
       <motion.div className="cap-feature-head" {...fade}>
@@ -121,7 +121,7 @@ function TamperEvidenceSection() {
             </React.Fragment>
           ))}
         </div>
-        {/* Turn connector — right-aligned under card 03, above card 04 */}
+        {/* Turn connector: right-aligned under card 03, above card 04 */}
         <div className="cap-snake-turn"><ArrowDown size={15} /></div>
         {/* Row 2: 06 ← 05 ← 04 (visual snake, reads right→left) */}
         <div className="cap-snake-row">

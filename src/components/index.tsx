@@ -199,7 +199,7 @@ export function Footer({ onOpenContact }: { onOpenContact: () => void }) {
         <div className="footer-brand">
           <p>
             <img className="footer-inline-logo" src={logo} alt="Axis One" />
-            is global decision infrastructure for governed capital execution—connecting proven execution to attributable, authorised decisions.
+            is global decision infrastructure for governed capital execution, connecting proven execution to attributable, authorised decisions.
           </p>
           <div className="footer-links">
             <Link to="/privacy">Privacy</Link>
@@ -402,7 +402,7 @@ export function RequestAccessModal({ onClose }: ModalProps) {
     }
 
     const summaryText = [
-      'AX1 — Capital Workflow Assessment',
+      'AX1: Capital Workflow Assessment',
       '---------------------------------',
       `Full Name:     ${values.fullName}`,
       `Work Email:    ${values.workEmail}`,

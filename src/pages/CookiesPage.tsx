@@ -23,10 +23,10 @@ export default function CookiesPage({ onOpenContact }: PageProps) {
               'The Axis One website may use the following categories of cookies.',
             ],
             bullets: [
-              'Strictly necessary cookies — required for the website to function correctly',
-              'Preference cookies — remember choices you make to improve your experience',
-              'Analytics cookies — help understand how visitors use the website',
-              'Embedded content cookies — may be set by third-party embeds such as fonts or video',
+              'Strictly necessary cookies: required for the website to function correctly',
+              'Preference cookies: remember choices you make to improve your experience',
+              'Analytics cookies: help understand how visitors use the website',
+              'Embedded content cookies: may be set by third-party embeds such as fonts or video',
             ],
           },
           {

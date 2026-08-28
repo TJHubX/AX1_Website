@@ -353,7 +353,7 @@ export default function SystemPage({ onOpenAccess, onOpenContact }: PageProps) {
         <motion.div className="section-head center" {...fade}>
           <Badge>Capital Operating System</Badge>
           <h2>The system speaks through execution state.</h2>
-          <p>Illustrative system state — not live financial data.</p>
+          <p>Illustrative system state. Not live financial data.</p>
         </motion.div>
         <motion.div className="cockpit" {...fade}>
           <div className="cockpit-label"><span>Gate Monitor</span><Pill tone="amber">release review required</Pill></div>

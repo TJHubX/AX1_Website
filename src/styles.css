@@ -1990,7 +1990,7 @@ button { cursor: pointer; }
   min-width: 22px;
 }
 
-/* 4th cell — CTA panel */
+/* 4th cell: CTA panel */
 .dep-workflow-cta-cell {
   grid-column: 1 / -1;
   padding: 36px 28px 0;
