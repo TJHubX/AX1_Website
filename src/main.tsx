@@ -25,7 +25,7 @@ const PAGE_METADATA: Record<string, { title: string; description: string }> = {
     description: 'AX1 connects live execution evidence, validation and decision authority so capital providers can act on proven execution in one permissioned, audit-ready environment.',
   },
   '/system': {
-    title: 'How AX1 Works | Execution Proof to Capital Decision',
+    title: 'How AX1 Works | Global Decision Infrastructure',
     description: 'See how AX1 connects execution, evidence, validation, authority and capital decisions in one governed workflow.',
   },
   '/capital': {
@@ -65,7 +65,7 @@ function PageMetadata() {
   useEffect(() => {
     const fallback = {
       title: 'AX1 | Governed Capital Execution',
-      description: 'Non-custodial collaboration and decision infrastructure connecting proven execution to governed capital action.',
+      description: 'Global decision infrastructure connecting proven execution to governed capital action in a non-custodial, permissioned environment.',
     };
     const metadata = PAGE_METADATA[pathname] ?? fallback;
     const canonicalPath = PAGE_METADATA[pathname] ? pathname : '/';

@@ -37,7 +37,7 @@ export default function FounderPage({ onOpenAccess, onOpenContact }: PageProps) 
             <p>This matters most when pressure is high, when relationships are strained, and when the gap between what was promised and what was delivered becomes visible. In those moments, a process built on scattered interpretation becomes difficult to defend. A structured, attributable record holds its context.</p>
             <p>That is why AX1 had to be structured and explainable. Not to remove human judgement, but to ensure that the conditions informing a capital decision are clear, agreed, attributable and visible when the decision is made.</p>
           </div>
-          <p>AX1 is not another reporting layer. It provides the shared infrastructure through which execution, evidence, stakeholders and capital decisions remain connected.</p>
+          <p>AX1 is not another reporting layer. It is global decision infrastructure through which execution, evidence, stakeholders and capital decisions remain connected.</p>
           <blockquote className="closing-quote">“Capital needs more than a compelling strategy. It needs execution that decision-makers can trust.”</blockquote>
           <div className="actions"><Button onClick={onOpenAccess}>Assess a Capital Workflow</Button><Button variant="ghost" to="/system">See How AX1 Works</Button></div>
         </motion.div>

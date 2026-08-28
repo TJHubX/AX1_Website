@@ -12,9 +12,9 @@ function Hero({ onOpenAccess }: { onOpenAccess: () => void }) {
   return (
     <section className="hero section-xl proof-hero">
       <motion.div className="proof-hero-copy" {...fade}>
-        <Badge>Governed capital execution</Badge>
+        <Badge>Global decision infrastructure</Badge>
         <h1>Capital moves when execution is proven.</h1>
-        <p>AX1 gives capital providers, operators, validators and advisors one permissioned environment to coordinate execution, validate evidence and make real-time, audit-ready capital decisions.</p>
+        <p>AX1 is global decision infrastructure for governed capital execution—giving capital providers, operators, validators and advisors one permissioned environment to coordinate execution, validate evidence and make real-time, audit-ready decisions.</p>
         <div className="actions">
           <Button onClick={onOpenAccess}>Assess a Capital Workflow</Button>
           <a className="button button-ghost" href="#decision-flow">See the Decision Flow</a>
@@ -125,7 +125,7 @@ function CollaborationSection() {
     <section className="section collaboration-section">
       <motion.div className="section-head" {...fade}>
         <Badge>Shared infrastructure</Badge><h2>One governed environment. Different responsibilities.</h2>
-        <p>AX1 is collaboration infrastructure for capital execution—not a shared folder where everyone sees everything. Each participant receives the context, evidence and actions relevant to their role and authority.</p>
+        <p>AX1 provides global decision infrastructure for capital execution—not a shared folder where everyone sees everything. Each participant receives the context, evidence and actions relevant to their role and authority.</p>
       </motion.div>
       <div className="collaboration-layout">
         <div className="stakeholder-role-grid">

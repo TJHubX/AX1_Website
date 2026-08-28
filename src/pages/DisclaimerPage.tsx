@@ -26,7 +26,7 @@ export default function DisclaimerPage({ onOpenContact }: PageProps) {
           {
             heading: '3. Non-custodial positioning',
             paragraphs: [
-              'Axis One is described as non-custodial capital execution infrastructure. AX1 Structura Ltd does not hold, custody, transfer, or guarantee the movement of funds through the public website. Release logic and governance workflows are separate from capital custody and provider execution.',
+              'AX1 is described as non-custodial global decision infrastructure for governed capital execution. AX1 Structura Ltd does not hold, custody, transfer, or guarantee the movement of funds through the public website. Release logic and governance workflows are separate from capital custody and provider execution.',
             ],
           },
           {

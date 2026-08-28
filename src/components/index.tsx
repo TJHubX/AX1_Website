@@ -143,7 +143,7 @@ export function Header({ onOpenAccess, onOpenContact }: PageProps) {
     <header className="header">
       <nav className="nav" aria-label="Primary navigation">
         <Link to="/" className="logo-link" aria-label="Axis One home"><Logo /></Link>
-        <div className="nav-tag"><span />Execution proof to capital decision</div>
+        <div className="nav-tag"><span />Global decision infrastructure</div>
         <div className="nav-links">
           <NavLink to="/system">How It Works</NavLink>
           <NavLink to="/capital">Capital Governance</NavLink>
@@ -199,7 +199,7 @@ export function Footer({ onOpenContact }: { onOpenContact: () => void }) {
         <div className="footer-brand">
           <p>
             <img className="footer-inline-logo" src={logo} alt="Axis One" />
-            provides non-custodial collaboration and decision infrastructure connecting proven execution to governed capital action.
+            is global decision infrastructure for governed capital execution—connecting proven execution to attributable, authorised decisions.
           </p>
           <div className="footer-links">
             <Link to="/privacy">Privacy</Link>
@@ -234,7 +234,7 @@ export function Footer({ onOpenContact }: { onOpenContact: () => void }) {
           <span className="footer-disclaimer">AX1 does not hold, transfer, manage, or guarantee client capital. Authorised external financial providers execute any transfer.</span>
         </div>
       </div>
-      <div className="footer-bottom">© 2026 AX1 Structura Ltd • GLOBAL CAPITAL INFRASTRUCTURE • ALL RIGHTS RESERVED</div>
+      <div className="footer-bottom">© 2026 AX1 Structura Ltd • GLOBAL DECISION INFRASTRUCTURE • ALL RIGHTS RESERVED</div>
     </footer>
   );
 }
