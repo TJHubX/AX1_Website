@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import portrait from '../assets/founder-portrait.webp';
 import { Badge, BoundarySection, Button, FinalCTA, Footer, PageProps, fade } from '../components';
-import { DecisionValueCalculator } from '../features/DecisionValueCalculator';
+import { CapitalValueProtectionCalculator } from '../features/capital-value/CapitalValueProtectionCalculator';
 
 function Hero({ onOpenAccess }: { onOpenAccess: () => void }) {
   return (
@@ -254,7 +254,7 @@ export default function HomePage({ onOpenAccess, onOpenContact }: PageProps) {
   return (
     <main>
       <Hero onOpenAccess={onOpenAccess} /><DecisionGapSection /><DecisionFlowSection /><CollaborationSection />
-      <LiveDecisionDemo /><OutcomesSection /><DecisionValueCalculator onOpenAccess={onOpenAccess} /><EngagementSection onOpenAccess={onOpenAccess} />
+      <LiveDecisionDemo /><OutcomesSection /><CapitalValueProtectionCalculator onOpenAccess={onOpenAccess} /><EngagementSection onOpenAccess={onOpenAccess} />
       <BoundarySection /><TrustProofStrip /><ClaritySection /><OriginPreview onOpenAccess={onOpenAccess} />
       <FinalCTA onOpenAccess={onOpenAccess} heading="Start with the capital decision that creates the most friction." subcopy="Bring us one current workflow. We will identify where proof, authority and coordination break, then define how a controlled pilot would measure the improvement." primaryLabel="Assess a Capital Workflow" secondaryLabel="See How AX1 Works" secondaryTo="/system" />
       <Footer onOpenContact={onOpenContact} />

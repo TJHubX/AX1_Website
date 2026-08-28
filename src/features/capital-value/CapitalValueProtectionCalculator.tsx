@@ -1,0 +1,625 @@
+import React from 'react';
+import {
+  Calculator,
+  Check,
+  ChevronDown,
+  CircleDollarSign,
+  Copy,
+  ExternalLink,
+  Info,
+  LockKeyhole,
+  RefreshCcw,
+  ShieldAlert,
+  Trash2,
+} from 'lucide-react';
+import { Badge, Button } from '../../components';
+import {
+  buildCalculationSummary,
+  calculateCapitalValueProtection,
+  calculateGovernanceCapacity,
+  EMPTY_CAPITAL_INPUTS,
+  EMPTY_GOVERNANCE_INPUTS,
+  EXAMPLE_CAPITAL_INPUTS,
+  formatCompactCurrency,
+  formatCurrency,
+  IMPROVEMENT_SCENARIOS,
+  validateCapitalInputs,
+  type CapitalCalculatorInput,
+  type CurrencyCode,
+  type GovernanceCapacityInput,
+} from './capitalValueProtection';
+import { narrativeEvidence, numericalEvidence } from './industryEvidence';
+
+type NumericInputKey = {
+  [Key in keyof CapitalCalculatorInput]: CapitalCalculatorInput[Key] extends number | null ? Key : never;
+}[keyof CapitalCalculatorInput];
+
+type NumberFieldProps = {
+  label: string;
+  helper: string;
+  value: number | null;
+  onChange: (value: number | null) => void;
+  min: number;
+  max: number;
+  step?: number;
+  prefix?: string;
+  suffix?: string;
+  error?: string;
+  basis?: string;
+};
+
+const CURRENCY_SYMBOLS: Record<CurrencyCode, string> = { GBP: '£', EUR: '€', USD: '$' };
+
+function NumberField({
+  label,
+  helper,
+  value,
+  onChange,
+  min,
+  max,
+  step = 1,
+  prefix,
+  suffix,
+  error,
+  basis,
+}: NumberFieldProps) {
+  const id = React.useId();
+  const helperId = `${id}-helper`;
+  const errorId = `${id}-error`;
+
+  return (
+    <label className={`cvp-field${error ? ' has-error' : ''}`} htmlFor={id}>
+      <span className="cvp-field-label">
+        <span>{label}</span>
+        {basis && <small className="cvp-basis-tag">{basis}</small>}
+      </span>
+      <span className="cvp-input-wrap">
+        {prefix && <small aria-hidden="true">{prefix}</small>}
+        <input
+          id={id}
+          type="number"
+          inputMode="decimal"
+          min={min}
+          max={max}
+          step={step}
+          value={value ?? ''}
+          aria-invalid={Boolean(error)}
+          aria-describedby={`${helperId}${error ? ` ${errorId}` : ''}`}
+          onChange={(event) => {
+            const raw = event.target.value;
+            onChange(raw === '' ? null : Number(raw));
+          }}
+        />
+        {suffix && <small aria-hidden="true">{suffix}</small>}
+      </span>
+      <small id={helperId} className="cvp-field-helper">{helper}</small>
+      {error && <small id={errorId} className="cvp-field-error">{error}</small>}
+    </label>
+  );
+}
+
+function Toggle({
+  checked,
+  onChange,
+  label,
+  helper,
+}: {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  label: string;
+  helper: string;
+}) {
+  return (
+    <label className="cvp-toggle">
+      <input type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} />
+      <span><strong>{label}</strong><small>{helper}</small></span>
+      <i aria-hidden="true" />
+    </label>
+  );
+}
+
+function EvidenceLink({
+  href,
+  organisation,
+  sourceTitle,
+}: {
+  href: string;
+  organisation: string;
+  sourceTitle: string;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Read ${sourceTitle} by ${organisation}, opens in a new tab`}
+    >
+      View original source <ExternalLink size={13} aria-hidden="true" />
+    </a>
+  );
+}
+
+export function CapitalValueProtectionCalculator({ onOpenAccess }: { onOpenAccess: () => void }) {
+  const [currency, setCurrency] = React.useState<CurrencyCode>('GBP');
+  const [inputs, setInputs] = React.useState<CapitalCalculatorInput>({ ...EXAMPLE_CAPITAL_INPUTS });
+  const [governanceInputs, setGovernanceInputs] = React.useState<GovernanceCapacityInput>({ ...EMPTY_GOVERNANCE_INPUTS });
+  const [editedFields, setEditedFields] = React.useState<Set<string>>(new Set());
+  const [isExample, setIsExample] = React.useState(true);
+  const [copyState, setCopyState] = React.useState<'idle' | 'copied' | 'error'>('idle');
+
+  const governanceCapacity = calculateGovernanceCapacity(governanceInputs);
+  const calculationInputs = React.useMemo(() => ({
+    ...inputs,
+    optionalGovernanceCapacityValue: governanceCapacity,
+  }), [inputs, governanceCapacity]);
+  const errors = React.useMemo(() => validateCapitalInputs(calculationInputs), [calculationInputs]);
+  const result = React.useMemo(() => calculateCapitalValueProtection(calculationInputs), [calculationInputs]);
+
+  const markEdited = (field: string) => {
+    setIsExample(false);
+    setEditedFields((current) => new Set(current).add(field));
+  };
+
+  const updateInput = (key: NumericInputKey) => (value: number | null) => {
+    markEdited(key);
+    setInputs((current) => ({ ...current, [key]: value }));
+  };
+
+  const updateGovernance = (key: keyof GovernanceCapacityInput) => (value: number | null) => {
+    markEdited(`governance-${key}`);
+    setGovernanceInputs((current) => ({ ...current, [key]: value }));
+  };
+
+  const updateBoolean = (
+    key: 'includeDelayCarryingCost'
+      | 'includeOptionalReworkCost'
+      | 'includeOptionalDelayedOperatingValue'
+      | 'includeOptionalGovernanceCapacityValue',
+  ) => (value: boolean) => {
+    markEdited(key);
+    setInputs((current) => ({ ...current, [key]: value }));
+  };
+
+  const setImprovement = (value: number) => {
+    markEdited('selectedImprovementPercent');
+    setInputs((current) => ({ ...current, selectedImprovementPercent: value }));
+  };
+
+  const resetExample = () => {
+    setCurrency('GBP');
+    setInputs({ ...EXAMPLE_CAPITAL_INPUTS });
+    setGovernanceInputs({ ...EMPTY_GOVERNANCE_INPUTS });
+    setEditedFields(new Set());
+    setIsExample(true);
+    setCopyState('idle');
+  };
+
+  const clearAll = () => {
+    setInputs({ ...EMPTY_CAPITAL_INPUTS });
+    setGovernanceInputs({ ...EMPTY_GOVERNANCE_INPUTS });
+    setEditedFields(new Set());
+    setIsExample(false);
+    setCopyState('idle');
+  };
+
+  const basisFor = (field: string, assumption = false) => {
+    if (editedFields.has(field)) return 'User-entered';
+    return assumption ? 'Editable assumption' : 'Example value';
+  };
+
+  const copySummary = async () => {
+    if (!result) return;
+    const summary = buildCalculationSummary(calculationInputs, result, currency);
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(summary);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = summary;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+      }
+      setCopyState('copied');
+      window.setTimeout(() => setCopyState('idle'), 2400);
+    } catch {
+      setCopyState('error');
+    }
+  };
+
+  const fullMoney = (value: number) => formatCurrency(value, currency);
+  const compactMoney = (value: number) => formatCompactCurrency(value, currency);
+  const optionalRows = result ? [
+    inputs.includeOptionalReworkCost && { label: 'Rework, claims or dispute cost', value: inputs.optionalReworkCost as number },
+    inputs.includeOptionalDelayedOperatingValue && { label: 'Delayed operating value', value: inputs.optionalDelayedOperatingValue as number },
+    inputs.includeOptionalGovernanceCapacityValue && governanceCapacity !== null && { label: 'Governance capacity value', value: governanceCapacity },
+  ].filter(Boolean) as { label: string; value: number }[] : [];
+
+  const [liveMessage, setLiveMessage] = React.useState('');
+  React.useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setLiveMessage(result
+        ? `Estimated identified exposure ${fullMoney(result.identifiedExecutionExposure)}. Every one percent improvement is worth approximately ${fullMoney(result.valueOfOnePercent)}.`
+        : 'The estimate is incomplete. Complete the required fields to calculate a result.');
+    }, 450);
+    return () => window.clearTimeout(timer);
+  }, [result, currency]);
+
+  return (
+    <section className="section decision-value-section" id="decision-cost">
+      <div className="decision-value-shell cvp-shell">
+        <header className="cvp-intro">
+          <div className="cvp-intro-copy">
+            <Badge>Capital value protection calculator</Badge>
+            <h2>What is 1% better<br />capital execution<br />worth to you?</h2>
+            <p>Enter four portfolio figures to estimate the value exposed to overruns and delay. Then test what a reduction in that exposure could be worth. Independent industry benchmarks are shown separately and are never applied automatically.</p>
+            <span className="cvp-privacy"><LockKeyhole size={14} />Calculated in your browser. Your financial inputs are not submitted or stored.</span>
+          </div>
+          <div className="cvp-intro-actions">
+            <label className="cvp-currency">
+              <span>Currency <small>Display only, no FX conversion</small></span>
+              <select
+                value={currency}
+                onChange={(event) => {
+                  setCurrency(event.target.value as CurrencyCode);
+                  markEdited('currency');
+                }}
+              >
+                <option value="GBP">GBP (£)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="USD">USD ($)</option>
+              </select>
+            </label>
+            <div className="cvp-reset-actions">
+              <button type="button" onClick={resetExample}><RefreshCcw size={13} />Reset example</button>
+              <button type="button" onClick={clearAll}><Trash2 size={13} />Clear all</button>
+            </div>
+          </div>
+        </header>
+
+        <div className="cvp-status" data-state={isExample ? 'example' : 'estimate'}>
+          <Info size={15} />
+          <span><strong>{isExample ? 'Example' : 'Your estimate'}</strong>{isExample ? 'Example figures are loaded. Change any value to create your estimate.' : 'Your figures are updating the calculation live in this browser.'}</span>
+        </div>
+
+        <div className="cvp-workspace">
+          <form className="cvp-form" onSubmit={(event) => event.preventDefault()} noValidate>
+            <fieldset className="cvp-step">
+              <legend><b>01</b><span><strong>Define the capital exposure</strong><small>Use one programme or one consistent portfolio period.</small></span></legend>
+              <div className="cvp-field-grid">
+                <NumberField
+                  label="Capital under execution"
+                  helper="Use one programme or one consistent portfolio period."
+                  value={inputs.capitalUnderExecution}
+                  onChange={updateInput('capitalUnderExecution')}
+                  min={0}
+                  max={1_000_000_000_000_000}
+                  step={100_000}
+                  prefix={CURRENCY_SYMBOLS[currency]}
+                  error={errors.capitalUnderExecution}
+                  basis={basisFor('capitalUnderExecution')}
+                />
+                <div className="cvp-overrun-field">
+                  <span className="cvp-field-label"><span>Typical cost overrun</span><small className="cvp-basis-tag">{basisFor(inputs.costOverrunMode === 'percentage' ? 'costOverrunPercent' : 'knownCostOverrunAmount')}</small></span>
+                  <div className="cvp-segmented" role="group" aria-label="Cost overrun input mode">
+                    <button
+                      type="button"
+                      aria-pressed={inputs.costOverrunMode === 'percentage'}
+                      onClick={() => {
+                        markEdited('costOverrunMode');
+                        setInputs((current) => ({ ...current, costOverrunMode: 'percentage' }));
+                      }}
+                    >Percentage</button>
+                    <button
+                      type="button"
+                      aria-pressed={inputs.costOverrunMode === 'amount'}
+                      onClick={() => {
+                        markEdited('costOverrunMode');
+                        setInputs((current) => ({ ...current, costOverrunMode: 'amount' }));
+                      }}
+                    >Known amount</button>
+                  </div>
+                  {inputs.costOverrunMode === 'percentage' ? (
+                    <NumberField
+                      label="Overrun percentage"
+                      helper="Use a current forecast or historical average. Valid range: 0% to 500%."
+                      value={inputs.costOverrunPercent}
+                      onChange={updateInput('costOverrunPercent')}
+                      min={0}
+                      max={500}
+                      step={0.1}
+                      suffix="%"
+                      error={errors.costOverrunPercent}
+                    />
+                  ) : (
+                    <NumberField
+                      label="Known exposed amount"
+                      helper="Enter the direct amount currently exposed to overrun."
+                      value={inputs.knownCostOverrunAmount}
+                      onChange={updateInput('knownCostOverrunAmount')}
+                      min={0}
+                      max={1_000_000_000_000_000}
+                      step={100_000}
+                      prefix={CURRENCY_SYMBOLS[currency]}
+                      error={errors.knownCostOverrunAmount}
+                    />
+                  )}
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset className="cvp-step">
+              <legend><b>02</b><span><strong>Add delay exposure</strong><small>Make the affected capital and time period explicit.</small></span></legend>
+              <div className="cvp-field-grid">
+                <NumberField
+                  label="Capital affected by delay"
+                  helper="Estimate the portion of the capital above that is currently affected."
+                  value={inputs.capitalAffectedByDelayPercent}
+                  onChange={updateInput('capitalAffectedByDelayPercent')}
+                  min={0}
+                  max={100}
+                  step={0.1}
+                  suffix="%"
+                  error={errors.capitalAffectedByDelayPercent}
+                  basis={basisFor('capitalAffectedByDelayPercent')}
+                />
+                <NumberField
+                  label="Average delay"
+                  helper="Use the average delay across the affected projects."
+                  value={inputs.averageDelayMonths}
+                  onChange={updateInput('averageDelayMonths')}
+                  min={0}
+                  max={120}
+                  step={0.25}
+                  suffix="months"
+                  error={errors.averageDelayMonths}
+                  basis={basisFor('averageDelayMonths')}
+                />
+              </div>
+              <div className="cvp-assumption-panel">
+                <NumberField
+                  label="Annual capital carrying rate"
+                  helper="Use your approved financing rate, WACC or another appropriate carrying rate. The preloaded 8% is an editable example, not an industry benchmark."
+                  value={inputs.annualCarryingRatePercent}
+                  onChange={updateInput('annualCarryingRatePercent')}
+                  min={0}
+                  max={100}
+                  step={0.1}
+                  suffix="%"
+                  error={errors.annualCarryingRatePercent}
+                  basis={basisFor('annualCarryingRatePercent', true)}
+                />
+                <Toggle
+                  checked={inputs.includeDelayCarryingCost}
+                  onChange={updateBoolean('includeDelayCarryingCost')}
+                  label="Include delay carrying cost in the combined exposure"
+                  helper="Turn this off when financing or delay-related costs are already included in the cost-overrun figure."
+                />
+              </div>
+            </fieldset>
+
+            <details className="cvp-refine">
+              <summary><span><b>03</b><span><strong>Refine your estimate</strong><small>Optional direct costs and governance capacity</small></span></span><ChevronDown size={18} /></summary>
+              <div className="cvp-refine-body">
+                <div className="cvp-refine-card">
+                  <Toggle
+                    checked={inputs.includeOptionalReworkCost}
+                    onChange={updateBoolean('includeOptionalReworkCost')}
+                    label="Known rework, claims or dispute cost"
+                    helper="Include only when this is a distinct amount from the same period."
+                  />
+                  {inputs.includeOptionalReworkCost && <NumberField
+                    label="Direct amount"
+                    helper="Exclude anything already included in the overrun or delay figures."
+                    value={inputs.optionalReworkCost}
+                    onChange={updateInput('optionalReworkCost')}
+                    min={0}
+                    max={1_000_000_000_000_000}
+                    step={10_000}
+                    prefix={CURRENCY_SYMBOLS[currency]}
+                    error={errors.optionalReworkCost}
+                    basis={basisFor('optionalReworkCost')}
+                  />}
+                </div>
+                <div className="cvp-refine-card">
+                  <Toggle
+                    checked={inputs.includeOptionalDelayedOperatingValue}
+                    onChange={updateBoolean('includeOptionalDelayedOperatingValue')}
+                    label="Known delayed operating value"
+                    helper="Include only when this is a distinct, supportable amount from the same period."
+                  />
+                  {inputs.includeOptionalDelayedOperatingValue && <NumberField
+                    label="Direct amount"
+                    helper="Exclude deferred value unless the amount is genuinely lost and not counted elsewhere."
+                    value={inputs.optionalDelayedOperatingValue}
+                    onChange={updateInput('optionalDelayedOperatingValue')}
+                    min={0}
+                    max={1_000_000_000_000_000}
+                    step={10_000}
+                    prefix={CURRENCY_SYMBOLS[currency]}
+                    error={errors.optionalDelayedOperatingValue}
+                    basis={basisFor('optionalDelayedOperatingValue')}
+                  />}
+                </div>
+                <div className="cvp-refine-card cvp-governance-card">
+                  <Toggle
+                    checked={inputs.includeOptionalGovernanceCapacityValue}
+                    onChange={updateBoolean('includeOptionalGovernanceCapacityValue')}
+                    label="Decision-governance capacity"
+                    helper="Capacity value, not automatic cash savings. Excluded unless you explicitly include it."
+                  />
+                  {inputs.includeOptionalGovernanceCapacityValue && <>
+                    <div className="cvp-governance-grid">
+                      <NumberField label="Decisions / month" helper="Repeated decisions in the same period." value={governanceInputs.decisionsPerMonth} onChange={updateGovernance('decisionsPerMonth')} min={0} max={10_000} />
+                      <NumberField label="People / decision" helper="People contributing to each decision." value={governanceInputs.peoplePerDecision} onChange={updateGovernance('peoplePerDecision')} min={0} max={10_000} />
+                      <NumberField label="Hours / person" helper="Preparation hours per person." value={governanceInputs.preparationHoursPerPerson} onChange={updateGovernance('preparationHoursPerPerson')} min={0} max={10_000} step={0.25} suffix="hrs" />
+                      <NumberField label="Blended hourly cost" helper="Approved blended internal cost." value={governanceInputs.blendedHourlyCost} onChange={updateGovernance('blendedHourlyCost')} min={0} max={100_000} step={5} prefix={CURRENCY_SYMBOLS[currency]} />
+                    </div>
+                    <div className="cvp-capacity-result">
+                      <span>Capacity value</span>
+                      <strong>{governanceCapacity === null ? 'Complete all four fields' : fullMoney(governanceCapacity)}</strong>
+                      <small>Decisions × 12 × people × hours × blended hourly cost</small>
+                    </div>
+                    {errors.optionalGovernanceCapacityValue && <small className="cvp-field-error">Complete valid governance inputs before including this category.</small>}
+                  </>}
+                </div>
+                <div className="cvp-overlap-note"><ShieldAlert size={15} /><span>Include each optional category only when it is a distinct amount from the same period and is not already included elsewhere.</span></div>
+              </div>
+            </details>
+          </form>
+
+          <aside className="cvp-results" aria-labelledby="cvp-results-title">
+            <div className="cvp-results-head">
+              <div><span>Your capital execution picture</span><h3 id="cvp-results-title">See the parts before the total</h3></div>
+              <small className="cvp-basis-tag">{isExample ? 'Example' : 'Your estimate'}</small>
+            </div>
+
+            {result ? <>
+              <div className="cvp-breakdown">
+                <span className="cvp-breakdown-context">{fullMoney(result.delayedCapital)} of capital is affected by delay</span>
+                <div><span>Cost-overrun exposure <small>Calculated</small></span><strong>{fullMoney(result.costOverrunExposure)}</strong></div>
+                <div className={inputs.includeDelayCarryingCost ? '' : 'is-excluded'}>
+                  <span>Delay carrying cost <small>{inputs.includeDelayCarryingCost ? 'Included' : 'Calculated, not included'}</small></span>
+                  <strong>{fullMoney(result.delayCarryingCost)}</strong>
+                </div>
+                {optionalRows.map((row) => <div key={row.label}><span>{row.label} <small>Explicitly included</small></span><strong>{fullMoney(row.value)}</strong></div>)}
+              </div>
+
+              <div className="cvp-exposure-total">
+                <span>Estimated identified exposure <small>Calculated</small></span>
+                <strong>{compactMoney(result.identifiedExecutionExposure)}</strong>
+                <small>{fullMoney(result.identifiedExecutionExposure)} using the categories included above</small>
+              </div>
+
+              <div className="cvp-one-percent">
+                <span>Every 1% improvement is worth approximately</span>
+                <strong>{fullMoney(result.valueOfOnePercent)}</strong>
+                <small>One percent of the identified exposure, not a predicted AX1 result.</small>
+              </div>
+
+              <div className="cvp-scenario">
+                <div className="cvp-scenario-title">
+                  <span>Test an improvement</span>
+                  <label className="cvp-custom-improvement">
+                    <span>Custom</span>
+                    <input
+                      type="number"
+                      min="1"
+                      max="25"
+                      step="1"
+                      value={inputs.selectedImprovementPercent}
+                      aria-label="Custom reduction in identified exposure"
+                      onChange={(event) => {
+                        const value = Number(event.target.value);
+                        if (Number.isFinite(value) && value >= 1 && value <= 25) setImprovement(value);
+                      }}
+                    />
+                    <b>%</b>
+                  </label>
+                </div>
+                <div className="cvp-scenario-buttons" role="group" aria-label="Improvement scenarios">
+                  {IMPROVEMENT_SCENARIOS.map((percentage) => <button
+                    key={percentage}
+                    type="button"
+                    className={inputs.selectedImprovementPercent === percentage ? 'is-selected' : ''}
+                    aria-pressed={inputs.selectedImprovementPercent === percentage}
+                    onClick={() => setImprovement(percentage)}
+                  >{percentage}%</button>)}
+                </div>
+                <label className="cvp-range" htmlFor="cvp-improvement-range">
+                  <span>Custom reduction in identified exposure <small>1% to 25%</small></span>
+                  <input id="cvp-improvement-range" type="range" min="1" max="25" step="1" value={inputs.selectedImprovementPercent} onChange={(event) => setImprovement(Number(event.target.value))} />
+                </label>
+                <div className="cvp-selected-value">
+                  <strong>{compactMoney(result.selectedValueProtected)}</strong>
+                  <span>Illustrative value potentially protected at a {inputs.selectedImprovementPercent}% reduction in identified exposure</span>
+                </div>
+                <div className="cvp-scenario-table" aria-label="Scenario comparison">
+                  {IMPROVEMENT_SCENARIOS.map((percentage) => <div key={percentage} className={inputs.selectedImprovementPercent === percentage ? 'is-selected' : ''}><span>{percentage}%</span><strong>{fullMoney(result.scenarioValues[percentage])}</strong></div>)}
+                </div>
+              </div>
+
+              <p className="cvp-result-notice">This scenario applies your selected improvement percentage to the exposure identified from your inputs. It is not a guarantee, accounting valuation or predicted AX1 result.</p>
+
+              <div className="cvp-basis-list">
+                <span>Estimate basis</span>
+                <div><small>Capital</small><b>{basisFor('capitalUnderExecution')}</b></div>
+                <div><small>Overrun</small><b>{basisFor(inputs.costOverrunMode === 'percentage' ? 'costOverrunPercent' : 'knownCostOverrunAmount')}</b></div>
+                <div><small>Delay</small><b>{editedFields.has('capitalAffectedByDelayPercent') || editedFields.has('averageDelayMonths') ? 'User-entered' : 'Example value'}</b></div>
+                <div><small>Carrying rate</small><b>{basisFor('annualCarryingRatePercent', true)}</b></div>
+                <div><small>Results</small><b>Calculated</b></div>
+              </div>
+            </> : (
+              <div className="cvp-incomplete">
+                <Calculator size={28} />
+                <strong>Complete the required fields</strong>
+                <p>The total will appear when each core figure and the carrying-rate assumption contains a valid value.</p>
+                <ul>{Object.values(errors).slice(0, 5).map((error) => <li key={error}>{error}</li>)}</ul>
+              </div>
+            )}
+            <span className="cvp-live" aria-live="polite" aria-atomic="true">{liveMessage}</span>
+          </aside>
+        </div>
+
+        <details className="cvp-methodology">
+          <summary><span><Calculator size={17} />See the calculation and safeguards</span><ChevronDown size={18} /></summary>
+          <div className="cvp-methodology-body">
+            <div className="cvp-methodology-grid">
+              <article><span>01</span><strong>Cost-overrun exposure</strong><p>Percentage mode: capital under execution × cost-overrun percentage. Known amount mode: the amount entered by the user.</p></article>
+              <article><span>02</span><strong>Delay carrying cost</strong><p>Capital under execution × portion affected by delay × annual carrying rate × delay months / 12.</p></article>
+              <article><span>03</span><strong>Optional observed costs</strong><p>Only direct, explicitly enabled values are added to the combined identified exposure.</p></article>
+              <article><span>04</span><strong>Illustrative value protected</strong><p>Identified execution exposure × the selected improvement percentage.</p></article>
+            </div>
+            <div className="cvp-safeguard"><ShieldAlert size={18} /><p>Use one consistent programme or portfolio period. Include only non-overlapping amounts. Turn off delay carrying cost when financing or delay costs are already included in the overrun figure. Validate material assumptions with Finance and the programme team.</p></div>
+          </div>
+        </details>
+
+        <section className="cvp-evidence" aria-labelledby="cvp-evidence-heading">
+          <div className="cvp-evidence-head">
+            <div><span>Independent industry evidence</span><h3 id="cvp-evidence-heading">The problem is documented.<br />The estimate is yours.</h3></div>
+            <p>Independent research consistently connects capital-project underperformance with fragmented information, delayed decisions, weak governance and inadequate evidence. The calculator above uses the visitor's own data. The research below provides context and is not automatically included in the estimate.</p>
+          </div>
+
+          <div className="cvp-narrative-grid">
+            {narrativeEvidence.map((item) => <article className="cvp-evidence-card cvp-narrative-card" key={item.sourceUrl}>
+              <div className="cvp-source-meta"><span>{item.organisation}</span><small>{item.evidenceType} · {item.year}</small></div>
+              <h4>{item.heading}</h4>
+              <p>{item.copy}</p>
+              <small className="cvp-source-title">{item.sourceTitle}</small>
+              <EvidenceLink href={item.sourceUrl} organisation={item.organisation} sourceTitle={item.sourceTitle} />
+            </article>)}
+          </div>
+
+          <div className="cvp-number-grid">
+            {numericalEvidence.map((item) => <article className="cvp-evidence-card cvp-number-card" key={item.sourceUrl}>
+              <div className="cvp-source-meta"><span>{item.organisation}</span><small>{item.evidenceType}{item.year ? ` · ${item.year}` : ''}</small></div>
+              <strong className="cvp-evidence-figure">{item.primaryFigure}</strong>
+              <h4>{item.metric}</h4>
+              {item.secondaryFigures && <ul>{item.secondaryFigures.map((figure) => <li key={figure}>{figure}</li>)}</ul>}
+              <p>{item.copy}</p>
+              {item.scope && <span className="cvp-evidence-scope">Scope: {item.scope}</span>}
+              <small className="cvp-source-title">{item.sourceTitle}</small>
+              <EvidenceLink href={item.sourceUrl} organisation={item.organisation} sourceTitle={item.sourceTitle} />
+            </article>)}
+          </div>
+
+          <p className="cvp-research-disclaimer">Independent research context. The figures above come from different sectors, geographies, project types, methodologies and intervention scopes. They are not AX1 results, are not applied automatically in this calculator and do not represent guaranteed savings. Company names are used for source attribution only; no affiliation or endorsement is implied.</p>
+        </section>
+
+        <div className="cvp-cta">
+          <div><CircleDollarSign size={22} /><span><strong>Validate this against a live capital programme</strong><small>Use the estimate as a starting point. AX1 can help structure the milestones, evidence, ownership and release controls behind a live capital decision.</small></span></div>
+          <div className="cvp-cta-actions">
+            <Button onClick={onOpenAccess}>Review a live programme</Button>
+            <button type="button" className="cvp-copy-button" onClick={copySummary} disabled={!result}>
+              {copyState === 'copied' ? <Check size={14} /> : <Copy size={14} />}
+              {copyState === 'copied' ? 'Copied' : copyState === 'error' ? 'Copy unavailable' : 'Copy calculation summary'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

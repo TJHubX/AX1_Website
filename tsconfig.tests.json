@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": ".test-dist",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "isolatedModules": false,
+    "types": ["node"]
+  },
+  "include": [
+    "src/features/capital-value/capitalValueProtection.ts",
+    "src/features/capital-value/capitalValueProtection.test.ts",
+    "src/features/capital-value/industryEvidence.ts"
+  ]
+}
