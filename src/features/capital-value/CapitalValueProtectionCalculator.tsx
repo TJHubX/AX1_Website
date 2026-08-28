@@ -274,7 +274,7 @@ export function CapitalValueProtectionCalculator({ onOpenAccess }: { onOpenAcces
 
           <div className="cvp-story-definition">
             <span>What is disconnected capital execution?</span>
-            <h3>The gap between capital approval and verified delivery.</h3>
+            <h3>Disconnected capital execution is the gap between capital approval and verified delivery.</h3>
             <p>It occurs when the people making decisions, the teams executing the work and the evidence proving progress do not operate through the same governed system.</p>
             <div className="cvp-problem-cards">
               <article><b>01</b><div><strong>Fragmented evidence</strong><p>Progress information is spread across documents, meetings, emails and disconnected systems.</p></div></article>
@@ -638,7 +638,14 @@ export function CapitalValueProtectionCalculator({ onOpenAccess }: { onOpenAcces
               <article><span>03</span><strong>Optional observed costs</strong><p>Only direct, explicitly enabled values are added to the combined identified exposure.</p></article>
               <article><span>04</span><strong>Illustrative value protected</strong><p>Identified execution exposure × the selected improvement percentage.</p></article>
             </div>
-            <div className="cvp-safeguard"><ShieldAlert size={18} /><p>Use one consistent programme or portfolio period. Include only non-overlapping amounts. Turn off delay carrying cost when financing or delay costs are already included in the overrun figure. Validate material assumptions with Finance and the programme team.</p></div>
+            <div className="cvp-safeguard">
+              <ShieldAlert size={18} />
+              <div>
+                <strong>Prevent double counting</strong>
+                <p>Use one consistent programme or portfolio period and include only non-overlapping amounts. Turn off delay carrying cost when financing or delay costs are already represented in the overrun figure.</p>
+                <p>Do not add the full capital principal, contingency reserves, full loss severity, generic overrun benchmarks, consulting percentages, financing already represented elsewhere, or duplicate rework or claims. Validate material assumptions with Finance and the programme team.</p>
+              </div>
+            </div>
           </div>
         </details>
 

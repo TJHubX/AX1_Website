@@ -12,5 +12,6 @@
     "src/features/capital-value/capitalValueProtection.ts",
     "src/features/capital-value/capitalValueProtection.test.ts",
     "src/features/capital-value/industryEvidence.ts"
-  ]
+  ],
+  "exclude": []
 }

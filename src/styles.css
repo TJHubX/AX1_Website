@@ -3133,6 +3133,8 @@ button { cursor: pointer; }
 .cvp-methodology-grid p { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.55; }
 .cvp-safeguard { display: flex; align-items: flex-start; gap: 10px; padding: 14px; border: 1px solid rgba(216,178,91,.24); border-radius: 12px; color: var(--amber); background: rgba(216,178,91,.05); }
 .cvp-safeguard svg { flex: 0 0 auto; }
+.cvp-safeguard > div { display: grid; gap: 6px; }
+.cvp-safeguard strong { color: var(--amber); font-size: 9px; letter-spacing: .04em; text-transform: uppercase; }
 .cvp-safeguard p { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.55; }
 .cvp-evidence { padding: clamp(36px,5vw,68px) clamp(28px,4.5vw,64px); border-top: 1px solid var(--line); background: rgba(8,12,23,.25); }
 .cvp-evidence-head { display: grid; grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr); align-items: end; gap: 36px; }

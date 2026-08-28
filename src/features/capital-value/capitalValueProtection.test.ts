@@ -40,7 +40,13 @@ test('uses known-amount cost-overrun mode', () => {
     costOverrunMode: 'amount',
     knownCostOverrunAmount: 7_500_000,
   }));
-  assert.equal(result?.costOverrunExposure, 7_500_000);
+  assert.ok(result);
+  assert.equal(result.costOverrunExposure, 7_500_000);
+  assert.equal(result.delayCarryingCost, 1_000_000);
+  assert.equal(result.identifiedExecutionExposure, 8_500_000);
+  assert.equal(result.valueOfOnePercent, 85_000);
+  assert.equal(result.scenarioValues[10], 850_000);
+  assert.equal(result.selectedValueProtected, 850_000);
 });
 
 test('includes delay carrying cost when enabled', () => {
@@ -57,6 +63,13 @@ test('excludes delay carrying cost when disabled', () => {
 
 test('handles zero delay', () => {
   const result = calculateCapitalValueProtection(example({ averageDelayMonths: 0 }));
+  assert.equal(result?.delayCarryingCost, 0);
+  assert.equal(result?.identifiedExecutionExposure, 10_000_000);
+});
+
+test('handles zero capital affected by delay', () => {
+  const result = calculateCapitalValueProtection(example({ capitalAffectedByDelayPercent: 0 }));
+  assert.equal(result?.delayedCapital, 0);
   assert.equal(result?.delayCarryingCost, 0);
   assert.equal(result?.identifiedExecutionExposure, 10_000_000);
 });
@@ -124,6 +137,21 @@ test('negative values produce validation errors', () => {
   assert.ok(errors.averageDelayMonths);
 });
 
+test('out-of-range values produce validation errors', () => {
+  const errors = validateCapitalInputs(example({
+    costOverrunPercent: 501,
+    capitalAffectedByDelayPercent: 101,
+    averageDelayMonths: 121,
+    annualCarryingRatePercent: 101,
+    selectedImprovementPercent: 26,
+  }));
+  assert.ok(errors.costOverrunPercent);
+  assert.ok(errors.capitalAffectedByDelayPercent);
+  assert.ok(errors.averageDelayMonths);
+  assert.ok(errors.annualCarryingRatePercent);
+  assert.ok(errors.selectedImprovementPercent);
+});
+
 test('NaN and Infinity never produce a result', () => {
   assert.equal(calculateCapitalValueProtection(example({ costOverrunPercent: Number.NaN })), null);
   assert.equal(calculateCapitalValueProtection(example({ capitalUnderExecution: Number.POSITIVE_INFINITY })), null);
@@ -163,6 +191,16 @@ test('copy summary contains the calculation, assumptions and disclaimer', () => 
   assert.match(summary, /10% reduction in identified exposure/);
   assert.match(summary, /not a guarantee/i);
   assert.doesNotMatch(summary, /NaN|Infinity/);
+});
+
+test('copy summary states when calculated delay cost is excluded', () => {
+  const input = example({ includeDelayCarryingCost: false });
+  const result = calculateCapitalValueProtection(input);
+  assert.ok(result);
+  const summary = buildCalculationSummary(input, result, 'GBP');
+  assert.match(summary, /Delay carrying cost: £1,000,000 \(calculated but excluded from combined exposure\)/);
+  assert.match(summary, /Identified execution exposure: £10,000,000/);
+  assert.match(summary, /Value of each 1% improvement: £100,000/);
 });
 
 test('evidence records retain official HTTPS sources and accessible titles', () => {
