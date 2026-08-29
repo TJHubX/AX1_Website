@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';
 import {
   ArrowRight,
@@ -21,7 +21,7 @@ import {
   X,
   Zap,
 } from 'lucide-react';
-import logo from '../assets/ax1-logo.png';
+import logo from '../assets/ax1-logo.svg';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -121,7 +121,7 @@ export function Button({ children, variant = 'primary', onClick, to }: { childre
 
 // ─── Layout ───────────────────────────────────────────────────────────────────
 
-export function Header({ onOpenAccess, onOpenContact }: PageProps) {
+export function Header(_props: PageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { pathname } = useLocation();
 
@@ -143,15 +143,15 @@ export function Header({ onOpenAccess, onOpenContact }: PageProps) {
     <header className="header">
       <nav className="nav" aria-label="Primary navigation">
         <Link to="/" className="logo-link" aria-label="Axis One home"><Logo /></Link>
-        <div className="nav-tag"><span />Global decision infrastructure</div>
+        <div className="nav-tag"><span />Capital governance infrastructure</div>
         <div className="nav-links">
-          <NavLink to="/system">How It Works</NavLink>
-          <NavLink to="/capital">Capital Governance</NavLink>
-          <NavLink to="/deployment">Pilot &amp; Programs</NavLink>
-          <NavLink to="/trust">Trust</NavLink>
-          <button type="button" onClick={onOpenContact}>Contact</button>
+          <a href="/#why-ax1">Why AX1</a>
+          <Link to="/system">System</Link>
+          <a href="/#decision-exposure">Decision exposure</a>
+          <Link to="/trust">Trust</Link>
+          <Link to="/deployment">Deployment</Link>
         </div>
-        <button className="nav-cta" onClick={onOpenAccess} type="button">Assess Workflow <ArrowRight size={13} /></button>
+        <a className="nav-cta" href="/#decision-brief">Frame a decision <ArrowRight size={13} /></a>
         <button
           className="nav-menu-toggle"
           type="button"
@@ -178,13 +178,13 @@ export function Header({ onOpenAccess, onOpenContact }: PageProps) {
               <span>Navigation</span>
               <button type="button" onClick={closeMobileMenu} aria-label="Close navigation menu"><X size={16} /></button>
             </div>
-            <Link to="/system" onClick={closeMobileMenu}>How It Works</Link>
-            <Link to="/capital" onClick={closeMobileMenu}>Capital Governance</Link>
-            <Link to="/deployment" onClick={closeMobileMenu}>Pilot &amp; Programs</Link>
+            <a href="/#why-ax1" onClick={closeMobileMenu}>Why AX1</a>
+            <Link to="/system" onClick={closeMobileMenu}>System</Link>
+            <a href="/#decision-exposure" onClick={closeMobileMenu}>Decision exposure</a>
             <Link to="/trust" onClick={closeMobileMenu}>Trust</Link>
+            <Link to="/deployment" onClick={closeMobileMenu}>Deployment</Link>
             <div className="mobile-nav-divider" />
-            <button type="button" className="mobile-nav-contact" onClick={() => { closeMobileMenu(); onOpenContact(); }}>Direct Channels</button>
-            <button className="mobile-nav-request" type="button" onClick={() => { closeMobileMenu(); onOpenAccess(); }}>Assess a Capital Workflow</button>
+            <a className="mobile-nav-request" href="/#decision-brief" onClick={closeMobileMenu}>Frame a decision</a>
           </div>
         </div>
       )}
@@ -192,14 +192,14 @@ export function Header({ onOpenAccess, onOpenContact }: PageProps) {
   );
 }
 
-export function Footer({ onOpenContact }: { onOpenContact: () => void }) {
+export function Footer(_props: { onOpenContact: () => void }) {
   return (
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-brand">
           <p>
             <img className="footer-inline-logo" src={logo} alt="Axis One" />
-            is global decision infrastructure for governed capital execution, connecting proven execution to attributable, authorised decisions.
+            is capital governance infrastructure connecting committed capital to verified milestones, attributable evidence and controlled decision states.
           </p>
           <div className="footer-links">
             <Link to="/privacy">Privacy</Link>
@@ -219,12 +219,12 @@ export function Footer({ onOpenContact }: { onOpenContact: () => void }) {
         </div>
         <div className="footer-nav">
           <Link to="/">HOME</Link>
-          <Link to="/system">How It Works</Link>
-          <Link to="/capital">Capital Governance</Link>
-          <Link to="/deployment">Pilot &amp; Programs</Link>
+          <a href="/#why-ax1">Why AX1</a>
+          <Link to="/system">System</Link>
+          <a href="/#decision-exposure">Decision exposure</a>
           <Link to="/trust">Trust</Link>
+          <Link to="/deployment">Deployment</Link>
           <Link to="/founder">Founder</Link>
-          <button className="footer-nav-contact" onClick={onOpenContact}>Contact</button>
         </div>
         <div className="footer-legal">
           <strong>AX1 Structura Ltd</strong>
@@ -234,7 +234,7 @@ export function Footer({ onOpenContact }: { onOpenContact: () => void }) {
           <span className="footer-disclaimer">AX1 does not hold, transfer, manage, or guarantee client capital. Authorised external financial providers execute any transfer.</span>
         </div>
       </div>
-      <div className="footer-bottom">© 2026 AX1 Structura Ltd • GLOBAL DECISION INFRASTRUCTURE • ALL RIGHTS RESERVED</div>
+      <div className="footer-bottom">© 2026 AX1 Structura Ltd • CAPITAL GOVERNANCE INFRASTRUCTURE • GLOBAL DECISION INFRASTRUCTURE • ALL RIGHTS RESERVED</div>
     </footer>
   );
 }
@@ -402,13 +402,13 @@ export function RequestAccessModal({ onClose }: ModalProps) {
     }
 
     const summaryText = [
-      'AX1: Capital Workflow Assessment',
+      'AX1 CAPITAL DECISION BRIEF',
       '---------------------------------',
       `Full Name:     ${values.fullName}`,
       `Work Email:    ${values.workEmail}`,
       `Organization:  ${values.organization}`,
       '',
-      'Workflow or decision to assess:',
+      'Approaching capital decision:',
       values.briefIntent || 'To be discussed during the assessment.',
     ].join('\n');
 
@@ -427,7 +427,7 @@ export function RequestAccessModal({ onClose }: ModalProps) {
   };
 
   const handleEmailFallback = () => {
-    const subject = encodeURIComponent('AX1 Capital Workflow Assessment');
+    const subject = encodeURIComponent('AX1 Capital Decision Brief');
     const body = encodeURIComponent(summary);
     window.location.href = `mailto:info@ax1.capital?subject=${subject}&body=${body}`;
   };
@@ -439,16 +439,16 @@ export function RequestAccessModal({ onClose }: ModalProps) {
       {isPrepared ? (
         <div className="access-success">
           <div className="access-success-icon"><CheckCircle2 size={28} /></div>
-          <h3 ref={preparedHeadingRef} tabIndex={-1}>Assessment request prepared</h3>
-          <p>Send the prepared email so the AX1 team can receive and review your workflow. No request has been transmitted yet.</p>
+          <h3 ref={preparedHeadingRef} tabIndex={-1}>Decision brief prepared</h3>
+          <p>Review and send the prepared email so the AX1 team can examine the decision boundary. No request has been transmitted yet.</p>
           <pre className="access-summary" aria-label="Request summary">{summary}</pre>
           <div className="access-fallback-actions">
             <button type="button" className="submit-request" onClick={handleCopy}>
-              {copied ? 'Copied to Clipboard' : 'Copy Assessment Summary'}
+              {copied ? 'Copied to Clipboard' : 'Copy Decision Brief'}
               {!copied && <Copy size={15} />}
             </button>
             <button type="button" className="submit-request submit-request-ghost" onClick={handleEmailFallback}>
-              Send Assessment by Email
+              Send Decision Brief by Email
               <Send size={15} />
             </button>
           </div>
@@ -457,12 +457,12 @@ export function RequestAccessModal({ onClose }: ModalProps) {
       ) : (
         <>
           <div className="modal-title">
-            <h2 id="request-access-title">Assess a Capital Workflow</h2>
-            <p>Start with one decision process</p>
+            <h2 id="request-access-title">Frame a Capital Decision</h2>
+            <p>Bring the next capital decision, not a requirements list.</p>
           </div>
           <form className="access-form" onSubmit={handleSubmit} noValidate aria-labelledby="request-access-title">
             <label className={fieldClass('fullName')}>
-              <span>Full Name</span>
+              <span>Decision owner</span>
               <input
                 ref={fullNameRef}
                 name="fullName"
@@ -485,7 +485,7 @@ export function RequestAccessModal({ onClose }: ModalProps) {
               {errors.workEmail && <em id="err-workEmail" className="field-error">{errors.workEmail}</em>}
             </label>
             <label className={`${fieldClass('organization')} field-wide`}>
-              <span>Organization</span>
+              <span>Organisation or programme</span>
               <input
                 ref={organizationRef}
                 name="organization"
@@ -496,14 +496,14 @@ export function RequestAccessModal({ onClose }: ModalProps) {
               {errors.organization && <em id="err-organization" className="field-error">{errors.organization}</em>}
             </label>
             <label className="field field-wide">
-              <span>Workflow or decision to assess <small>(optional)</small></span>
+              <span>What capital decision is approaching? <small>(optional)</small></span>
               <textarea
                 name="briefIntent"
-                placeholder="For example: a staged investment tranche, construction draw, or portfolio approval process."
+                placeholder="For example: authorise a staged investment tranche or hold pending evidence. Do not include confidential data."
               />
             </label>
             <button className="submit-request" type="submit">
-              Prepare Assessment Request
+              Prepare Decision Brief
               <Send size={15} />
             </button>
           </form>

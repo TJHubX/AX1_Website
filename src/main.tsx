@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { MotionConfig } from 'motion/react';
 import { Header, RequestAccessModal, ContactChannelsModal } from './components';
+import '@fontsource-variable/inter';
 import './styles.css';
 
 const HomePage = React.lazy(() => import('./pages/HomePage'));
@@ -21,16 +22,16 @@ const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 
 const PAGE_METADATA: Record<string, { title: string; description: string }> = {
   '/': {
-    title: 'AX1 | Capital moves when execution is proven',
-    description: 'AX1 connects live execution evidence, validation and decision authority so capital providers can act on proven execution in one permissioned, audit-ready environment.',
+    title: 'AX1 | Capital Governance Infrastructure',
+    description: 'AX1 connects committed capital to verified milestones, attributable evidence and controlled decision states.',
   },
   '/system': {
-    title: 'How AX1 Works | Global Decision Infrastructure',
-    description: 'See how AX1 connects execution, evidence, validation, authority and capital decisions in one governed workflow.',
+    title: 'AX1 System | Capital Governance Infrastructure',
+    description: 'See how AX1 connects execution, evidence, validation, authority and controlled capital decision states.',
   },
   '/capital': {
-    title: 'Capital Governance | AX1',
-    description: 'Evaluate readiness as execution changes, preserve human decision authority and keep external capital execution traceable.',
+    title: 'Decision Exposure | AX1 Capital Governance',
+    description: 'Model cost-overrun, delay and decision exposure while preserving human decision authority and controlled capital action.',
   },
   '/deployment': {
     title: 'Pilot & Programs | AX1',
@@ -64,8 +65,8 @@ function PageMetadata() {
   const { pathname } = useLocation();
   useEffect(() => {
     const fallback = {
-      title: 'AX1 | Governed Capital Execution',
-      description: 'Global decision infrastructure connecting proven execution to governed capital action in a non-custodial, permissioned environment.',
+      title: 'AX1 | Capital Governance Infrastructure',
+      description: 'Capital governance infrastructure connecting proven execution to governed capital action in a non-custodial, permissioned environment.',
     };
     const metadata = PAGE_METADATA[pathname] ?? fallback;
     const canonicalPath = PAGE_METADATA[pathname] ? pathname : '/';

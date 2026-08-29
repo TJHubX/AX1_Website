@@ -142,7 +142,13 @@ function EvidenceLink({
   );
 }
 
-export function CapitalValueProtectionCalculator({ onOpenAccess }: { onOpenAccess: () => void }) {
+export function CapitalValueProtectionCalculator({
+  onOpenAccess,
+  showContext = true,
+}: {
+  onOpenAccess: () => void;
+  showContext?: boolean;
+}) {
   const [currency, setCurrency] = React.useState<CurrencyCode>('GBP');
   const [inputs, setInputs] = React.useState<CapitalCalculatorInput>({ ...EXAMPLE_CAPITAL_INPUTS });
   const [governanceInputs, setGovernanceInputs] = React.useState<GovernanceCapacityInput>({ ...EMPTY_GOVERNANCE_INPUTS });
@@ -262,8 +268,8 @@ export function CapitalValueProtectionCalculator({ onOpenAccess }: { onOpenAcces
   };
 
   return (
-    <section className="section decision-value-section" aria-labelledby="capital-performance-heading">
-      <article className="cvp-story" id="capital-performance">
+    <section className="section decision-value-section" aria-labelledby={showContext ? 'capital-performance-heading' : 'decision-cost-title'}>
+      {showContext && <article className="cvp-story" id="capital-performance">
         <div className="cvp-story-layout">
           <div className="cvp-story-copy">
             <Badge>Capital performance</Badge>
@@ -313,13 +319,13 @@ export function CapitalValueProtectionCalculator({ onOpenAccess }: { onOpenAcces
             <small className="cvp-story-privacy"><LockKeyhole size={13} />Calculated in your browser. Your financial inputs are not submitted or stored.</small>
           </div>
         </div>
-      </article>
+      </article>}
 
       <div className="decision-value-shell cvp-shell" id="decision-cost">
         <header className="cvp-intro">
           <div className="cvp-intro-copy">
             <Badge>Capital value protection calculator</Badge>
-            <h2>What is 1% better<br />capital execution<br />worth to you?</h2>
+            <h2 id="decision-cost-title">What is 1% better<br />capital execution<br />worth to you?</h2>
             <p>Enter four portfolio figures to estimate the value exposed to overruns and delay. Then test what a reduction in that exposure could be worth.</p>
           </div>
           <div className="cvp-intro-actions">

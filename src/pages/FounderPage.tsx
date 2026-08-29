@@ -39,7 +39,7 @@ export default function FounderPage({ onOpenAccess, onOpenContact }: PageProps) 
           </div>
           <p>AX1 is not another reporting layer. It is global decision infrastructure through which execution, evidence, stakeholders and capital decisions remain connected.</p>
           <blockquote className="closing-quote">“Capital needs more than a compelling strategy. It needs execution that decision-makers can trust.”</blockquote>
-          <div className="actions"><Button onClick={onOpenAccess}>Assess a Capital Workflow</Button><Button variant="ghost" to="/system">See How AX1 Works</Button></div>
+          <div className="actions"><Button onClick={onOpenAccess}>Frame a Capital Decision</Button><Button variant="ghost" to="/system">See How AX1 Works</Button></div>
         </motion.div>
         <motion.div className="founder-sticky" {...fade}>
           <img src={portrait} alt="Tania Jokic, Founder & CEO" loading="eager" decoding="async" />
@@ -50,7 +50,7 @@ export default function FounderPage({ onOpenAccess, onOpenContact }: PageProps) 
         onOpenAccess={onOpenAccess}
         heading="Explore the system built from this structural gap."
         subcopy="AX1 connects execution proof, decision authority and the governed record, while external providers remain responsible for custody and transfer."
-        primaryLabel="Assess a Capital Workflow"
+        primaryLabel="Frame a Capital Decision"
         showLogo={false}
         secondaryLabel="See How AX1 Works"
         secondaryTo="/system"

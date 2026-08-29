@@ -77,7 +77,7 @@ function DeploymentWorkflowSection({ onOpenAccess }: { onOpenAccess: () => void 
         ))}
         <motion.div className="dep-workflow-cta-cell" {...fade}>
           <p>One governance framework. Any execution structure.</p>
-          <Button onClick={onOpenAccess}>Assess a Capital Workflow</Button>
+          <Button onClick={onOpenAccess}>Frame a Capital Decision</Button>
         </motion.div>
       </div>
     </section>
@@ -94,7 +94,7 @@ export default function DeploymentPage({ onOpenAccess, onOpenContact }: PageProp
           <Badge>Pilot &amp; Programs</Badge>
           <h1>Start with one workflow. Scale with evidence.</h1>
           <p>Begin with the capital decision where fragmented evidence, stakeholder coordination and unclear readiness already create delay or risk.</p>
-          <div className="actions center-actions"><Button onClick={onOpenAccess}>Assess a Capital Workflow</Button><Button variant="ghost" to="/capital">View Capital Governance</Button></div>
+          <div className="actions center-actions"><Button onClick={onOpenAccess}>Frame a Capital Decision</Button><Button variant="ghost" to="/capital">View Decision Exposure</Button></div>
         </motion.div>
       </section>
       <section className="section"><DeploymentGrid /></section>
@@ -104,7 +104,7 @@ export default function DeploymentPage({ onOpenAccess, onOpenContact }: PageProp
         onOpenAccess={onOpenAccess}
         heading="Prove one governed workflow before expanding."
         subcopy="A controlled Launch Programme establishes the baseline, measures the result and defines the next rollout decision."
-        primaryLabel="Assess a Capital Workflow"
+        primaryLabel="Frame a Capital Decision"
         showLogo={false}
         secondaryLabel="Review Capital Governance"
         secondaryTo="/capital"

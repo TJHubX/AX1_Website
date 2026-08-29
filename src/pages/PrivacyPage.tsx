@@ -104,11 +104,11 @@ export default function PrivacyPage({ onOpenContact }: PageProps) {
             ],
           },
           {
-            heading: '11. Use of AI-assisted services',
+            heading: '11. Platform intelligence and submitted information',
             paragraphs: [
-              'AX1 Structura Ltd may use AI-assisted tools or LLM-connected services to support inquiry handling, product insights, user guidance, summarization, and platform interpretation features. Where such tools are used, AX1 Structura Ltd aims to apply appropriate data minimization, access control, vendor review, human oversight, and security measures.',
+              'The AX1 intelligence system may organise and present authorised platform records to support user guidance and decision context. Its operation remains subject to applicable access controls, data minimisation, security measures and contractual terms.',
               'Users should not submit unnecessary sensitive personal data through public website forms, request-access forms, or general inquiry channels.',
-              'AI-assisted services may process information submitted through the website or platform where necessary to provide relevant interpretation, support, or product functionality, subject to applicable privacy, security, and contractual controls.',
+              'Information submitted through the website or platform may be processed where necessary to provide the relevant service or functionality, subject to applicable privacy, security and contractual controls.',
             ],
           },
           {

@@ -42,30 +42,28 @@ export default function TrustPage({ onOpenContact }: PageProps) {
             ],
           },
           {
-            heading: '5. Tamper-evident lifecycle records',
+            heading: '5. Reviewable lifecycle records',
             paragraphs: [
-              'Axis One can link policy versions, evaluations, evidence snapshots, validator states, and release decisions through a tamper-evident snapshot chain. This supports reviewability and traceability across the capital execution lifecycle without relying on a blockchain or immutable ledger.',
+              'Axis One is designed to keep material execution updates, evidence, reviews and decisions connected to the relevant programme record. This supports controlled review and traceability across the capital execution lifecycle.',
             ],
           },
           {
-            heading: '6. LLM-assisted interpretation',
+            heading: '6. AX1 intelligence system',
             paragraphs: [
-              'LLM-connected interpretation can help explain readiness, evidence coverage, validator activity, and decision context within the platform. It does not replace deterministic governance logic or human decision-making. All LLM outputs are contextual guidance only.',
+              'The AX1 intelligence system helps authorised users understand execution state, evidence coverage, unresolved commitments and decision context from the records available to them. It supports human review and does not replace the responsible decision-maker.',
             ],
           },
           {
-            heading: '7. AI governance readiness',
+            heading: '7. Human authority and platform boundaries',
             paragraphs: [
-              'AX1 Structura Ltd monitors developing AI governance frameworks, including the EU AI Act, and designs Axis One\'s AI-assisted features around transparency, human review, traceability, data minimization, and role separation between deterministic governance logic and LLM-assisted interpretation.',
-              'Axis One\'s release governance is designed to remain deterministic. Gate logic, validator quorum, evidence requirements, holdbacks, readiness scoring, and release enforcement are governed by structured policy rules. LLM-connected features support explanation, summarization, review prioritization, anomaly interpretation, and capital-readiness narratives.',
-              'AI-assisted interpretation is intended to help users understand what changed, what requires attention, and what context supports a review. It does not replace validators, investors, operators, legal reviewers, or authorized decision-makers.',
+              'AX1 is designed to keep decision context visible while preserving human responsibility. Validators and authorised stakeholders remain responsible for their reviews and approval decisions.',
+              'The public website intentionally describes outcomes and selected product context without publishing protected rules, scoring, thresholds, configuration, automation or technical architecture.',
             ],
             bullets: [
-              'Deterministic core: Release readiness follows structured policy logic.',
-              'LLM-assisted interpretation: AI explains evidence, readiness, blockers, and decision context.',
-              'Human review: Validators and authorized stakeholders remain responsible for approval decisions.',
-              'Traceable outputs: AI-assisted narratives can be linked to underlying records and review context.',
-              'AI governance roadmap: Feature classification, prompt/version records, source grounding, vendor governance, and human oversight are part of the trust model.',
+              'Human authority: Authorised stakeholders remain responsible for material decisions.',
+              'Role separation: Visibility and actions follow the participant\'s responsibility.',
+              'Traceable context: Material outputs can remain connected to the underlying programme record.',
+              'Data minimisation: Public enquiries should not contain unnecessary confidential information.',
             ],
           },
           {

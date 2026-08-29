@@ -345,7 +345,7 @@ export default function SystemPage({ onOpenAccess, onOpenContact }: PageProps) {
           <Badge>How AX1 works</Badge>
           <h1>From live execution evidence to a decision-ready record.</h1>
           <p>AX1 connects execution evidence, assigned validation, mandatory conditions and decision authority in one inspectable, permissioned record.</p>
-          <div className="actions"><Button onClick={onOpenAccess}>Assess a Capital Workflow</Button><Button variant="secondary" to="/capital">Capital Governance</Button></div>
+          <div className="actions"><Button onClick={onOpenAccess}>Frame a Capital Decision</Button><Button variant="secondary" to="/capital">Decision Exposure</Button></div>
         </motion.div>
         <ReleaseEnginePanel />
       </section>
@@ -386,7 +386,7 @@ export default function SystemPage({ onOpenAccess, onOpenContact }: PageProps) {
         variant="split"
         heading="See how execution evidence becomes decision readiness."
         subcopy="Every outcome, evidence item, validation and decision remains connected in one permissioned execution state."
-        primaryLabel="Assess a Capital Workflow"
+        primaryLabel="Frame a Capital Decision"
         secondaryLabel="Explore Capital Governance"
         secondaryTo="/capital"
         points={['Defined evidence requirements', 'Assigned validation and authority', 'Audit-ready decision record']}

@@ -50,15 +50,15 @@ export default function DisclaimerPage({ onOpenContact }: PageProps) {
           {
             heading: '7. Forward-looking statements',
             paragraphs: [
-              'The Axis One website may include references to roadmap items, future features, private launch timelines, AI and LLM capabilities, certification roadmaps, or future liquidity concepts. These are subject to change without notice and should not be treated as commitments or guarantees.',
+              'The Axis One website may include references to roadmap items, future features, private launch timelines, certification roadmaps, or future liquidity concepts. These are subject to change without notice and should not be treated as commitments or guarantees.',
             ],
           },
           {
-            heading: '8. AI / LLM-assisted interpretation',
+            heading: '8. AX1 intelligence system',
             paragraphs: [
-              'Axis One may use LLM-assisted interpretation to support explanation, summarization, review prioritization, anomaly interpretation, scenario interpretation, and capital-readiness narratives. AI-assisted outputs are intended to help users understand execution state, evidence coverage, validator activity, blocker context, and release-readiness information.',
-              'AI-assisted outputs do not replace human judgment, validator decisions, legal review, financial advice, investment advice, or deterministic governance logic. Axis One does not use AI to autonomously approve capital release, reject capital release, move funds, guarantee settlement, or make investment decisions.',
-              'Where AI-assisted outputs are presented, they should be understood as interpretive support based on available records and context, not as a final decision, recommendation, or regulated advice.',
+              'The AX1 intelligence system helps authorised users understand recorded execution state, evidence coverage, unresolved commitments and decision context within the platform.',
+              'Its outputs do not replace human judgement, validation, legal review, financial advice, investment advice or the authority of the responsible decision-maker. AX1 does not autonomously approve or reject capital action, move funds, guarantee settlement or make investment decisions.',
+              'Platform intelligence should be understood as decision support based on the records available to the authorised user, not as a final recommendation or regulated advice.',
             ],
           },
           {

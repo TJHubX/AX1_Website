@@ -17,6 +17,7 @@ import {
   Badge, Pill, Button, BoundarySection, FinalCTA, Footer,
   fade, Tone, PageProps,
 } from '../components';
+import { CapitalValueProtectionCalculator } from '../features/capital-value/CapitalValueProtectionCalculator';
 
 // ─── Sections ─────────────────────────────────────────────────────────────────
 
@@ -186,9 +187,10 @@ export default function CapitalPage({ onOpenAccess, onOpenContact }: PageProps) 
           <Badge>Capital governance</Badge>
           <h1>Proven execution. Authorised capital action.</h1>
           <p>AX1 connects execution evidence, validation and decision authority in real time. It governs the basis for action while custody and transfer remain with authorised external providers.</p>
-          <div className="actions center-actions"><Button onClick={onOpenAccess}>Assess a Capital Workflow</Button><Button variant="secondary" to="/system">See How It Works</Button></div>
+          <div className="actions center-actions"><Button onClick={onOpenAccess}>Frame a Capital Decision</Button><Button variant="secondary" to="/system">See How It Works</Button></div>
         </motion.div>
       </section>
+      <CapitalValueProtectionCalculator onOpenAccess={onOpenAccess} />
       <BoundarySection />
       <section className="section behavior-section">
         <motion.div className="section-head" {...fade}>
@@ -205,7 +207,7 @@ export default function CapitalPage({ onOpenAccess, onOpenContact }: PageProps) 
         onOpenAccess={onOpenAccess}
         variant="bar"
         heading="Review the decision before the capital action."
-        primaryLabel="Assess a Capital Workflow"
+        primaryLabel="Frame a Capital Decision"
         secondaryLabel="See How It Works"
         secondaryTo="/system"
       />
