@@ -83,7 +83,6 @@ export default function SystemVisual({ compact = false }: SystemVisualProps) {
           <img className="system-brand-logo" src={logo} alt="Axis One" />
           <span />
         </div>
-        {compact && <div className="system-brand-name">Axis One</div>}
       </div>
     </motion.div>
   );

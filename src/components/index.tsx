@@ -202,20 +202,7 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
       <div className="footer-signal" aria-hidden="true"><i /><i /><i /></div>
       <div className="footer-frame">
         <div className="footer-masthead">
-          <Link to="/" className="footer-brand-signal" aria-label="Axis One, Global decision infrastructure, home">
-            <SystemVisual compact />
-          </Link>
-          <button className="footer-cta" type="button" onClick={() => { trackAX1Event('primary_cta_selected', { location: 'footer_masthead', action: 'contact' }); onOpenContact({ source: 'footer_masthead' }); }}>Contact Axis One <ArrowRight size={14} /></button>
-        </div>
-
-        <div className="footer-main">
-          <section className="footer-brand" aria-labelledby="footer-brand-title">
-            <span>Capital governance infrastructure</span>
-            <h2 id="footer-brand-title">Capital, <span>governed by</span> execution.</h2>
-            <p>Axis One connects committed capital to verified milestones, attributable evidence and controlled decision states.</p>
-          </section>
-
-          <nav className="footer-nav" aria-label="Footer navigation">
+          <nav className="footer-nav footer-nav-masthead" aria-label="Footer navigation">
             <div>
               <strong>Explore</strong>
               <Link to="/">Home</Link>
@@ -231,6 +218,15 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
               <a href="mailto:info@ax1.capital?subject=Axis%20One%20inquiry">Email Axis One</a>
             </div>
           </nav>
+          <button className="footer-cta" type="button" onClick={() => { trackAX1Event('primary_cta_selected', { location: 'footer_masthead', action: 'contact' }); onOpenContact({ source: 'footer_masthead' }); }}>Contact Axis One <ArrowRight size={14} /></button>
+        </div>
+
+        <div className="footer-main">
+          <section className="footer-brand" aria-labelledby="footer-brand-title">
+            <span>Capital governance infrastructure</span>
+            <h2 id="footer-brand-title">Capital, <span>governed by</span> execution.</h2>
+            <p>Axis One connects committed capital to verified milestones, attributable evidence and controlled decision states.</p>
+          </section>
 
           <aside className="footer-company" aria-label="Company information">
             <span>Operating company</span>
@@ -238,6 +234,10 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
             <p>66 Paul Street<br />London EC2A 4NA<br />England</p>
             <small>Registered in England and Wales<br />Company No. 17151320</small>
           </aside>
+
+          <Link to="/" className="footer-brand-signal" aria-label="Axis One, Global decision infrastructure, home">
+            <SystemVisual compact />
+          </Link>
         </div>
 
         <div className="footer-boundary">
