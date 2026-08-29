@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Check, Layers3, Network, Rocket, Users } from 'lucide-react';
 import { Footer, PageProps, fade } from '../components';
+import type { PackageName } from '../features/package-inquiry/packageInquiry';
 import { trackAX1Event } from '../utils/analytics';
 
 const options = [
@@ -39,6 +40,11 @@ function DeploymentPathObject() {
 }
 
 export default function DeploymentPage({ onOpenContact }: PageProps) {
+  const openPackageInquiry = (packageName: PackageName) => {
+    trackAX1Event('deployment_option_selected', { option: packageName.toLowerCase().replaceAll('.', '_') });
+    onOpenContact({ packageName, source: 'deployment_package' });
+  };
+
   return (
     <main className="cg-public-page cg-deployment-page">
       <section className="cg-public-hero" aria-labelledby="deployment-title">
@@ -55,8 +61,8 @@ export default function DeploymentPage({ onOpenContact }: PageProps) {
 
       <section className="cg-public-section is-light" id="deployment-options" aria-labelledby="deployment-options-title"><div className="cg-shell">
         <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Choose the operating scope</span><h2 id="deployment-options-title">Use the package that matches the decision maturity.</h2><p>AX1.Pilot is the recommended first step. Broader deployment should be earned through a clear operating result.</p></motion.header>
-        <div className="cg-package-grid">{options.map(({ number, icon: Icon, title, note, copy, points }, index) => <motion.article className={index === 0 ? 'is-featured' : ''} key={title} {...fade}>
-          <div className="cg-package-head"><span>{number}</span><Icon size={22} /><small>{note}</small></div><h3>{title}</h3><p>{copy}</p><ul>{points.map((point) => <li key={point}><Check size={15} />{point}</li>)}</ul><a href="/#decision-brief" onClick={() => trackAX1Event('deployment_option_selected', { option: title.toLowerCase().replaceAll('.', '_') })}>Frame {title}<ArrowRight size={16} /></a>
+        <div className="cg-package-grid">{options.map(({ number, icon: Icon, title, note, copy, points }, index) => <motion.article id={title.toLowerCase().replace('.', '-')} className={index === 0 ? 'is-featured' : ''} key={title} {...fade}>
+          <div className="cg-package-head"><span>{number}</span><Icon size={22} /><small>{note}</small></div><h3>{title}</h3><p>{copy}</p><ul>{points.map((point) => <li key={point}><Check size={15} />{point}</li>)}</ul><button type="button" className="cg-package-inquiry-trigger" onClick={() => openPackageInquiry(title as PackageName)}>Discuss {title}<ArrowRight size={16} /></button>
         </motion.article>)}</div>
       </div></section>
 
@@ -71,7 +77,7 @@ export default function DeploymentPage({ onOpenContact }: PageProps) {
 
       <section className="cg-public-section is-light" aria-labelledby="deployment-collaboration-title"><div className="cg-shell cg-public-editorial-split">
         <motion.div {...fade}><span className="cg-eyebrow">Collaboration infrastructure</span><h2 id="deployment-collaboration-title">One programme reality. Different responsibilities.</h2></motion.div>
-        <motion.div className="cg-public-editorial-copy" {...fade}><p>Capital owners, execution teams, assurance participants, partners and workspace administrators work through permissioned views of the same relevant context. Shared visibility does not collapse authority.</p><a href="/#decision-brief">Bring the stakeholder context<ArrowRight size={15} /></a></motion.div>
+        <motion.div className="cg-public-editorial-copy" {...fade}><p>Capital owners, execution teams, assurance participants, partners and workspace administrators work through permissioned views of the same relevant context. Shared visibility does not collapse authority.</p><a href="/trust#trust-boundaries">Review roles and responsibilities<ArrowRight size={15} /></a></motion.div>
       </div></section>
 
       <section className="cg-public-cta"><div className="cg-shell"><div><span>Recommended first step</span><h2>Frame one live decision for AX1.Pilot.</h2></div><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'deployment_footer', action: 'decision_brief' })}>Prepare a Decision Brief<ArrowRight size={16} /></a></div></section>

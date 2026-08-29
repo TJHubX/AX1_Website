@@ -23,12 +23,14 @@ import {
 } from 'lucide-react';
 import logo from '../assets/ax1-logo.svg';
 import { trackAX1Event } from '../utils/analytics';
+import type { PackageName } from '../features/package-inquiry/packageInquiry';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 export type Tone = 'blue' | 'green' | 'amber' | 'muted' | 'white';
 export type ModalProps = { onClose: () => void };
-export type PageProps = { onOpenAccess: () => void; onOpenContact: () => void };
+export type ContactIntent = { packageName?: PackageName; source?: string };
+export type PageProps = { onOpenAccess: () => void; onOpenContact: (intent?: ContactIntent) => void };
 export type AccessErrors = Partial<Record<'fullName' | 'workEmail' | 'organization', string>>;
 
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -193,14 +195,14 @@ export function Header(_props: PageProps) {
   );
 }
 
-export function Footer(_props: { onOpenContact: () => void }) {
+export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
   return (
     <footer className="footer">
       <div className="footer-signal" aria-hidden="true"><i /><i /><i /></div>
       <div className="footer-frame">
         <div className="footer-masthead">
           <Link to="/" className="footer-wordmark" aria-label="Axis One home"><Logo /><span><strong>Axis One</strong><small>Global decision infrastructure</small></span></Link>
-          <a className="footer-cta" href="/#decision-brief">Frame a decision <ArrowRight size={14} /></a>
+          <button className="footer-cta" type="button" onClick={() => { trackAX1Event('primary_cta_selected', { location: 'footer_masthead', action: 'contact' }); onOpenContact({ source: 'footer_masthead' }); }}>Contact Axis One <ArrowRight size={14} /></button>
         </div>
 
         <div className="footer-main">
@@ -223,7 +225,7 @@ export function Footer(_props: { onOpenContact: () => void }) {
               <Link to="/deployment">Deployment</Link>
               <Link to="/trust">Trust</Link>
               <Link to="/founder">Founder</Link>
-              <a href="mailto:info@ax1.capital">Contact</a>
+              <a href="mailto:info@ax1.capital?subject=Axis%20One%20inquiry">Email Axis One</a>
             </div>
           </nav>
 
@@ -265,8 +267,11 @@ export function ModalShell({ children, onClose, className = '', labelledBy }: { 
 
   useEffect(() => {
     returnFocusRef.current = document.activeElement as HTMLElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     shellRef.current?.focus();
     return () => {
+      document.body.style.overflow = previousOverflow;
       returnFocusRef.current?.focus();
     };
   }, []);
@@ -534,7 +539,7 @@ export function ContactChannelsModal({ onClose }: ModalProps) {
   const copy = (email: string) => void navigator.clipboard?.writeText(email);
   const openEmail = (email: string, channel: string) => {
     const subject = encodeURIComponent(`Axis One Inquiry - ${channel}`);
-    const body = encodeURIComponent('Hello Axis One team,%0D%0A%0D%0AI would like to discuss:%0D%0A');
+    const body = encodeURIComponent('Hello Axis One team,\r\n\r\nI would like to discuss:\r\n');
     window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
   };
   return (

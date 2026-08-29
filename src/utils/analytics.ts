@@ -10,6 +10,9 @@ export type AX1EventName =
   | 'decision_brief_copied'
   | 'decision_brief_email_opened'
   | 'deployment_option_selected'
+  | 'package_inquiry_prepared'
+  | 'package_inquiry_copied'
+  | 'package_inquiry_email_opened'
   | 'primary_cta_selected';
 
 type EventDetail = Record<string, string | number | boolean | undefined>;
@@ -34,4 +37,3 @@ export function trackAX1Event(name: AX1EventName, detail: EventDetail = {}) {
   window.dispatchEvent(new CustomEvent('ax1:analytics', { detail: event }));
   window.dataLayer?.push(event);
 }
-

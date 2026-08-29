@@ -790,7 +790,7 @@ export function CapitalValueProtectionCalculator({
         <div className="cvp-cta">
           <div><CircleDollarSign size={22} /><span><strong>Validate this against a live capital programme</strong><small>Use the estimate as a starting point. Axis One can help structure the milestones, evidence, ownership and release controls behind a live capital decision.</small></span></div>
           <div className="cvp-cta-actions">
-            <Button onClick={onOpenAccess}>Review a live programme</Button>
+            <Button onClick={onOpenAccess}>Prepare a Decision Brief</Button>
             <button type="button" className="cvp-copy-button" onClick={copySummary} disabled={!result}>
               {copyState === 'copied' ? <Check size={14} /> : <Copy size={14} />}
               {copyState === 'copied' ? 'Copied' : copyState === 'error' ? 'Copy unavailable' : 'Copy calculation summary'}

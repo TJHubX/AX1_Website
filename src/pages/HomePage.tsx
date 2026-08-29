@@ -193,14 +193,14 @@ function TrustBoundaries() {
 
 function Deployment() {
   const options = [
-    ['01', 'Launch programme', 'Frame one approaching capital decision, agree the boundary and measure whether the decision basis becomes more current and defensible.', 'Recommended first step'],
-    ['02', 'Single programme', 'Operate one defined programme with its milestones, stakeholders, evidence and capital decision states connected.', 'Focused operating scope'],
-    ['03', 'Portfolio expansion', 'Extend a proven governance pattern across multiple programmes, entities or capital decision environments.', 'Scale after proof'],
+    ['01', 'AX1.Pilot', 'Frame one approaching capital decision, agree the boundary and measure whether the decision basis becomes more current and defensible.', 'Recommended first step'],
+    ['02', 'AX1.Core', 'Operate one defined programme with its milestones, stakeholders, evidence and capital decision states connected.', 'Single programme'],
+    ['03', 'AX1.Enterprise', 'Extend a proven governance pattern across multiple programmes, entities or capital decision environments.', 'Multiple programmes'],
   ];
   return (
     <section className="cg-deployment" id="deployment" aria-labelledby="cg-deployment-title"><div className="cg-shell">
       <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Start narrow. Prove value. Expand.</span><h2 id="cg-deployment-title">Begin where capital decision friction matters now.</h2><p>A bounded first scope creates a credible basis for expansion without requiring an enterprise-wide transformation.</p></motion.header>
-      <div className="cg-deployment-list">{options.map(([number, title, copy, note], index) => <motion.article className={index === 0 ? 'is-featured' : ''} key={number} {...fade}><span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div><small>{note}</small><a href="#decision-brief" aria-label={`Frame a ${title.toLowerCase()} decision`} onClick={() => trackAX1Event('deployment_option_selected', { option: title.toLowerCase().replaceAll(' ', '_') })}><ArrowRight size={18} /></a></motion.article>)}</div>
+      <div className="cg-deployment-list">{options.map(([number, title, copy, note], index) => <motion.article className={index === 0 ? 'is-featured' : ''} key={number} {...fade}><span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div><small>{note}</small><a href={`/deployment#${title.toLowerCase().replace('.', '-')}`} aria-label={`Review ${title} deployment`} onClick={() => trackAX1Event('deployment_option_selected', { option: title.toLowerCase().replaceAll('.', '_') })}><ArrowRight size={18} /></a></motion.article>)}</div>
     </div></section>
   );
 }

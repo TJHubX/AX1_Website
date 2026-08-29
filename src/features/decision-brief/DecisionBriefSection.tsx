@@ -139,18 +139,27 @@ export function DecisionBriefSection({ scenario }: Props) {
           <div className="cg-brief-intro cg-brief-intro-panel">
             <span className="cg-eyebrow"><Mail size={15} /> Decision Brief</span>
             <h2 id="decision-brief-title">Bring the next capital decision, not a requirements list.</h2>
-            <p>Frame one approaching action. Review the generated brief on this page, edit it if needed, then decide whether to copy it or open your email client.</p>
           </div>
           <div className="cg-brief-meta">
-            <div className="cg-brief-principle"><ShieldCheck size={18} /><p><strong>Capital, governed by execution.</strong>Configured rules determine readiness. Authorised people determine action.</p></div>
-            <div className="cg-brief-contact"><span>Direct recipient</span><a href={`mailto:${recipientEmail()}`}>{recipientEmail()}</a></div>
-            <p className="cg-brief-privacy">Your entries remain in this browser. Axis One does not receive anything until you choose to send the email.</p>
+            <p>Frame one approaching action. Review the generated brief on this page, edit it if needed, then choose whether to copy it or open your email client.</p>
+            <div className="cg-brief-utility" aria-label="Decision Brief privacy and recipient">
+              <ShieldCheck size={16} aria-hidden="true" />
+              <span>Prepared in your browser</span>
+              <i aria-hidden="true">·</i>
+              <span>Sent only when you choose</span>
+              <i aria-hidden="true">·</i>
+              <a href={`mailto:${recipientEmail()}`}>To {recipientEmail()}</a>
+            </div>
           </div>
         </div>
 
         <div className="cg-brief-workspace">
           <form className="cg-brief-form" onSubmit={prepareBrief} noValidate>
-            <div className="cg-form-progress" aria-hidden="true"><span className="is-active" /><span className={preview ? 'is-active' : ''} /><span /></div>
+            <ol className="cg-form-progress" aria-label="Decision Brief stages">
+              <li className={preview ? 'is-complete' : 'is-current'} aria-current={!preview ? 'step' : undefined}><span>01</span><strong>Frame</strong></li>
+              <li className={preview ? 'is-current' : ''} aria-current={preview ? 'step' : undefined}><span>02</span><strong>Review</strong></li>
+              <li><span>03</span><strong>Send</strong></li>
+            </ol>
             <label className={errors.decision ? 'is-invalid' : ''} htmlFor={ids.decision}>
               <span>What capital decision is approaching?</span>
               <textarea id={ids.decision} rows={3} value={values.decision} onChange={(event) => update('decision', event.target.value)} placeholder="For example: authorise the next infrastructure release" />

@@ -3,6 +3,7 @@ import test from 'node:test';
 import { calculateDiagnosticResult } from './diagnostic/diagnosticModel.js';
 import { buildDecisionBrief, buildDecisionEmail, type DecisionBriefValues } from './decision-brief/decisionBrief.js';
 import { calculateDecisionExposure } from './decision-exposure/decisionExposure.js';
+import { buildPackageInquiry, buildPackageInquiryEmail, type PackageInquiryValues } from './package-inquiry/packageInquiry.js';
 
 const briefValues: DecisionBriefValues = {
   decision: 'Authorise the next infrastructure release',
@@ -48,4 +49,35 @@ test('Decision Brief email is inspectable before launch', () => {
   const email = buildDecisionEmail(briefValues);
   assert.match(email.subject, /^Axis One decision brief:/);
   assert.equal(email.body, buildDecisionBrief(briefValues));
+});
+
+const packageInquiryValues: PackageInquiryValues = {
+  packageName: 'AX1.Pilot',
+  fullName: 'A Decision Owner',
+  workEmail: 'owner@example.com',
+  organisation: 'Example Infrastructure Programme',
+  context: 'We are approaching a staged capital release.',
+};
+
+test('package inquiry preserves the selected scope and supplied context', () => {
+  const inquiry = buildPackageInquiry(packageInquiryValues);
+  assert.match(inquiry, /Selected scope: AX1\.Pilot/);
+  assert.match(inquiry, /Example Infrastructure Programme/);
+  assert.match(inquiry, /staged capital release/);
+});
+
+test('package inquiry email is inspectable before the mail client opens', () => {
+  const email = buildPackageInquiryEmail(packageInquiryValues);
+  assert.match(email.subject, /^AX1\.Pilot deployment inquiry/);
+  assert.equal(email.body, buildPackageInquiry(packageInquiryValues));
+});
+
+test('general inquiry uses a general Axis One subject', () => {
+  const email = buildPackageInquiryEmail({
+    ...packageInquiryValues,
+    packageName: 'General Axis One inquiry',
+  });
+  assert.equal(email.subject, 'Axis One inquiry — Example Infrastructure Programme');
+  assert.match(email.body, /^AXIS ONE INQUIRY\n/);
+  assert.doesNotMatch(email.body, /DEPLOYMENT INQUIRY/);
 });

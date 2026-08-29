@@ -8,7 +8,8 @@ import {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
-export default function FounderPage({ onOpenAccess, onOpenContact }: PageProps) {
+export default function FounderPage({ onOpenContact }: PageProps) {
+  const openDecisionBrief = () => { window.location.href = '/#decision-brief'; };
   return (
     <main>
       <section className="section founder-page">
@@ -39,7 +40,7 @@ export default function FounderPage({ onOpenAccess, onOpenContact }: PageProps) 
           </div>
           <p>Axis One is not another reporting layer. It is global decision infrastructure through which execution, evidence, stakeholders and capital decisions remain connected.</p>
           <blockquote className="closing-quote">“Capital needs more than a compelling strategy. It needs execution that decision-makers can trust.”</blockquote>
-          <div className="actions"><Button onClick={onOpenAccess}>Frame a Capital Decision</Button><Button variant="ghost" to="/system">See How Axis One Works</Button></div>
+          <div className="actions"><Button onClick={openDecisionBrief}>Frame a Capital Decision</Button><Button variant="ghost" to="/system">See How Axis One Works</Button></div>
         </motion.div>
         <motion.div className="founder-sticky" {...fade}>
           <img src={portrait} alt="Tania Jokic, Founder & CEO" loading="eager" decoding="async" />
@@ -47,7 +48,7 @@ export default function FounderPage({ onOpenAccess, onOpenContact }: PageProps) 
         </motion.div>
       </section>
       <FinalCTA
-        onOpenAccess={onOpenAccess}
+        onOpenAccess={openDecisionBrief}
         heading="Explore the system built from this structural gap."
         subcopy="Axis One connects execution proof, decision authority and the governed record, while external providers remain responsible for custody and transfer."
         primaryLabel="Frame a Capital Decision"

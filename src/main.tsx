@@ -2,7 +2,8 @@
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { MotionConfig } from 'motion/react';
-import { Header, RequestAccessModal, ContactChannelsModal } from './components';
+import { Header, type ContactIntent } from './components';
+import { PackageInquiryModal } from './features/package-inquiry/PackageInquiryModal';
 import '@fontsource-variable/inter';
 import './styles.css';
 
@@ -35,7 +36,7 @@ const PAGE_METADATA: Record<string, { title: string; description: string }> = {
   },
   '/deployment': {
     title: 'Deployment | Axis One Capital Governance',
-    description: 'Start with a bounded Launch Programme, then expand Axis One across one programme or a governed portfolio.',
+    description: 'Start with AX1.Pilot, then expand through AX1.Core or AX1.Enterprise after a credible operating result.',
   },
   '/trust': {
     title: 'Trust, Security & Governance | Axis One',
@@ -56,8 +57,35 @@ function PageLoader() {
 }
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    let cancelled = false;
+    const scrollToHash = () => {
+      const target = document.getElementById(hash.slice(1));
+      if (!target) return false;
+      window.requestAnimationFrame(() => {
+        if (!cancelled) target.scrollIntoView({ block: 'start' });
+      });
+      return true;
+    };
+    if (scrollToHash()) return;
+
+    const observer = new MutationObserver(() => {
+      if (scrollToHash()) observer.disconnect();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    const timeoutId = window.setTimeout(() => observer.disconnect(), 5000);
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+      window.clearTimeout(timeoutId);
+    };
+  }, [pathname, hash]);
   return null;
 }
 
@@ -84,9 +112,11 @@ function PageMetadata() {
 }
 
 function App() {
-  const [accessOpen, setAccessOpen] = useState(false);
-  const [contactOpen, setContactOpen] = useState(false);
-  const pageProps = { onOpenAccess: () => setAccessOpen(true), onOpenContact: () => setContactOpen(true) };
+  const [contactIntent, setContactIntent] = useState<ContactIntent | null>(null);
+  const pageProps = {
+    onOpenAccess: () => { window.location.href = '/#decision-brief'; },
+    onOpenContact: (intent: ContactIntent = {}) => setContactIntent(intent),
+  };
   return (
     <MotionConfig reducedMotion="user">
       <BrowserRouter>
@@ -110,8 +140,7 @@ function App() {
             <Route path="*" element={<NotFoundPage {...pageProps} />} />
           </Routes>
         </Suspense>
-        {accessOpen && <RequestAccessModal onClose={() => setAccessOpen(false)} />}
-        {contactOpen && <ContactChannelsModal onClose={() => setContactOpen(false)} />}
+        {contactIntent && <PackageInquiryModal packageName={contactIntent.packageName} source={contactIntent.source} onClose={() => setContactIntent(null)} />}
       </BrowserRouter>
     </MotionConfig>
   );

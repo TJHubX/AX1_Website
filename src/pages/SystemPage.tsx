@@ -47,7 +47,7 @@ export default function SystemPage({ onOpenContact }: PageProps) {
             <span className="cg-eyebrow">The Axis One system</span>
             <h1 id="system-title">See what is decision-ready now.</h1>
             <p>Axis One connects execution, attributable evidence, ownership and human authority in one governed programme context. The public website shows the outcome without exposing protected operating mechanics.</p>
-            <div className="cg-actions"><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'system_hero', action: 'decision_brief' })}>Frame a capital decision<ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="/#system">Open the Decision Room</a></div>
+            <div className="cg-actions"><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'system_hero', action: 'decision_brief' })}>Frame a capital decision<ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="/#system">See the governed workflow</a></div>
           </motion.div>
           <DecisionReadinessObject />
         </div>
