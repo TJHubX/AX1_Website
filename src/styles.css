@@ -5935,7 +5935,7 @@ body .cvp-shell select { font-size: var(--type-caption); line-height: 1.5; }
 .cg-capital-page .cvp-evidence-row:hover { transform: none; border-color: #d4deea; box-shadow: none; }
 .cvp-evidence-row-source .cvp-source-meta { display: grid; gap: 7px; }
 .cvp-evidence-row-source .cvp-source-meta small { max-width: 150px; text-align: left; }
-.cg-capital-page .cvp-evidence-row-metric .cvp-evidence-figure { margin: 0; font-size: clamp(2.6rem, 3.4vw, 3.3rem); }
+.cg-capital-page .cvp-evidence-row-metric .cvp-evidence-figure { margin: 0; font-size: clamp(2.15rem, 2.75vw, 2.7rem); }
 .cg-capital-page .cvp-evidence-row-metric h4 { margin: 10px 0 0; font-size: .96rem; line-height: 1.32; }
 .cg-capital-page .cvp-evidence-row-context > p { margin: 0 0 14px; font-size: .92rem; line-height: 1.65; }
 .cg-capital-page .cvp-evidence-row-context > ul { margin: 0 0 16px; padding-top: 0; border-top: 0; font-size: .86rem; line-height: 1.55; }

@@ -163,7 +163,7 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
               <label htmlFor={additionalId}>
                 <span>Separate, evidenced cost</span>
                 <div className="cg-suffixed-input"><input id={additionalId} type="number" min="0" step="1000" value={additionalBurden} onChange={(event) => setAdditionalBurden(cleanNumber(event.target.value))} /><b>{currency}</b></div>
-                <small>Include only a distinct amount you can support. Do not repeat the carrying burden calculated above.</small>
+                <small>Include only evidenced costs not already represented in the carrying-cost estimate above.</small>
               </label>
             </details>
           </form>
