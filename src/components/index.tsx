@@ -199,8 +199,7 @@ export function Footer(_props: { onOpenContact: () => void }) {
       <div className="footer-signal" aria-hidden="true"><i /><i /><i /></div>
       <div className="footer-frame">
         <div className="footer-masthead">
-          <Link to="/" className="footer-logo-link" aria-label="Axis One home"><Logo /></Link>
-          <span className="footer-position"><i />Global decision infrastructure</span>
+          <Link to="/" className="footer-wordmark" aria-label="Axis One home"><Logo /><span><strong>Axis One</strong><small>Global decision infrastructure</small></span></Link>
           <a className="footer-cta" href="/#decision-brief">Frame a decision <ArrowRight size={14} /></a>
         </div>
 

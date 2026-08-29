@@ -29,19 +29,19 @@ const beforeAfter = [
 
 export default function SystemPage({ onOpenContact }: PageProps) {
   return (
-    <main className="cg-public-page">
+    <main className="cg-public-page cg-system-page">
       <section className="cg-public-hero" aria-labelledby="system-title">
         <div className="cg-shell cg-public-hero-grid">
           <motion.div {...fade}>
             <span className="cg-eyebrow">The Axis One system</span>
-            <h1 id="system-title">See what <span className="cg-public-keep">is decision-ready</span> now.</h1>
+            <h1 id="system-title" className="cg-structured-headline" aria-label="See what is decision-ready now."><span>See what is</span><span>decision-ready</span><span>now.</span></h1>
             <p>Axis One connects execution, attributable evidence, ownership and human authority in one governed programme context. The public website shows the outcome without exposing protected operating mechanics.</p>
             <div className="cg-actions"><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'system_hero', action: 'decision_brief' })}>Frame a capital decision<ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="/#system">Open the Decision Room</a></div>
           </motion.div>
           <motion.div className="cg-public-trace-card" {...fade}>
             <div><span>Public system view</span><strong>From execution change to authorised action</strong></div>
             <AX1MilestoneTrace items={capabilityTrace} activeIndex={2} ariaLabel="Public Axis One capability progression" theme="dark" />
-            <p><LockKeyhole size={14} />Editorial progression only. Axis One configuration and decision mechanics remain protected.</p>
+            <p><LockKeyhole size={14} />Illustrative public progression. Client configuration and operating rules remain protected.</p>
           </motion.div>
         </div>
       </section>
@@ -60,8 +60,8 @@ export default function SystemPage({ onOpenContact }: PageProps) {
       </div></section>
 
       <section className="cg-public-section is-light" aria-labelledby="system-boundary-title"><div className="cg-shell cg-public-split">
-        <motion.div {...fade}><span className="cg-eyebrow">Public boundary</span><h2 id="system-boundary-title">Understand the value without seeing the machinery.</h2></motion.div>
-        <motion.div className="cg-public-boundary-card" {...fade}><p>Visitors can understand that Axis One connects execution progression with evidence, ownership and decision readiness.</p><ul><li><ShieldCheck size={16} />No public thresholds or scoring</li><li><ShieldCheck size={16} />No public state-machine rules</li><li><ShieldCheck size={16} />No automation or capital-transformation mechanics</li><li><ShieldCheck size={16} />Human authority remains explicit</li></ul></motion.div>
+        <motion.div {...fade}><span className="cg-eyebrow">Protected by design</span><h2 id="system-boundary-title">Decision clarity without exposing the operating model.</h2><p>Clients can see the context needed for action while their configured rules and governance design remain private.</p></motion.div>
+        <motion.div className="cg-public-boundary-card" {...fade}><p>Axis One makes the present decision position understandable without turning protected client configuration into public product detail.</p><ul><li><ShieldCheck size={16} />Current execution and evidence position</li><li><ShieldCheck size={16} />Visible ownership and responsible authority</li><li><ShieldCheck size={16} />Clear decision readiness and permitted direction</li><li><ShieldCheck size={16} />Private client rules, thresholds and configuration</li></ul></motion.div>
       </div></section>
 
       <section className="cg-public-cta"><div className="cg-shell"><div><span>Bring one approaching decision</span><h2>See whether its basis is current, attributable and actionable.</h2></div><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'system_footer', action: 'decision_brief' })}>Prepare a Decision Brief<ArrowRight size={16} /></a></div></section>

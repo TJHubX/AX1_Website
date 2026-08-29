@@ -65,26 +65,32 @@ export function DecisionDiagnostic() {
           </div>
         </motion.header>
 
-        <div className="cg-question-rail">
-          {questions.map(([number, question, explanation], index) => (
-            <motion.article className={index === activeIndex && !result ? 'is-current' : ''} key={number} {...fade}>
-              <div className="cg-question-index"><span>{number}</span><i className={index === activeIndex && !result ? 'is-active' : answers[index] ? 'is-complete' : ''} /></div>
-              <div className="cg-question-copy"><h3>{question}</h3><p>{explanation}</p></div>
-              <div className="cg-diagnostic-choices" role="group" aria-label={question}>
-                {choices.map(({ value, label, icon: Icon }) => (
-                  <button
-                    className={answers[index] === value ? 'is-active' : ''}
-                    key={value}
-                    type="button"
-                    aria-pressed={answers[index] === value}
-                    onClick={() => answerQuestion(index, value)}
-                  >
-                    <Icon size={15} />{label}
-                  </button>
-                ))}
-              </div>
-            </motion.article>
-          ))}
+        <div className="cg-diagnostic-panel">
+          <div className="cg-diagnostic-panel-head">
+            <div><span>Decision defence check</span><strong>Four signals of a decision-ready position</strong></div>
+            <small>{completeAnswers.length === 4 ? 'Assessment complete' : `${4 - completeAnswers.length} remaining`}</small>
+          </div>
+          <div className="cg-question-rail">
+            {questions.map(([number, question, explanation], index) => (
+              <motion.article className={index === activeIndex && !result ? 'is-current' : answers[index] ? 'is-answered' : ''} key={number} {...fade}>
+                <div className="cg-question-index"><span>{number}</span><i className={index === activeIndex && !result ? 'is-active' : answers[index] ? 'is-complete' : ''} /></div>
+                <div className="cg-question-copy"><h3>{question}</h3><p>{explanation}</p></div>
+                <div className="cg-diagnostic-choices" role="group" aria-label={question}>
+                  {choices.map(({ value, label, icon: Icon }) => (
+                    <button
+                      className={answers[index] === value ? 'is-active' : ''}
+                      key={value}
+                      type="button"
+                      aria-pressed={answers[index] === value}
+                      onClick={() => answerQuestion(index, value)}
+                    >
+                      <Icon size={15} />{label}
+                    </button>
+                  ))}
+                </div>
+              </motion.article>
+            ))}
+          </div>
         </div>
 
         {result && (

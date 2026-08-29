@@ -52,6 +52,21 @@ type NumberFieldProps = {
 
 const CURRENCY_SYMBOLS: Record<CurrencyCode, string> = { GBP: '£', EUR: '€', USD: '$' };
 
+function formatInputNumber(value: number | null) {
+  if (value === null || !Number.isFinite(value)) return '';
+  return new Intl.NumberFormat('en-GB', { maximumFractionDigits: 4 }).format(value);
+}
+
+function sanitiseNumberDraft(value: string) {
+  const clean = value.replace(/[\s,]/g, '').replace(/[^\d.-]/g, '');
+  const negative = clean.startsWith('-');
+  const unsigned = clean.replace(/-/g, '');
+  const [integer = '', ...fractionParts] = unsigned.split('.');
+  const fraction = fractionParts.join('').slice(0, 4);
+  const number = fractionParts.length > 0 ? `${integer}.${fraction}` : integer;
+  return `${negative ? '-' : ''}${number}`;
+}
+
 function NumberField({
   inputId,
   label,
@@ -70,6 +85,23 @@ function NumberField({
   const id = inputId ?? generatedId;
   const helperId = `${id}-helper`;
   const errorId = `${id}-error`;
+  const [focused, setFocused] = React.useState(false);
+  const [draft, setDraft] = React.useState(value === null ? '' : String(value));
+
+  React.useEffect(() => {
+    if (!focused) setDraft(value === null ? '' : String(value));
+  }, [value, focused]);
+
+  const updateDraft = (nextValue: string) => {
+    const nextDraft = sanitiseNumberDraft(nextValue);
+    setDraft(nextDraft);
+    if (nextDraft === '' || nextDraft === '-' || nextDraft === '.' || nextDraft === '-.') {
+      onChange(null);
+      return;
+    }
+    const numeric = Number(nextDraft);
+    if (Number.isFinite(numeric)) onChange(numeric);
+  };
 
   return (
     <label className={`cvp-field${error ? ' has-error' : ''}`} htmlFor={id}>
@@ -81,18 +113,20 @@ function NumberField({
         {prefix && <small aria-hidden="true">{prefix}</small>}
         <input
           id={id}
-          type="number"
+          type="text"
           inputMode="decimal"
-          min={min}
-          max={max}
-          step={step}
-          value={value ?? ''}
+          data-min={min}
+          data-max={max}
+          data-step={step}
+          value={focused ? draft : formatInputNumber(value)}
           aria-invalid={Boolean(error)}
           aria-describedby={`${helperId}${error ? ` ${errorId}` : ''}`}
-          onChange={(event) => {
-            const raw = event.target.value;
-            onChange(raw === '' ? null : Number(raw));
+          onFocus={() => {
+            setDraft(value === null ? '' : String(value));
+            setFocused(true);
           }}
+          onBlur={() => setFocused(false)}
+          onChange={(event) => updateDraft(event.target.value)}
         />
         {suffix && <small aria-hidden="true">{suffix}</small>}
       </span>
@@ -658,6 +692,7 @@ export function CapitalValueProtectionCalculator({
             </div>
           </div>
         </details>
+      </div>
 
         <section className="cvp-evidence" id="independent-evidence" tabIndex={-1} aria-labelledby="cvp-evidence-heading">
           <div className="cvp-evidence-head">
@@ -665,6 +700,7 @@ export function CapitalValueProtectionCalculator({
             <p>Independent research consistently connects capital-project underperformance with fragmented information, delayed decisions, weak governance and inadequate evidence. The calculator above uses the visitor's own data. The research below provides context and is not automatically included in the estimate.</p>
           </div>
 
+          <div className="cvp-evidence-group-title"><span>01</span><strong>What independent research identifies</strong></div>
           <div className="cvp-narrative-grid">
             {narrativeEvidence.map((item) => <article className="cvp-evidence-card cvp-narrative-card" key={item.sourceUrl}>
               <div className="cvp-source-meta"><span>{item.organisation}</span><small>{item.evidenceType} · {item.year}</small></div>
@@ -675,6 +711,7 @@ export function CapitalValueProtectionCalculator({
             </article>)}
           </div>
 
+          <div className="cvp-evidence-group-title"><span>02</span><strong>Published performance indicators</strong></div>
           <div className="cvp-number-grid">
             {numericalEvidence.map((item) => <article className="cvp-evidence-card cvp-number-card" key={item.sourceUrl}>
               <div className="cvp-source-meta"><span>{item.organisation}</span><small>{item.evidenceType}{item.year ? ` · ${item.year}` : ''}</small></div>
@@ -701,7 +738,6 @@ export function CapitalValueProtectionCalculator({
             </button>
           </div>
         </div>
-      </div>
     </section>
   );
 }

@@ -14,17 +14,17 @@ const deploymentTrace = [
 
 const options = [
   {
-    number: '01', icon: Rocket, title: 'Launch Programme', note: 'Recommended first step',
+    number: '01', icon: Rocket, title: 'AX1.Pilot', note: 'Recommended first step',
     copy: 'Start with one approaching capital decision and a bounded stakeholder group. Establish the baseline, connect the present decision basis and agree how value will be judged.',
     points: ['One decision boundary', 'Defined participants', 'Current-state baseline', 'Measured review point'],
   },
   {
-    number: '02', icon: Network, title: 'Single Programme', note: 'Focused operating scope',
+    number: '02', icon: Network, title: 'AX1.Core', note: 'Single programme',
     copy: 'Operate one programme with its milestones, evidence, ownership and capital decision states connected through a permissioned environment.',
     points: ['Programme-wide context', 'Role-scoped collaboration', 'Attributable evidence', 'Reviewable decisions'],
   },
   {
-    number: '03', icon: Layers3, title: 'Portfolio Expansion', note: 'Scale after proof',
+    number: '03', icon: Layers3, title: 'AX1.Enterprise', note: 'Multiple programmes',
     copy: 'Extend a proven governance pattern across multiple programmes, entities or capital decision environments without losing local responsibility.',
     points: ['Multiple programmes', 'Shared governance language', 'Portfolio visibility', 'Controlled expansion'],
   },
@@ -50,9 +50,9 @@ export default function DeploymentPage({ onOpenContact }: PageProps) {
       </section>
 
       <section className="cg-public-section is-light" id="deployment-options" aria-labelledby="deployment-options-title"><div className="cg-shell">
-        <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Choose the operating scope</span><h2 id="deployment-options-title">Use the package that matches the decision maturity.</h2><p>A Launch Programme is the default first step. Broader deployment should be earned through a clear operating result.</p></motion.header>
+        <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Choose the operating scope</span><h2 id="deployment-options-title">Use the package that matches the decision maturity.</h2><p>AX1.Pilot is the recommended first step. Broader deployment should be earned through a clear operating result.</p></motion.header>
         <div className="cg-package-grid">{options.map(({ number, icon: Icon, title, note, copy, points }, index) => <motion.article className={index === 0 ? 'is-featured' : ''} key={title} {...fade}>
-          <div className="cg-package-head"><span>{number}</span><Icon size={22} /><small>{note}</small></div><h3>{title}</h3><p>{copy}</p><ul>{points.map((point) => <li key={point}><Check size={15} />{point}</li>)}</ul><a href="/#decision-brief" onClick={() => trackAX1Event('deployment_option_selected', { option: title.toLowerCase().replaceAll(' ', '_') })}>Frame this scope<ArrowRight size={16} /></a>
+          <div className="cg-package-head"><span>{number}</span><Icon size={22} /><small>{note}</small></div><h3>{title}</h3><p>{copy}</p><ul>{points.map((point) => <li key={point}><Check size={15} />{point}</li>)}</ul><a href="/#decision-brief" onClick={() => trackAX1Event('deployment_option_selected', { option: title.toLowerCase().replaceAll('.', '_') })}>Frame {title}<ArrowRight size={16} /></a>
         </motion.article>)}</div>
       </div></section>
 
@@ -70,7 +70,7 @@ export default function DeploymentPage({ onOpenContact }: PageProps) {
         <motion.div className="cg-public-boundary-card" {...fade}><p>Capital owners, execution teams, assurance participants, partners and workspace administrators work through permissioned views of the same relevant context. Shared visibility does not collapse authority.</p><a href="/#decision-brief">Bring the stakeholder context<ArrowRight size={15} /></a></motion.div>
       </div></section>
 
-      <section className="cg-public-cta"><div className="cg-shell"><div><span>Recommended first step</span><h2>Frame one live decision for a bounded Launch Programme.</h2></div><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'deployment_footer', action: 'decision_brief' })}>Prepare a Decision Brief<ArrowRight size={16} /></a></div></section>
+      <section className="cg-public-cta"><div className="cg-shell"><div><span>Recommended first step</span><h2>Frame one live decision for AX1.Pilot.</h2></div><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'deployment_footer', action: 'decision_brief' })}>Prepare a Decision Brief<ArrowRight size={16} /></a></div></section>
       <Footer onOpenContact={onOpenContact} />
     </main>
   );

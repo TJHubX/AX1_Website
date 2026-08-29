@@ -44,7 +44,7 @@ const visibilityCopy: Record<EvidenceVisibility, { title: string; copy: string }
 };
 
 function cleanNumber(value: string, fallback = 0) {
-  const parsed = Number(value);
+  const parsed = Number(value.replace(/[\s,]/g, ''));
   return Number.isFinite(parsed) ? Math.max(0, parsed) : fallback;
 }
 
@@ -55,6 +55,7 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
   const currencyId = useId();
   const additionalId = useId();
   const [capital, setCapital] = useState(12_400_000);
+  const [capitalFocused, setCapitalFocused] = useState(false);
   const [days, setDays] = useState(21);
   const [annualRate, setAnnualRate] = useState(8);
   const [currency, setCurrency] = useState<CurrencyCode>('EUR');
@@ -141,7 +142,7 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
               <label htmlFor={capitalId}>Capital governed through the next decision</label>
               <div className="cg-money-input">
                 <BrandedSelect<CurrencyCode> id={currencyId} className="is-money" ariaLabel="Display currency" value={currency} options={currencyOptions} onChange={setCurrency} />
-                <input id={capitalId} type="number" min="0" step="10000" value={capital} onChange={(event) => setCapital(cleanNumber(event.target.value))} />
+                <input id={capitalId} type="text" inputMode="decimal" value={capitalFocused ? String(capital) : new Intl.NumberFormat('en-GB', { maximumFractionDigits: 2 }).format(capital)} onFocus={() => setCapitalFocused(true)} onBlur={() => setCapitalFocused(false)} onChange={(event) => setCapital(cleanNumber(event.target.value))} />
               </div>
               <small>Currency changes display only. No exchange-rate conversion is performed.</small>
             </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useState } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, Copy, ExternalLink, Mail, ShieldCheck } from 'lucide-react';
+import { BrandedDatePicker } from '../../components/BrandedDatePicker';
 import { BrandedSelect } from '../../components/BrandedSelect';
 import type { DecisionExposureScenario } from '../decision-exposure/DecisionExposureSnapshot';
 import { trackAX1Event } from '../../utils/analytics';
@@ -26,6 +27,20 @@ const initialValues: DecisionBriefValues = {
   context: '',
 };
 
+function sanitiseCapitalInput(value: string) {
+  const clean = value.replace(/[\s,]/g, '').replace(/[^\d.]/g, '');
+  const [integer = '', ...fractionParts] = clean.split('.');
+  const fraction = fractionParts.join('').slice(0, 2);
+  return fractionParts.length > 0 ? `${integer}.${fraction}` : integer;
+}
+
+function formatCapitalInput(value: string) {
+  if (!value) return '';
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return value;
+  return new Intl.NumberFormat('en-GB', { maximumFractionDigits: 2 }).format(numeric);
+}
+
 function recipientEmail() {
   return document.documentElement.dataset.ax1Email || 'info@ax1.capital';
 }
@@ -40,6 +55,7 @@ export function DecisionBriefSection({ scenario }: Props) {
   const [errors, setErrors] = useState<Errors>({});
   const [preview, setPreview] = useState<DecisionBriefEmail | null>(null);
   const [status, setStatus] = useState('');
+  const [capitalFocused, setCapitalFocused] = useState(false);
 
   useEffect(() => {
     if (!scenario) return;
@@ -137,14 +153,14 @@ export function DecisionBriefSection({ scenario }: Props) {
               {errors.decision && <small>{errors.decision}</small>}
             </label>
             <div className="cg-brief-form-row cg-brief-form-row-three">
-              <label className={errors.decisionDate ? 'is-invalid' : ''} htmlFor={ids.decisionDate}>
-                <span>When is the next decision?</span>
-                <input id={ids.decisionDate} type="date" value={values.decisionDate} onChange={(event) => update('decisionDate', event.target.value)} />
+              <div className={`cg-brief-field ${errors.decisionDate ? 'is-invalid' : ''}`.trim()}>
+                <label htmlFor={ids.decisionDate}>When is the next decision?</label>
+                <BrandedDatePicker id={ids.decisionDate} value={values.decisionDate} invalid={Boolean(errors.decisionDate)} ariaLabel="Next decision date" onChange={(nextDate) => update('decisionDate', nextDate)} />
                 {errors.decisionDate && <small>{errors.decisionDate}</small>}
-              </label>
+              </div>
               <div className={`cg-brief-field ${errors.capitalAffected ? 'is-invalid' : ''}`.trim()}>
                 <label htmlFor={ids.capitalAffected}>Approximate capital affected</label>
-                <div className="cg-brief-money"><BrandedSelect id={ids.currency} className="is-money" ariaLabel="Capital currency" value={values.currency} options={[{ value: 'EUR', label: 'EUR' }, { value: 'GBP', label: 'GBP' }, { value: 'USD', label: 'USD' }]} onChange={(nextCurrency) => update('currency', nextCurrency)} /><input id={ids.capitalAffected} type="number" min="0" step="10000" value={values.capitalAffected} onChange={(event) => update('capitalAffected', event.target.value)} placeholder="12400000" /></div>
+                <div className="cg-brief-money"><BrandedSelect id={ids.currency} className="is-money" ariaLabel="Capital currency" value={values.currency} options={[{ value: 'EUR', label: 'EUR' }, { value: 'GBP', label: 'GBP' }, { value: 'USD', label: 'USD' }]} onChange={(nextCurrency) => update('currency', nextCurrency)} /><input id={ids.capitalAffected} type="text" inputMode="decimal" value={capitalFocused ? values.capitalAffected : formatCapitalInput(values.capitalAffected)} onFocus={() => setCapitalFocused(true)} onBlur={() => setCapitalFocused(false)} onChange={(event) => update('capitalAffected', sanitiseCapitalInput(event.target.value))} placeholder="12,400,000" /></div>
                 {errors.capitalAffected && <small>{errors.capitalAffected}</small>}
               </div>
             </div>
