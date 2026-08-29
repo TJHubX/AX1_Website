@@ -55,8 +55,8 @@ export function DecisionDiagnostic() {
   return (
     <section className="cg-diagnostic" id="diagnostic" aria-labelledby="cg-diagnostic-title">
       <div className="cg-shell cg-diagnostic-layout">
-        <motion.header className="cg-section-heading cg-section-heading-dark" {...fade}>
-          <span className="cg-eyebrow">A 60 second test</span>
+        <motion.header className="cg-section-heading cg-section-heading-dark cg-diagnostic-heading" {...fade}>
+          <span className="cg-eyebrow">A 60-second test</span>
           <h2 id="cg-diagnostic-title">Can the next action <span className="cg-diagnostic-keep">be defended</span> without another report?</h2>
           <p>Answer four plain questions. No programme data is submitted or stored.</p>
           <div className="cg-diagnostic-progress" aria-label={`${completeAnswers.length} of 4 questions answered`}>

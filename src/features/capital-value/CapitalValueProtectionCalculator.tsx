@@ -31,6 +31,12 @@ import {
 } from './capitalValueProtection';
 import { narrativeEvidence, numericalEvidence } from './industryEvidence';
 
+const observedOutcomeEvidence = numericalEvidence.filter(({ organisation }) =>
+  organisation === 'Accenture' || organisation === 'PwC');
+
+const externalPracticeBenchmarkEvidence = numericalEvidence.filter(({ organisation }) =>
+  organisation === 'BCG' || organisation === 'McKinsey & Company');
+
 type NumericInputKey = {
   [Key in keyof CapitalCalculatorInput]: CapitalCalculatorInput[Key] extends number | null ? Key : never;
 }[keyof CapitalCalculatorInput];
@@ -314,9 +320,10 @@ export function CapitalValueProtectionCalculator({
           </div>
 
           <div className="cvp-story-definition">
-            <span>What is disconnected capital execution?</span>
-            <h3>Disconnected capital execution is the gap between capital approval and verified delivery.</h3>
-            <p>It occurs when the people making decisions, the teams executing the work and the evidence proving progress do not operate through the same governed system.</p>
+            <span className="cvp-story-definition-kicker">Capital execution gap</span>
+            <h3>What is disconnected capital execution?</h3>
+            <p className="cvp-story-definition-lede">Disconnected capital execution is the gap between capital approval and verified delivery.</p>
+            <p className="cvp-story-definition-detail">It occurs when the people making decisions, the teams executing the work and the evidence proving progress do not operate through the same governed system.</p>
             <div className="cvp-problem-cards">
               <article><b>01</b><div><strong>Fragmented evidence</strong><p>Progress information is spread across documents, meetings, emails and disconnected systems.</p></div></article>
               <article><b>02</b><div><strong>Delayed decisions</strong><p>Decision-makers do not receive complete, current and decision-ready information at the right moment.</p></div></article>
@@ -360,7 +367,7 @@ export function CapitalValueProtectionCalculator({
         <header className="cvp-intro">
           <div className="cvp-intro-copy">
             <Badge>Capital value protection calculator</Badge>
-            <h2 id="decision-cost-title">Where is capital value<br />currently exposed?</h2>
+            <h2 id="decision-cost-title">Where is capital value currently exposed?</h2>
             <p>Enter your portfolio figures to estimate the value exposed to overruns and delay. Then test transparent reduction scenarios without treating them as guaranteed Axis One savings.</p>
           </div>
           <div className="cvp-intro-actions">
@@ -711,19 +718,71 @@ export function CapitalValueProtectionCalculator({
             </article>)}
           </div>
 
-          <div className="cvp-evidence-group-title"><span>02</span><strong>Published performance indicators</strong></div>
-          <div className="cvp-number-grid">
-            {numericalEvidence.map((item) => <article className="cvp-evidence-card cvp-number-card" key={item.sourceUrl}>
-              <div className="cvp-source-meta"><span>{item.organisation}</span><small>{item.evidenceType}{item.year ? ` · ${item.year}` : ''}</small></div>
-              <strong className="cvp-evidence-figure">{item.primaryFigure}</strong>
-              <h4>{item.metric}</h4>
-              {item.secondaryFigures && <ul>{item.secondaryFigures.map((figure) => <li key={figure}>{figure}</li>)}</ul>}
-              <p>{item.copy}</p>
-              {item.scope && <span className="cvp-evidence-scope">Scope: {item.scope}</span>}
-              <small className="cvp-source-title">{item.sourceTitle}</small>
-              <EvidenceLink href={item.sourceUrl} organisation={item.organisation} sourceTitle={item.sourceTitle} />
-            </article>)}
-          </div>
+          <section className="cvp-evidence-band cvp-evidence-band-observed" aria-labelledby="cvp-observed-outcomes-heading">
+            <header className="cvp-evidence-band-head">
+              <div className="cvp-evidence-band-title">
+                <span>02</span>
+                <div>
+                  <strong id="cvp-observed-outcomes-heading">Observed delivery outcomes</strong>
+                  <small>Published survey findings</small>
+                </div>
+              </div>
+              <p>Reported outcomes from independent industry surveys. These figures describe their research populations and are not inputs to the calculator.</p>
+            </header>
+            <div className="cvp-evidence-rows">
+              {observedOutcomeEvidence.map((item) => <article className="cvp-evidence-card cvp-number-card cvp-evidence-row" key={item.sourceUrl}>
+                <div className="cvp-evidence-row-source">
+                  <div className="cvp-source-meta"><span>{item.organisation}</span><small>{item.evidenceType}{item.year ? ` · ${item.year}` : ''}</small></div>
+                </div>
+                <div className="cvp-evidence-row-metric">
+                  <strong className="cvp-evidence-figure">{item.primaryFigure}</strong>
+                  <h4>{item.metric}</h4>
+                </div>
+                <div className="cvp-evidence-row-context">
+                  {item.secondaryFigures && <ul>{item.secondaryFigures.map((figure) => <li key={figure}>{figure}</li>)}</ul>}
+                  <p>{item.copy}</p>
+                  {item.scope && <span className="cvp-evidence-scope">Scope: {item.scope}</span>}
+                </div>
+                <div className="cvp-evidence-row-citation">
+                  <small className="cvp-source-title">{item.sourceTitle}</small>
+                  <EvidenceLink href={item.sourceUrl} organisation={item.organisation} sourceTitle={item.sourceTitle} />
+                </div>
+              </article>)}
+            </div>
+          </section>
+
+          <section className="cvp-evidence-band cvp-evidence-band-benchmarks" aria-labelledby="cvp-practice-benchmarks-heading">
+            <header className="cvp-evidence-band-head">
+              <div className="cvp-evidence-band-title">
+                <span>03</span>
+                <div>
+                  <strong id="cvp-practice-benchmarks-heading">External practice benchmarks</strong>
+                  <small>Context only · not used in the calculation</small>
+                </div>
+              </div>
+              <p>Published consulting-practice estimates provide external context only. They are not Axis One results, predictions or guaranteed savings.</p>
+            </header>
+            <div className="cvp-evidence-rows">
+              {externalPracticeBenchmarkEvidence.map((item) => <article className="cvp-evidence-card cvp-number-card cvp-evidence-row" key={item.sourceUrl}>
+                <div className="cvp-evidence-row-source">
+                  <div className="cvp-source-meta"><span>{item.organisation}</span><small>{item.evidenceType}{item.year ? ` · ${item.year}` : ''}</small></div>
+                </div>
+                <div className="cvp-evidence-row-metric">
+                  <strong className="cvp-evidence-figure">{item.primaryFigure}</strong>
+                  <h4>{item.metric}</h4>
+                </div>
+                <div className="cvp-evidence-row-context">
+                  {item.secondaryFigures && <ul>{item.secondaryFigures.map((figure) => <li key={figure}>{figure}</li>)}</ul>}
+                  <p>{item.copy}</p>
+                  {item.scope && <span className="cvp-evidence-scope">Scope: {item.scope}</span>}
+                </div>
+                <div className="cvp-evidence-row-citation">
+                  <small className="cvp-source-title">{item.sourceTitle}</small>
+                  <EvidenceLink href={item.sourceUrl} organisation={item.organisation} sourceTitle={item.sourceTitle} />
+                </div>
+              </article>)}
+            </div>
+          </section>
 
           <p className="cvp-research-disclaimer">Independent research context. The figures above come from different sectors, geographies, project types, methodologies and intervention scopes. They are not Axis One results, are not applied automatically in this calculator and do not represent guaranteed savings. Company names are used for source attribution only; no affiliation or endorsement is implied.</p>
         </section>

@@ -135,8 +135,8 @@ export function DecisionBriefSection({ scenario }: Props) {
   return (
     <section className="cg-brief" id="decision-brief" aria-labelledby="decision-brief-title">
       <div className="cg-shell cg-brief-layout">
-        <div className="cg-brief-copy">
-          <div className="cg-brief-intro">
+        <div className="cg-brief-copy cg-brief-editorial">
+          <div className="cg-brief-intro cg-brief-intro-panel">
             <span className="cg-eyebrow"><Mail size={15} /> Decision Brief</span>
             <h2 id="decision-brief-title">Bring the next capital decision, not a requirements list.</h2>
             <p>Frame one approaching action. Review the generated brief on this page, edit it if needed, then decide whether to copy it or open your email client.</p>

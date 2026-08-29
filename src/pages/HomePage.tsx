@@ -163,8 +163,8 @@ function RoleViews() {
     window.requestAnimationFrame(() => document.getElementById(`role-tab-${nextRole.id}`)?.focus());
   };
   return (
-    <section className="cg-roles" aria-labelledby="cg-roles-title"><div className="cg-shell">
-      <motion.header className="cg-section-heading cg-section-heading-dark" {...fade}><span className="cg-eyebrow">Permissioned collaboration</span><h2 id="cg-roles-title">One programme reality. Different responsibilities.</h2><p>Shared context does not mean shared authority. Each participant sees the decision through the responsibility they hold.</p></motion.header>
+    <section className="cg-roles cg-roles-editorial" aria-labelledby="cg-roles-title"><div className="cg-shell">
+      <motion.header className="cg-section-heading cg-section-heading-dark cg-roles-heading" {...fade}><span className="cg-eyebrow">Permissioned collaboration</span><h2 id="cg-roles-title">One programme reality. Different responsibilities.</h2><p>Shared context does not mean shared authority. Each participant sees the decision through the responsibility they hold.</p></motion.header>
       <div className="cg-role-tabs" role="tablist" aria-label="Axis One stakeholder views">{roleViews.map((role, roleIndex) => <button id={`role-tab-${role.id}`} key={role.id} type="button" role="tab" aria-selected={activeRole === role.id} aria-controls="role-panel" tabIndex={activeRole === role.id ? 0 : -1} className={activeRole === role.id ? 'is-active' : ''} onClick={() => setActiveRole(role.id)} onKeyDown={(event) => handleTabKey(event, roleIndex)}>{role.tab}</button>)}</div>
       <motion.div className="cg-role-panel" id="role-panel" role="tabpanel" aria-labelledby={`role-tab-${current.id}`} key={current.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
         <div className="cg-role-copy"><Icon size={24} /><span>{current.eyebrow}</span><h3>{current.headline}</h3><p>{current.copy}</p></div>
@@ -184,9 +184,9 @@ function TrustBoundaries() {
     ['Boundaries', 'Capital execution remains non-custodial.', 'Axis One does not hold, transfer or manage client funds.'],
   ];
   return (
-    <section className="cg-trust" id="trust" aria-labelledby="cg-trust-title"><div className="cg-shell cg-trust-layout">
-      <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Trust through boundaries</span><h2 id="cg-trust-title">Institutional claims should come with visible boundaries.</h2><p>Axis One is designed to make responsibility, evidence and decision state clearer without obscuring where the platform stops.</p><a className="cg-text-link" href="/trust">Review trust and governance <ArrowRight size={15} /></a></motion.header>
-      <div><div className="cg-claim-list">{claims.map(([title, claim, boundary]) => <motion.article key={title} {...fade}><span>{title}</span><div><strong>{claim}</strong><p>{boundary}</p></div><ShieldCheck size={17} /></motion.article>)}</div><aside className="cg-not-block"><strong>What Axis One is not</strong><p>Not a bank, custodian, autonomous allocator, guarantee of performance or substitute for authorised judgement.</p></aside></div>
+    <section className="cg-trust cg-trust-editorial" id="trust" aria-labelledby="cg-trust-title"><div className="cg-shell cg-trust-layout">
+      <motion.header className="cg-section-heading cg-trust-heading" {...fade}><span className="cg-eyebrow">Trust through boundaries</span><h2 id="cg-trust-title">Institutional claims should come with visible boundaries.</h2><p>Axis One is designed to make responsibility, evidence and decision state clearer without obscuring where the platform stops.</p><a className="cg-text-link" href="/trust">Review trust and governance <ArrowRight size={15} /></a></motion.header>
+      <div className="cg-trust-content"><div className="cg-claim-list">{claims.map(([title, claim, boundary]) => <motion.article key={title} {...fade}><span>{title}</span><div><strong>{claim}</strong><p>{boundary}</p></div><ShieldCheck size={17} /></motion.article>)}</div><aside className="cg-not-block"><strong>What Axis One is not</strong><p>Not a bank, custodian, autonomous allocator, guarantee of performance or substitute for authorised judgement.</p></aside></div>
     </div></section>
   );
 }

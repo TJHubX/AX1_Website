@@ -61,7 +61,7 @@ export default function TrustPage({ onOpenContact }: PageProps) {
         <motion.div className="cg-public-editorial-copy" {...fade}><p>Axis One is designed around permissioned access, scoped roles, attributable programme records and non-custodial capital boundaries. Any future third-party certification will be stated only after it has been independently achieved.</p><div className="cg-trust-contact"><span>Trust and governance enquiries</span><a href="mailto:info@ax1.capital">info@ax1.capital</a></div></motion.div>
       </div></section>
 
-      <section className="cg-public-cta"><div className="cg-shell"><div><span>Apply the boundary to a real decision</span><h2>Frame the action, evidence position and responsible authority.</h2></div><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'trust_footer', action: 'decision_brief' })}>Prepare a Decision Brief<ArrowRight size={16} /></a></div></section>
+      <section className="cg-public-cta cg-trust-cta"><div className="cg-shell"><div className="cg-trust-cta-copy"><span>Apply the boundary to a real decision</span><h2>Frame the action, evidence position and responsible authority.</h2></div><a className="cg-button cg-button-primary cg-trust-cta-action" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'trust_footer', action: 'decision_brief' })}>Prepare a Decision Brief<ArrowRight size={16} /></a></div></section>
       <Footer onOpenContact={onOpenContact} />
     </main>
   );
