@@ -74,7 +74,7 @@ function Hero() {
       <div className="cg-shell cg-hero-layout">
         <motion.div className="cg-hero-copy" {...fade}>
           <span className="cg-eyebrow">Capital governance infrastructure</span>
-          <h1 id="cg-hero-title" aria-label="What proves the next capital move? Capital, governed by execution."><span className="cg-hero-question">What proves the next capital move?</span>Capital,<br /><span className="cg-hero-keep">governed by</span><br />execution.</h1>
+          <h1 id="cg-hero-title" aria-label="What proves the next capital move? Capital, governed by execution."><span className="cg-hero-question">What proves the next capital move?</span>Capital,<br /><span className="cg-hero-accent"><span className="cg-hero-keep">governed by</span><br />execution.</span></h1>
           <p>Axis One connects committed capital to verified milestones, attributable evidence and controlled decision states. Configured rules determine readiness. Authorised people determine action.</p>
           <div className="cg-actions"><a className="cg-button cg-button-primary" href="#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'hero', action: 'decision_brief' })}>Frame a capital decision <ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="#system">See the system</a><a className="cg-button cg-button-tertiary" href="#diagnostic">Take the 60-second test</a></div>
           <div className="cg-hero-principle"><LockKeyhole size={15} /><span>Money moves only when execution is proven and an authorised stakeholder decides.</span></div>

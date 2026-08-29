@@ -37,7 +37,7 @@ export default function DeploymentPage({ onOpenContact }: PageProps) {
         <div className="cg-shell cg-public-hero-grid">
           <motion.div {...fade}>
             <span className="cg-eyebrow">Deployment</span>
-            <h1 id="deployment-title">Start narrow. Prove value. Expand.</h1>
+            <h1 id="deployment-title" className="cg-structured-headline" aria-label="Start narrow. Prove value. Expand."><span>Start narrow.</span><span className="cg-headline-accent">Prove value. Expand.</span></h1>
             <p>Begin with the capital decision where fragmented evidence, stakeholder coordination and unclear readiness already create friction. Expansion follows proof, not ambition alone.</p>
             <div className="cg-actions"><a className="cg-button cg-button-primary" href="#deployment-options">Choose the starting scope<ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="/#decision-brief">Frame the decision</a></div>
           </motion.div>
@@ -65,9 +65,9 @@ export default function DeploymentPage({ onOpenContact }: PageProps) {
         </motion.div>
       </div></section>
 
-      <section className="cg-public-section is-light" aria-labelledby="deployment-collaboration-title"><div className="cg-shell cg-public-split">
+      <section className="cg-public-section is-light" aria-labelledby="deployment-collaboration-title"><div className="cg-shell cg-public-editorial-split">
         <motion.div {...fade}><span className="cg-eyebrow">Collaboration infrastructure</span><h2 id="deployment-collaboration-title">One programme reality. Different responsibilities.</h2></motion.div>
-        <motion.div className="cg-public-boundary-card" {...fade}><p>Capital owners, execution teams, assurance participants, partners and workspace administrators work through permissioned views of the same relevant context. Shared visibility does not collapse authority.</p><a href="/#decision-brief">Bring the stakeholder context<ArrowRight size={15} /></a></motion.div>
+        <motion.div className="cg-public-editorial-copy" {...fade}><p>Capital owners, execution teams, assurance participants, partners and workspace administrators work through permissioned views of the same relevant context. Shared visibility does not collapse authority.</p><a href="/#decision-brief">Bring the stakeholder context<ArrowRight size={15} /></a></motion.div>
       </div></section>
 
       <section className="cg-public-cta"><div className="cg-shell"><div><span>Recommended first step</span><h2>Frame one live decision for AX1.Pilot.</h2></div><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'deployment_footer', action: 'decision_brief' })}>Prepare a Decision Brief<ArrowRight size={16} /></a></div></section>

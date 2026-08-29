@@ -136,12 +136,16 @@ export function DecisionBriefSection({ scenario }: Props) {
     <section className="cg-brief" id="decision-brief" aria-labelledby="decision-brief-title">
       <div className="cg-shell cg-brief-layout">
         <div className="cg-brief-copy">
-          <span className="cg-eyebrow"><Mail size={15} /> Decision Brief</span>
-          <h2 id="decision-brief-title">Bring the next capital decision, not a requirements list.</h2>
-          <p>Frame one approaching action. Review the generated brief on this page, edit it if needed, then decide whether to copy it or open your email client.</p>
-          <div className="cg-brief-principle"><ShieldCheck size={18} /><p><strong>Capital, governed by execution.</strong>Configured rules determine readiness. Authorised people determine action.</p></div>
-          <div className="cg-brief-contact"><span>Direct recipient</span><a href={`mailto:${recipientEmail()}`}>{recipientEmail()}</a></div>
-          <p className="cg-brief-privacy">Your entries remain in this browser. Axis One does not receive anything until you choose to send the email.</p>
+          <div className="cg-brief-intro">
+            <span className="cg-eyebrow"><Mail size={15} /> Decision Brief</span>
+            <h2 id="decision-brief-title">Bring the next capital decision, not a requirements list.</h2>
+            <p>Frame one approaching action. Review the generated brief on this page, edit it if needed, then decide whether to copy it or open your email client.</p>
+          </div>
+          <div className="cg-brief-meta">
+            <div className="cg-brief-principle"><ShieldCheck size={18} /><p><strong>Capital, governed by execution.</strong>Configured rules determine readiness. Authorised people determine action.</p></div>
+            <div className="cg-brief-contact"><span>Direct recipient</span><a href={`mailto:${recipientEmail()}`}>{recipientEmail()}</a></div>
+            <p className="cg-brief-privacy">Your entries remain in this browser. Axis One does not receive anything until you choose to send the email.</p>
+          </div>
         </div>
 
         <div className="cg-brief-workspace">

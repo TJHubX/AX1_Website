@@ -56,9 +56,9 @@ export default function TrustPage({ onOpenContact }: PageProps) {
         </motion.ul>
       </div></section>
 
-      <section className="cg-public-section is-light" aria-labelledby="assurance-title"><div className="cg-shell cg-public-split">
+      <section className="cg-public-section is-light" aria-labelledby="assurance-title"><div className="cg-shell cg-public-editorial-split">
         <motion.div {...fade}><span className="cg-eyebrow">Assurance and access</span><h2 id="assurance-title">Security claims should match the current position.</h2></motion.div>
-        <motion.div className="cg-public-boundary-card" {...fade}><p>Axis One is designed around permissioned access, scoped roles, attributable programme records and non-custodial capital boundaries. Any future third-party certification will be stated only after it has been independently achieved.</p><div className="cg-trust-contact"><span>Trust and governance enquiries</span><a href="mailto:info@ax1.capital">info@ax1.capital</a></div></motion.div>
+        <motion.div className="cg-public-editorial-copy" {...fade}><p>Axis One is designed around permissioned access, scoped roles, attributable programme records and non-custodial capital boundaries. Any future third-party certification will be stated only after it has been independently achieved.</p><div className="cg-trust-contact"><span>Trust and governance enquiries</span><a href="mailto:info@ax1.capital">info@ax1.capital</a></div></motion.div>
       </div></section>
 
       <section className="cg-public-cta"><div className="cg-shell"><div><span>Apply the boundary to a real decision</span><h2>Frame the action, evidence position and responsible authority.</h2></div><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'trust_footer', action: 'decision_brief' })}>Prepare a Decision Brief<ArrowRight size={16} /></a></div></section>
