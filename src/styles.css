@@ -4699,6 +4699,7 @@ body .cvp-shell select { font-size: var(--type-caption); line-height: 1.5; }
 .cg-diagnostic-layout { display: grid; grid-template-columns: minmax(320px,.72fr) minmax(620px,1.28fr); gap: clamp(60px,8vw,120px); align-items: start; }
 .cg-diagnostic-layout .cg-section-heading { position: sticky; top: 120px; margin-bottom: 0; }
 .cg-diagnostic-progress { margin-top: 32px; display: grid; gap: 11px; max-width: 310px; }
+.cg-diagnostic-keep { white-space: nowrap; }
 .cg-diagnostic-progress > span { color: #9eabc0; font-size: .85rem; }
 .cg-diagnostic-progress > span strong { color: #f1f5fb; font-size: 1.2rem; }
 .cg-diagnostic-progress > i { height: 4px; overflow: hidden; background: #27354a; }
