@@ -59,16 +59,32 @@ export function DecisionDiagnostic() {
           <span className="cg-eyebrow">A 60-second test</span>
           <h2 id="cg-diagnostic-title">Can the next action <span className="cg-diagnostic-keep">be defended</span> without another report?</h2>
           <p>Answer four plain questions. No programme data is submitted or stored.</p>
-          <div className="cg-diagnostic-progress" aria-label={`${completeAnswers.length} of 4 questions answered`}>
-            <span><strong>{completeAnswers.length}</strong> / 4 answered</span>
-            <i><b style={{ width: `${completeAnswers.length * 25}%` }} /></i>
-          </div>
         </motion.header>
 
         <div className="cg-diagnostic-panel">
           <div className="cg-diagnostic-panel-head">
-            <div><span>Decision defence check</span><strong>Four signals of a decision-ready position</strong></div>
-            <small>{completeAnswers.length === 4 ? 'Assessment complete' : `${4 - completeAnswers.length} remaining`}</small>
+            <div className="cg-diagnostic-panel-title">
+              <span>Decision defence check</span>
+              <strong>Four signals of a decision-ready position</strong>
+            </div>
+            <div className="cg-diagnostic-progress cg-diagnostic-panel-progress">
+              <span
+                className="cg-diagnostic-progress-status"
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                <strong>{completeAnswers.length}</strong> / 4 answered
+              </span>
+              <div className="cg-diagnostic-progress-segments" aria-hidden="true">
+                {questions.map((_, index) => (
+                  <i
+                    className={answers[index] ? 'is-complete' : index === activeIndex && !result ? 'is-current' : ''}
+                    key={index}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
           <div className="cg-question-rail">
             {questions.map(([number, question, explanation], index) => (

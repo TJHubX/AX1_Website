@@ -5595,26 +5595,52 @@ body .cvp-shell select { font-size: var(--type-caption); line-height: 1.5; }
 .cg-trust,
 .cg-brief { padding-block: clamp(92px, 8vw, 112px); }
 
-.cg-diagnostic-layout { gap: clamp(42px, 4.5vw, 62px); }
-.cg-diagnostic-heading {
-  grid-template-columns: minmax(0, 1.08fr) minmax(330px, .62fr);
-  column-gap: clamp(48px, 7vw, 104px);
+.cg-diagnostic-layout { gap: clamp(42px, 3.7vw, 48px); }
+.cg-diagnostic-layout .cg-diagnostic-heading {
+  grid-template-columns: minmax(0, 1.45fr) minmax(300px, .55fr);
+  column-gap: clamp(64px, 5.4vw, 76px);
 }
 .cg-diagnostic-layout .cg-diagnostic-heading h2 {
-  max-width: 720px;
-  font-size: clamp(3.05rem, 4.15vw, 4.25rem);
+  max-width: 840px;
+  font-size: clamp(3.15rem, 3.8vw, 3.55rem);
   line-height: .98;
-  letter-spacing: -.052em;
+  letter-spacing: -.045em;
+  text-wrap: balance;
 }
 .cg-diagnostic-layout .cg-diagnostic-heading > p {
-  max-width: 420px;
+  max-width: 32ch;
   margin-top: 20px;
+  padding-left: 28px;
+  border-left: 1px solid #2d3c52;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.6;
 }
-.cg-diagnostic-layout .cg-diagnostic-heading .cg-diagnostic-progress { margin-top: 24px; }
 .cg-diagnostic-panel { border-radius: 16px 16px 16px 4px; box-shadow: 0 28px 72px rgba(0, 0, 0, .22); }
-.cg-diagnostic .cg-question-rail article { min-height: 124px; }
+.cg-diagnostic-panel-head { min-height: 80px; padding: 17px 24px; }
+.cg-diagnostic-panel-title { display: grid; gap: 5px; }
+.cg-diagnostic-layout .cg-diagnostic-panel-progress {
+  width: min(100%, 300px);
+  max-width: 300px;
+  margin: 0;
+  gap: 8px;
+}
+.cg-diagnostic-panel-progress > .cg-diagnostic-progress-status { font-size: .78rem; text-align: right; }
+.cg-diagnostic-panel-progress > .cg-diagnostic-progress-status strong { font-size: 1rem; }
+.cg-diagnostic-progress-segments { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.cg-diagnostic-progress-segments > i {
+  height: 3px;
+  background: #2b3a50;
+  border-radius: 999px;
+  transition: background-color 180ms ease, box-shadow 180ms ease;
+}
+.cg-diagnostic-progress-segments > i.is-current { background: #456fae; box-shadow: 0 0 14px rgba(52, 120, 246, .28); }
+.cg-diagnostic-progress-segments > i.is-complete { background: #3478f6; box-shadow: 0 0 14px rgba(52, 120, 246, .42); }
+.cg-diagnostic .cg-question-rail { max-width: none; padding: 10px; }
+.cg-diagnostic .cg-question-rail article {
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  min-height: 118px;
+  padding: 21px 22px;
+}
 
 .cg-exposure .cg-section-heading {
   max-width: none;
@@ -5928,7 +5954,7 @@ body .cvp-shell select { font-size: var(--type-caption); line-height: 1.5; }
 .cg-capital-page .cvp-research-disclaimer { padding: 17px 19px; font-size: .78rem; line-height: 1.65; }
 
 @media (max-width: 1180px) {
-  .cg-diagnostic-heading,
+  .cg-diagnostic-layout .cg-diagnostic-heading,
   .cg-exposure .cg-section-heading,
   .cg-roles-heading,
   .cg-trust .cg-trust-heading,
@@ -5952,7 +5978,7 @@ body .cvp-shell select { font-size: var(--type-caption); line-height: 1.5; }
   .cg-exposure .cg-section-heading > p,
   .cg-roles-heading > p,
   .cg-trust-heading > p { margin-top: 24px; }
-  .cg-diagnostic-layout .cg-diagnostic-heading .cg-diagnostic-progress { margin-top: 22px; }
+  .cg-diagnostic-layout .cg-diagnostic-heading > p { max-width: 600px; padding-left: 0; border-left: 0; }
   .cg-brief-editorial .cg-brief-meta { max-width: 720px; margin-top: 38px; }
   .cg-capital-page .cvp-story-layout { grid-template-columns: 1fr; }
   .cg-capital-page .cvp-story-definition { border-top: 1px solid var(--line); border-left: 0; }
@@ -5963,6 +5989,8 @@ body .cvp-shell select { font-size: var(--type-caption); line-height: 1.5; }
 }
 
 @media (max-width: 920px) {
+  .cg-diagnostic .cg-question-rail article { grid-template-columns: 44px minmax(0, 1fr); min-height: 0; }
+  .cg-diagnostic-choices { grid-column: 2; width: min(100%, 340px); }
   .cg-trust-editorial .cg-claim-list { grid-template-columns: 1fr; }
   .cg-trust-editorial .cg-claim-list article,
   .cg-trust-editorial .cg-claim-list article:nth-child(odd),
@@ -5990,11 +6018,21 @@ body .cvp-shell select { font-size: var(--type-caption); line-height: 1.5; }
   .cg-roles,
   .cg-trust,
   .cg-brief { padding-block: 76px; }
+  .cg-diagnostic { padding-block: 68px; }
+  .cg-diagnostic-layout { gap: 30px; }
   .cg-diagnostic-layout .cg-diagnostic-heading h2,
   .cg-exposure .cg-section-heading > h2,
   .cg-roles-heading > h2,
   .cg-trust-heading > h2,
   .cg-brief-intro-panel h2 { font-size: clamp(2.6rem, 12vw, 3.45rem); line-height: 1; }
+  .cg-diagnostic-layout .cg-diagnostic-heading h2 { font-size: clamp(2.5rem, 10.8vw, 2.8rem); }
+  .cg-diagnostic-layout .cg-diagnostic-heading > p { margin-top: 20px; line-height: 1.55; }
+  .cg-diagnostic-keep { white-space: normal; }
+  .cg-diagnostic-panel-head { min-height: 0; padding: 18px; }
+  .cg-diagnostic-layout .cg-diagnostic-panel-progress { width: 100%; max-width: none; }
+  .cg-diagnostic-panel-progress > .cg-diagnostic-progress-status { text-align: left; }
+  .cg-diagnostic .cg-question-rail article { grid-template-columns: 1fr; min-height: 190px; padding: 22px 18px; }
+  .cg-diagnostic-choices { grid-column: 1; width: 100%; }
   .cg-roles-editorial .cg-role-tabs { overflow-x: auto; scrollbar-width: thin; }
   .cg-roles-editorial .cg-role-tabs button { min-width: 154px; }
   .cg-trust-editorial .cg-claim-list article { min-height: 0; padding: 24px 20px; grid-template-columns: 58px minmax(0, 1fr) 20px; gap: 14px; }
