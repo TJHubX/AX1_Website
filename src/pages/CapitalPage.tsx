@@ -1,23 +1,27 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Calculator, CircleDollarSign, Gavel, ShieldCheck } from 'lucide-react';
-import { AX1MilestoneTrace } from '../components/AX1MilestoneTrace';
 import { Footer, PageProps, fade } from '../components';
 import { CapitalValueProtectionCalculator } from '../features/capital-value/CapitalValueProtectionCalculator';
 import { trackAX1Event } from '../utils/analytics';
-
-const capitalTrace = [
-  { number: '01', label: 'Exposure framed' },
-  { number: '02', label: 'Assumptions visible' },
-  { number: '03', label: 'Scenario understood' },
-  { number: '04', label: 'Decision remains human' },
-];
 
 const interpretation = [
   { icon: Calculator, title: 'An exposure estimate', copy: 'The calculator organises the figures you enter. It is not a forecast of Axis One savings or programme performance.' },
   { icon: CircleDollarSign, title: 'A value-at-risk conversation', copy: 'The result helps expose where capital, delay and execution assumptions deserve closer governance attention.' },
   { icon: Gavel, title: 'A human decision input', copy: 'Axis One can make the basis clearer. It does not approve, transfer or autonomously allocate capital.' },
 ];
+
+function ExposureModelPreview() {
+  return (
+    <motion.div className="cg-exposure-preview" {...fade} aria-label="Illustrative capital exposure decomposition">
+      <div className="cg-exposure-preview-head"><div><span>Illustrative exposure model</span><strong>See the parts before the total</strong></div><ShieldCheck size={18} /></div>
+      <div className="cg-exposure-preview-ledger"><div><span>Known overrun exposure</span><strong>£7.50M</strong></div><i>+</i><div><span>Delay carrying cost</span><strong>£1.00M</strong></div></div>
+      <div className="cg-exposure-preview-total"><span>Identified execution exposure</span><strong>£8.50M</strong><small>Based only on the assumptions entered</small></div>
+      <div className="cg-exposure-preview-scenario"><span>Every 1% represented</span><strong>£85,000</strong><i><b style={{ width: '40%' }} /></i></div>
+      <p>Inputs calculate in your browser and are not submitted or stored.</p>
+    </motion.div>
+  );
+}
 
 export default function CapitalPage({ onOpenContact }: PageProps) {
   const openDecisionBrief = () => {
@@ -35,11 +39,7 @@ export default function CapitalPage({ onOpenContact }: PageProps) {
             <p>Model the financial burden around overrun and delay using your own assumptions. Axis One does not convert the result into a promised saving or automatic capital action.</p>
             <div className="cg-actions"><a className="cg-button cg-button-primary" href="#decision-cost">Open the full exposure model<ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="/#decision-brief">Frame the decision</a></div>
           </motion.div>
-          <motion.div className="cg-public-trace-card" {...fade}>
-            <div><span>Transparent modelling</span><strong>See the parts before the total</strong></div>
-            <AX1MilestoneTrace items={capitalTrace} activeIndex={1} ariaLabel="Capital exposure modelling progression" theme="dark" />
-            <p><ShieldCheck size={14} />Inputs calculate in your browser and are not submitted or stored.</p>
-          </motion.div>
+          <ExposureModelPreview />
         </div>
       </section>
 

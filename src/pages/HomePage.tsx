@@ -49,21 +49,22 @@ const roleViews = [
   },
 ];
 
-function HeroDecisionSurface() {
+function HeroProofObject() {
   return (
-    <motion.div className="cg-decision-surface" {...fade} transition={{ duration: 0.7, delay: 0.12 }} aria-label="Illustrative Axis One programme decision state">
-      <div className="cg-surface-topline"><div><span>Programme</span><strong>AX-1048</strong></div><div className="cg-live-state"><i /> Current state</div></div>
-      <div className="cg-surface-commitment"><span>Capital commitment</span><strong>€12,400,000</strong></div>
-      <div className="cg-surface-milestone"><div><span>Gate 03</span><strong>Infrastructure delivery</strong></div><span className="cg-state-badge is-validated"><Check size={13} /> VALIDATED</span></div>
-      <div className="cg-surface-progress"><i style={{ width: '84%' }} /><span>84%</span></div>
-      <div className="cg-surface-signals">
-        <div><span>Evidence</span><strong><CheckCircle2 size={14} /> Current</strong></div>
-        <div><span>Dependencies</span><strong><CheckCircle2 size={14} /> Cleared</strong></div>
-        <div><span>Authority</span><strong><Users size={14} /> 4 / 4</strong></div>
+    <motion.div className="cg-proof-object" {...fade} transition={{ duration: 0.7, delay: 0.12 }} aria-label="Illustrative Axis One proof-to-action position">
+      <div className="cg-proof-head">
+        <div><span>Decision position</span><strong>Infrastructure delivery</strong></div>
+        <div className="cg-live-state"><i /> Live execution</div>
       </div>
-      <div className="cg-surface-action"><div><span>Capital action</span><strong>€1,850,000</strong></div><div><span>Decision position</span><strong>Clear for authorised release</strong></div></div>
-      <div className="cg-surface-record"><Fingerprint size={14} /><span>Snapshot AX1-8F29D7</span><strong>Decision basis recorded</strong></div>
-      <p>Illustrative programme state, not customer data.</p>
+      <div className="cg-proof-route" aria-hidden="true">
+        {['Committed', 'Execution', 'Evidence', 'Authority'].map((label, index) => <div className={index < 3 ? 'is-connected' : 'is-current'} key={label}><span>0{index + 1}</span><i /><strong>{label}</strong></div>)}
+      </div>
+      <div className="cg-proof-focus">
+        <div className="cg-proof-state"><span>Current proof state</span><strong><CheckCircle2 size={18} /> Execution verified</strong><p>Milestone 03 is supported by current, attributable evidence.</p></div>
+        <div className="cg-proof-signals"><div><span>Evidence</span><strong><CheckCircle2 size={14} /> Current</strong></div><div><span>Authority</span><strong><Users size={14} /> 4 / 4</strong></div></div>
+      </div>
+      <div className="cg-proof-action"><div><span>Next capital action</span><strong>€1.85M</strong></div><div><span>Decision direction</span><strong>Available to authorised stakeholder <ArrowRight size={15} /></strong></div></div>
+      <div className="cg-proof-record"><Fingerprint size={14} /><span>Decision basis recorded</span><small>Illustrative programme state</small></div>
     </motion.div>
   );
 }
@@ -74,14 +75,13 @@ function Hero() {
       <div className="cg-shell cg-hero-layout">
         <motion.div className="cg-hero-copy" {...fade}>
           <span className="cg-eyebrow">Capital governance infrastructure</span>
-          <h1 id="cg-hero-title" aria-label="What proves the next capital move? Capital, governed by execution."><span className="cg-hero-question">What proves the next capital move?</span>Capital,<br /><span className="cg-hero-accent"><span className="cg-hero-keep">governed by</span><br />execution.</span></h1>
-          <p>Axis One connects committed capital to verified milestones, attributable evidence and controlled decision states. Configured rules determine readiness. Authorised people determine action.</p>
-          <div className="cg-actions"><a className="cg-button cg-button-primary" href="#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'hero', action: 'decision_brief' })}>Frame a capital decision <ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="#system">See the system</a><a className="cg-button cg-button-tertiary" href="#diagnostic">Take the 60-second test</a></div>
-          <div className="cg-hero-principle"><LockKeyhole size={15} /><span>Money moves only when execution is proven and an authorised stakeholder decides.</span></div>
+          <h1 id="cg-hero-title">Capital moves when execution is proven.</h1>
+          <p>Axis One connects committed capital to current milestones, attributable evidence and explicit authority, so the next action can be defended in real time.</p>
+          <div className="cg-actions"><a className="cg-button cg-button-primary" href="#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'hero', action: 'decision_brief' })}>Frame a capital decision <ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="#system">See the system</a></div>
         </motion.div>
-        <HeroDecisionSurface />
+        <HeroProofObject />
       </div>
-      <div className="cg-hero-index" aria-hidden="true"><span>COMMITMENT</span><i /><span>EXECUTION</span><i /><span>EVIDENCE</span><i /><span>DECISION</span></div>
+      <div className="cg-hero-index" aria-label="Axis One operating principles"><span>Current execution</span><i /><span>Attributable evidence</span><i /><span>Explicit authority</span><i /><span>Human decision</span></div>
     </section>
   );
 }

@@ -1,16 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Check, Layers3, Network, Rocket, Users } from 'lucide-react';
-import { AX1MilestoneTrace } from '../components/AX1MilestoneTrace';
 import { Footer, PageProps, fade } from '../components';
 import { trackAX1Event } from '../utils/analytics';
-
-const deploymentTrace = [
-  { number: '01', label: 'Frame one decision' },
-  { number: '02', label: 'Prove the operating value' },
-  { number: '03', label: 'Establish the pattern' },
-  { number: '04', label: 'Expand deliberately' },
-];
 
 const options = [
   {
@@ -30,6 +22,22 @@ const options = [
   },
 ];
 
+function DeploymentPathObject() {
+  const path = [
+    { number: '01', name: 'AX1.Pilot', scope: 'One live decision', note: 'Recommended first step', Icon: Rocket },
+    { number: '02', name: 'AX1.Core', scope: 'One programme', note: 'After operating proof', Icon: Network },
+    { number: '03', name: 'AX1.Enterprise', scope: 'Multiple programmes', note: 'Scale the proven pattern', Icon: Layers3 },
+  ];
+
+  return (
+    <motion.div className="cg-deployment-path" {...fade} aria-label="Axis One deployment path">
+      <div className="cg-deployment-path-head"><span>Controlled adoption</span><strong>Scope expands after proof</strong></div>
+      <div className="cg-deployment-path-list">{path.map(({ number, name, scope, note, Icon }, index) => <div className={index === 0 ? 'is-current' : ''} key={name}><span>{number}</span><i><Icon size={17} /></i><div><strong>{name}</strong><small>{scope}</small></div><b>{note}</b></div>)}</div>
+      <p><Users size={14} />Start with the smallest scope that can produce a credible operating result.</p>
+    </motion.div>
+  );
+}
+
 export default function DeploymentPage({ onOpenContact }: PageProps) {
   return (
     <main className="cg-public-page cg-deployment-page">
@@ -37,15 +45,11 @@ export default function DeploymentPage({ onOpenContact }: PageProps) {
         <div className="cg-shell cg-public-hero-grid">
           <motion.div {...fade}>
             <span className="cg-eyebrow">Deployment</span>
-            <h1 id="deployment-title" className="cg-structured-headline" aria-label="Start narrow. Prove value. Expand."><span>Start narrow.</span><span className="cg-headline-accent">Prove value. Expand.</span></h1>
+            <h1 id="deployment-title">Start narrow. Prove value. Expand.</h1>
             <p>Begin with the capital decision where fragmented evidence, stakeholder coordination and unclear readiness already create friction. Expansion follows proof, not ambition alone.</p>
             <div className="cg-actions"><a className="cg-button cg-button-primary" href="#deployment-options">Choose the starting scope<ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="/#decision-brief">Frame the decision</a></div>
           </motion.div>
-          <motion.div className="cg-public-trace-card" {...fade}>
-            <div><span>Adoption path</span><strong>A controlled progression from one decision</strong></div>
-            <AX1MilestoneTrace items={deploymentTrace} activeIndex={0} ariaLabel="Axis One deployment progression" theme="dark" />
-            <p><Users size={14} />Different stakeholders collaborate through one context while responsibility remains distinct.</p>
-          </motion.div>
+          <DeploymentPathObject />
         </div>
       </section>
 

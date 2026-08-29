@@ -27,6 +27,17 @@ const beforeAfter = [
   ['Decision record', 'Created after the fact', 'Retained with the operating context'],
 ];
 
+function DecisionReadinessObject() {
+  return (
+    <motion.div className="cg-readiness-object" {...fade} aria-label="Illustrative decision-readiness position">
+      <div className="cg-readiness-head"><div><span>Current decision basis</span><strong>Infrastructure delivery / Decision 03</strong></div><b><i /> Current</b></div>
+      <AX1MilestoneTrace items={capabilityTrace} activeIndex={2} ariaLabel="Public Axis One capability progression" theme="dark" />
+      <div className="cg-readiness-summary"><div><span>Execution change</span><strong>Visible</strong></div><div><span>Evidence position</span><strong>Current</strong></div><div className="is-active"><span>Decision readiness</span><strong>Ready for review</strong></div></div>
+      <p><LockKeyhole size={14} />Illustrative outcome. Client rules and operating configuration remain protected.</p>
+    </motion.div>
+  );
+}
+
 export default function SystemPage({ onOpenContact }: PageProps) {
   return (
     <main className="cg-public-page cg-system-page">
@@ -34,15 +45,11 @@ export default function SystemPage({ onOpenContact }: PageProps) {
         <div className="cg-shell cg-public-hero-grid">
           <motion.div {...fade}>
             <span className="cg-eyebrow">The Axis One system</span>
-            <h1 id="system-title" className="cg-structured-headline" aria-label="See what is decision-ready now."><span>See what is</span><span className="cg-headline-accent">decision-ready</span><span className="cg-headline-accent">now.</span></h1>
+            <h1 id="system-title">See what is decision-ready now.</h1>
             <p>Axis One connects execution, attributable evidence, ownership and human authority in one governed programme context. The public website shows the outcome without exposing protected operating mechanics.</p>
             <div className="cg-actions"><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'system_hero', action: 'decision_brief' })}>Frame a capital decision<ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="/#system">Open the Decision Room</a></div>
           </motion.div>
-          <motion.div className="cg-public-trace-card" {...fade}>
-            <div><span>Public system view</span><strong>From execution change to authorised action</strong></div>
-            <AX1MilestoneTrace items={capabilityTrace} activeIndex={2} ariaLabel="Public Axis One capability progression" theme="dark" />
-            <p><LockKeyhole size={14} />Illustrative public progression. Client configuration and operating rules remain protected.</p>
-          </motion.div>
+          <DecisionReadinessObject />
         </div>
       </section>
 
@@ -59,9 +66,9 @@ export default function SystemPage({ onOpenContact }: PageProps) {
         </div>
       </div></section>
 
-      <section className="cg-public-section is-light" aria-labelledby="system-boundary-title"><div className="cg-shell cg-public-split">
+      <section className="cg-public-section is-light" aria-labelledby="system-boundary-title"><div className="cg-shell cg-public-editorial-split">
         <motion.div {...fade}><span className="cg-eyebrow">Protected by design</span><h2 id="system-boundary-title">Decision clarity without exposing the operating model.</h2><p>Clients can see the context needed for action while their configured rules and governance design remain private.</p></motion.div>
-        <motion.div className="cg-public-boundary-card" {...fade}><p>Axis One makes the present decision position understandable without turning protected client configuration into public product detail.</p><ul><li><ShieldCheck size={16} />Current execution and evidence position</li><li><ShieldCheck size={16} />Visible ownership and responsible authority</li><li><ShieldCheck size={16} />Clear decision readiness and permitted direction</li><li><ShieldCheck size={16} />Private client rules, thresholds and configuration</li></ul></motion.div>
+        <motion.div className="cg-public-editorial-copy cg-system-boundary-copy" {...fade}><p>Axis One makes the present decision position understandable without turning protected client configuration into public product detail.</p><ul><li><ShieldCheck size={16} />Current execution and evidence position</li><li><ShieldCheck size={16} />Visible ownership and responsible authority</li><li><ShieldCheck size={16} />Clear decision readiness and permitted direction</li><li><ShieldCheck size={16} />Private client rules, thresholds and configuration</li></ul></motion.div>
       </div></section>
 
       <section className="cg-public-cta"><div className="cg-shell"><div><span>Bring one approaching decision</span><h2>See whether its basis is current, attributable and actionable.</h2></div><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'system_footer', action: 'decision_brief' })}>Prepare a Decision Brief<ArrowRight size={16} /></a></div></section>
