@@ -95,7 +95,6 @@ export default function TermsPage({ onOpenContact }: PageProps) {
             paragraphs: [
               'AX1 Structura Ltd',
               '66 Paul Street, London EC2A 4NA, England',
-              'info@ax1.network',
               'info@ax1.capital',
             ],
           },

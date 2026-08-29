@@ -30,7 +30,6 @@ export default function LegalPage({ onOpenContact }: PageProps) {
           {
             heading: 'Contact',
             paragraphs: [
-              'info@ax1.network',
               'info@ax1.capital',
             ],
           },

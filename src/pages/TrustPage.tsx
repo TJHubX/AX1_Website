@@ -1,89 +1,68 @@
 import React from 'react';
-import { Footer, PageProps } from '../components';
-import LegalPageLayout from '../components/LegalPageLayout';
+import { motion } from 'motion/react';
+import { ArrowRight, Check, Database, Fingerprint, Gavel, LockKeyhole, ShieldCheck, Users } from 'lucide-react';
+import { AX1MilestoneTrace } from '../components/AX1MilestoneTrace';
+import { Footer, PageProps, fade } from '../components';
+import { trackAX1Event } from '../utils/analytics';
+
+const trustTrace = [
+  { number: '01', label: 'Scoped access' },
+  { number: '02', label: 'Attributable evidence' },
+  { number: '03', label: 'Explicit authority' },
+  { number: '04', label: 'Reviewable record' },
+];
+
+const boundaries = [
+  { icon: Gavel, label: 'Authority', claim: 'Authorised stakeholders make material decisions.', boundary: 'AX1 does not replace investment, release or programme judgement.' },
+  { icon: Users, label: 'Roles', claim: 'Visibility and actions follow participant responsibility.', boundary: 'Shared context does not give every participant the same authority.' },
+  { icon: Database, label: 'Evidence', claim: 'Material proof can remain connected and attributable.', boundary: 'AX1 does not independently certify evidence outside assigned review responsibilities.' },
+  { icon: Fingerprint, label: 'Decision trace', claim: 'Material context and authorised outcomes remain reviewable.', boundary: 'AX1 does not replace underlying source systems or legal records.' },
+  { icon: LockKeyhole, label: 'Capital boundary', claim: 'The platform is designed to remain non-custodial.', boundary: 'AX1 does not hold, transfer or manage client funds.' },
+  { icon: ShieldCheck, label: 'Public claims', claim: 'Security and assurance claims are stated with boundaries.', boundary: 'AX1 does not claim certifications that have not been independently achieved.' },
+];
 
 export default function TrustPage({ onOpenContact }: PageProps) {
   return (
-    <>
-      <LegalPageLayout
-        label="Trust"
-        title="Trust"
-        lastUpdated="May 2026"
-        intro="AX1 is global decision infrastructure designed to support sensitive capital execution workflows through structured governance, role-based visibility, evidence traceability, and tamper-evident lifecycle records."
-        sections={[
-          {
-            heading: 'Built for audit readiness, traceability, and governed execution.',
-            paragraphs: [
-              'AX1 Structura Ltd has designed the Axis One platform around the principles of structured governance, scoped access, and verifiable execution records. The following sections describe key architectural commitments.',
-            ],
-          },
-          {
-            heading: '1. Non-custodial by design',
-            paragraphs: [
-              'AX1 is designed as non-custodial decision infrastructure for governed capital execution. It does not custody investor funds. Release logic, readiness, evidence, and decision records are kept separate from capital custody and provider execution.',
-            ],
-          },
-          {
-            heading: '2. Role-based access',
-            paragraphs: [
-              'Axis One supports scoped visibility and authority so stakeholders can access the information and actions relevant to their role. Investors, operators, validators, and partners each operate within defined boundaries.',
-            ],
-          },
-          {
-            heading: '3. Evidence traceability',
-            paragraphs: [
-              'Milestone evidence, documents, signatures, decisions, and release conditions can remain connected to the relevant execution record. Evidence requirements are defined up front and evaluated against gate policy.',
-            ],
-          },
-          {
-            heading: '4. Audit trails',
-            paragraphs: [
-              'Gate evaluations, evidence updates, approvals, holds, overrides, and release-readiness changes are structured for reviewability. Decision context, timing, and outcome remain part of the execution record.',
-            ],
-          },
-          {
-            heading: '5. Reviewable lifecycle records',
-            paragraphs: [
-              'Axis One is designed to keep material execution updates, evidence, reviews and decisions connected to the relevant programme record. This supports controlled review and traceability across the capital execution lifecycle.',
-            ],
-          },
-          {
-            heading: '6. AX1 intelligence system',
-            paragraphs: [
-              'The AX1 intelligence system helps authorised users understand execution state, evidence coverage, unresolved commitments and decision context from the records available to them. It supports human review and does not replace the responsible decision-maker.',
-            ],
-          },
-          {
-            heading: '7. Human authority and platform boundaries',
-            paragraphs: [
-              'AX1 is designed to keep decision context visible while preserving human responsibility. Validators and authorised stakeholders remain responsible for their reviews and approval decisions.',
-              'The public website intentionally describes outcomes and selected product context without publishing protected rules, scoring, thresholds, configuration, automation or technical architecture.',
-            ],
-            bullets: [
-              'Human authority: Authorised stakeholders remain responsible for material decisions.',
-              'Role separation: Visibility and actions follow the participant\'s responsibility.',
-              'Traceable context: Material outputs can remain connected to the underlying programme record.',
-              'Data minimisation: Public enquiries should not contain unnecessary confidential information.',
-            ],
-          },
-          {
-            heading: '8. Certification roadmap',
-            paragraphs: [
-              'AX1 Structura Ltd is preparing the platform architecture to support future third-party security and compliance reviews. References to audit readiness or certification roadmap on this website do not mean the company is currently SOC 2 or ISO 27001 certified unless expressly and separately stated.',
-            ],
-          },
-          {
-            heading: '8. Contact',
-            paragraphs: [
-              'AX1 Structura Ltd',
-              '66 Paul Street, London EC2A 4NA, England',
-              'info@ax1.network',
-              'info@ax1.capital',
-            ],
-          },
-        ]}
-      />
+    <main className="cg-public-page cg-trust-page">
+      <section className="cg-public-hero" aria-labelledby="trust-title">
+        <div className="cg-shell cg-public-hero-grid">
+          <motion.div {...fade}>
+            <span className="cg-eyebrow">Trust through boundaries</span>
+            <h1 id="trust-title">Know what AX1 does, and where it stops.</h1>
+            <p>Institutional trust depends on explicit authority, attributable evidence, scoped access and honest product boundaries. AX1 is designed to make each one visible.</p>
+            <div className="cg-actions"><a className="cg-button cg-button-primary" href="#trust-boundaries">Review the boundaries<ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="/#decision-brief">Frame a decision</a></div>
+          </motion.div>
+          <motion.div className="cg-public-trace-card" {...fade}>
+            <div><span>Trust architecture</span><strong>Responsibility remains attributable</strong></div>
+            <AX1MilestoneTrace items={trustTrace} activeIndex={3} ariaLabel="AX1 trust and governance progression" theme="dark" />
+            <p><ShieldCheck size={14} />Public description only. Client environments and access are separately configured.</p>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="cg-public-section is-light" id="trust-boundaries" aria-labelledby="trust-boundaries-title"><div className="cg-shell">
+        <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Claims and boundaries</span><h2 id="trust-boundaries-title">Every trust claim should say what it does not mean.</h2><p>This is the public operating boundary of AX1 Capital Governance Infrastructure.</p></motion.header>
+        <div className="cg-trust-matrix">{boundaries.map(({ icon: Icon, label, claim, boundary }) => <motion.article key={label} {...fade}><div><Icon size={19} /><span>{label}</span></div><strong>{claim}</strong><p>{boundary}</p></motion.article>)}</div>
+      </div></section>
+
+      <section className="cg-public-section is-dark" aria-labelledby="not-ax1-title"><div className="cg-shell cg-public-split">
+        <motion.div {...fade}><span className="cg-eyebrow">What AX1 is not</span><h2 id="not-ax1-title">Clear boundaries protect the decision.</h2><p>AX1 supports governed context and progression. Responsibility remains with the authorised organisations and people.</p></motion.div>
+        <motion.ul className="cg-not-list" {...fade}>
+          <li><Check size={16} />Not a bank, payment provider or custodian</li>
+          <li><Check size={16} />Not an autonomous capital allocator</li>
+          <li><Check size={16} />Not a substitute for investor or programme judgement</li>
+          <li><Check size={16} />Not a guarantee of savings, delivery or financial performance</li>
+          <li><Check size={16} />Not a public disclosure of configured operating mechanics</li>
+        </motion.ul>
+      </div></section>
+
+      <section className="cg-public-section is-light" aria-labelledby="assurance-title"><div className="cg-shell cg-public-split">
+        <motion.div {...fade}><span className="cg-eyebrow">Assurance posture</span><h2 id="assurance-title">State the current position without overclaiming.</h2></motion.div>
+        <motion.div className="cg-public-boundary-card" {...fade}><p>AX1 is designed around permissioned access, scoped roles, attributable programme records and non-custodial capital boundaries. Any future third-party certification will be stated only after it has been independently achieved.</p><div className="cg-trust-contact"><span>Trust and governance enquiries</span><a href="mailto:info@ax1.capital">info@ax1.capital</a></div></motion.div>
+      </div></section>
+
+      <section className="cg-public-cta"><div className="cg-shell"><div><span>Apply the boundary to a real decision</span><h2>Frame the action, evidence position and responsible authority.</h2></div><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'trust_footer', action: 'decision_brief' })}>Prepare a Decision Brief<ArrowRight size={16} /></a></div></section>
       <Footer onOpenContact={onOpenContact} />
-    </>
+    </main>
   );
 }

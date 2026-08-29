@@ -72,7 +72,7 @@ export default function LegalPageLayout({
           <p>66 Paul Street, London EC2A 4NA, England</p>
           <p>Registered in England and Wales</p>
           <p>Company Registration No. 17151320</p>
-          <p>Email: info@ax1.network | info@ax1.capital</p>
+          <p>Email: info@ax1.capital</p>
         </section>
       </section>
     </main>

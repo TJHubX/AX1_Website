@@ -1,5 +1,7 @@
-import React, { useId, useMemo, useState } from 'react';
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ArrowRight, Calculator, Check, Clock3, Eye, EyeOff, Plus, TriangleAlert } from 'lucide-react';
+import { trackAX1Event } from '../../utils/analytics';
+import { calculateDecisionExposure } from './decisionExposure';
 
 export type DecisionExposureScenario = {
   capital: number;
@@ -57,6 +59,7 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
   const [currency, setCurrency] = useState<CurrencyCode>('EUR');
   const [additionalBurden, setAdditionalBurden] = useState(0);
   const [evidenceVisibility, setEvidenceVisibility] = useState<EvidenceVisibility>('partly');
+  const initialCalculation = useRef(true);
 
   const formatMoney = (value: number, maximumFractionDigits = 0) => new Intl.NumberFormat('en-GB', {
     style: 'currency',
@@ -71,13 +74,28 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
     maximumFractionDigits: 1,
   }).format(value);
 
-  const carryingBurden = useMemo(
-    () => capital * (annualRate / 100) * (days / 365),
+  const { carryingBurden, sevenDayBurden } = useMemo(
+    () => calculateDecisionExposure(capital, annualRate, days),
     [annualRate, capital, days],
   );
-  const sevenDayBurden = capital * (annualRate / 100) * (7 / 365);
   const combinedVisibleBurden = carryingBurden + additionalBurden;
   const visibility = visibilityCopy[evidenceVisibility];
+
+  useEffect(() => {
+    if (initialCalculation.current) {
+      initialCalculation.current = false;
+      return undefined;
+    }
+    const timer = window.setTimeout(() => {
+      trackAX1Event('decision_exposure_calculated', {
+        currency,
+        delay_days: days,
+        carrying_rate: annualRate,
+        separate_burden_included: additionalBurden > 0,
+      });
+    }, 700);
+    return () => window.clearTimeout(timer);
+  }, [additionalBurden, annualRate, capital, currency, days]);
 
   const buildScenario = (): DecisionExposureScenario => {
     const summary = [
@@ -182,7 +200,7 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
           </div>
           <div className="cg-choice-group" role="group" aria-label="Current decision basis visibility">
             {(['yes', 'partly', 'no'] as EvidenceVisibility[]).map((choice) => (
-              <button className={evidenceVisibility === choice ? 'is-active' : ''} key={choice} type="button" aria-pressed={evidenceVisibility === choice} onClick={() => setEvidenceVisibility(choice)}>
+              <button className={evidenceVisibility === choice ? 'is-active' : ''} key={choice} type="button" aria-pressed={evidenceVisibility === choice} onClick={() => { setEvidenceVisibility(choice); trackAX1Event('decision_exposure_visibility_set', { answer: choice }); }}>
                 {choice === 'yes' ? <Check size={15} /> : choice === 'partly' ? <Eye size={15} /> : <EyeOff size={15} />}
                 {choice === 'yes' ? 'Yes' : choice === 'partly' ? 'Partly' : 'No'}
               </button>
@@ -192,7 +210,7 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
             {evidenceVisibility === 'no' ? <TriangleAlert size={18} /> : <Clock3 size={18} />}
             <p><strong>{visibility.title}</strong>{visibility.copy}</p>
           </div>
-          <button className="cg-button cg-button-primary cg-use-scenario" type="button" onClick={() => onUseScenario(buildScenario())}>
+          <button className="cg-button cg-button-primary cg-use-scenario" type="button" onClick={() => { trackAX1Event('decision_exposure_scenario_used', { currency, delay_days: days, evidence_visibility: evidenceVisibility }); onUseScenario(buildScenario()); }}>
             Use this scenario in a decision brief <ArrowRight size={16} />
           </button>
         </div>

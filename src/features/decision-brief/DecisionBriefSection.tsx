@@ -1,77 +1,72 @@
 import React, { useEffect, useId, useState } from 'react';
-import { ArrowRight, CheckCircle2, Copy, Mail, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Copy, ExternalLink, Mail, ShieldCheck } from 'lucide-react';
 import type { DecisionExposureScenario } from '../decision-exposure/DecisionExposureSnapshot';
+import { trackAX1Event } from '../../utils/analytics';
+import {
+  buildDecisionEmail,
+  type DecisionBriefEmail,
+  type DecisionBriefValues,
+} from './decisionBrief';
 
 type Props = {
-  scenario?: DecisionExposureScenario | null;
+  scenario: DecisionExposureScenario | null;
 };
 
-type FormValues = {
-  decision: string;
-  conditions: string;
-  evidenceLocation: string;
-  workEmail: string;
-  context: string;
-};
+type Errors = Partial<Record<keyof DecisionBriefValues, string>>;
 
-const initialValues: FormValues = {
+const initialValues: DecisionBriefValues = {
   decision: '',
+  decisionDate: '',
+  capitalAffected: '',
+  currency: 'EUR',
   conditions: '',
   evidenceLocation: '',
   workEmail: '',
   context: '',
 };
 
-export function buildDecisionBrief(values: FormValues) {
-  return [
-    'AX1 CAPITAL DECISION BRIEF',
-    '',
-    'What capital decision is approaching?',
-    values.decision,
-    '',
-    'What must be true before it moves?',
-    values.conditions,
-    '',
-    'Where is the proof today?',
-    values.evidenceLocation,
-    '',
-    `Work email: ${values.workEmail}`,
-    '',
-    'Optional context or decision-exposure scenario:',
-    values.context || 'None provided.',
-  ].join('\n');
+function recipientEmail() {
+  return document.documentElement.dataset.ax1Email || 'info@ax1.capital';
 }
 
 export function DecisionBriefSection({ scenario }: Props) {
-  const decisionId = useId();
-  const conditionsId = useId();
-  const evidenceId = useId();
-  const emailId = useId();
-  const contextId = useId();
-  const [values, setValues] = useState<FormValues>(initialValues);
-  const [errors, setErrors] = useState<Partial<Record<keyof FormValues, string>>>({});
+  const ids = {
+    decision: useId(), decisionDate: useId(), capitalAffected: useId(), currency: useId(),
+    conditions: useId(), evidenceLocation: useId(), workEmail: useId(), context: useId(),
+    subject: useId(), body: useId(),
+  };
+  const [values, setValues] = useState<DecisionBriefValues>(initialValues);
+  const [errors, setErrors] = useState<Errors>({});
+  const [preview, setPreview] = useState<DecisionBriefEmail | null>(null);
   const [status, setStatus] = useState('');
 
   useEffect(() => {
     if (!scenario) return;
     setValues((current) => ({
       ...current,
+      capitalAffected: scenario.capital > 0 ? String(Math.round(scenario.capital)) : current.capitalAffected,
+      currency: scenario.currency,
       context: current.context.includes('Capital governed through the next decision:')
         ? scenario.summary
         : [current.context, scenario.summary].filter(Boolean).join('\n\n'),
     }));
-    setStatus('Decision-exposure scenario added below.');
+    setPreview(null);
+    setStatus('Decision-exposure scenario added. Complete the brief when ready.');
   }, [scenario]);
 
-  const update = (key: keyof FormValues, value: string) => {
+  const update = <K extends keyof DecisionBriefValues>(key: K, value: DecisionBriefValues[K]) => {
     setValues((current) => ({ ...current, [key]: value }));
     setErrors((current) => ({ ...current, [key]: undefined }));
+    setPreview(null);
     setStatus('');
   };
 
   const validate = () => {
-    const next: Partial<Record<keyof FormValues, string>> = {};
+    const next: Errors = {};
     if (!values.decision.trim()) next.decision = 'Describe the approaching capital decision.';
+    if (!values.decisionDate) next.decisionDate = 'Add the expected decision date.';
+    if (!values.capitalAffected.trim()) next.capitalAffected = 'Add the approximate capital affected.';
+    else if (!Number.isFinite(Number(values.capitalAffected)) || Number(values.capitalAffected) <= 0) next.capitalAffected = 'Enter a positive amount.';
     if (!values.conditions.trim()) next.conditions = 'Describe what must be true before capital moves.';
     if (!values.evidenceLocation) next.evidenceLocation = 'Select where the proof is today.';
     if (!values.workEmail.trim()) next.workEmail = 'Enter a work email.';
@@ -80,74 +75,116 @@ export function DecisionBriefSection({ scenario }: Props) {
     return Object.keys(next).length === 0;
   };
 
-  const prepareBrief = async (event: React.FormEvent) => {
+  const prepareBrief = (event: React.FormEvent) => {
     event.preventDefault();
     if (!validate()) {
       setStatus('Complete the highlighted fields before preparing the brief.');
       return;
     }
+    setPreview(buildDecisionEmail(values));
+    setStatus('Brief prepared below. Review and edit it before copying or opening email.');
+    trackAX1Event('decision_brief_prepared', {
+      evidence_position: values.evidenceLocation,
+      scenario_included: Boolean(scenario),
+      currency: values.currency,
+    });
+    window.requestAnimationFrame(() => document.querySelector('.cg-brief-preview')?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+  };
 
-    const brief = buildDecisionBrief(values);
+  const updatePreview = (key: keyof DecisionBriefEmail, value: string) => {
+    setPreview((current) => current ? { ...current, [key]: value } : current);
+    setStatus('');
+  };
+
+  const copyBrief = async () => {
+    if (!preview) return;
     try {
-      await navigator.clipboard.writeText(brief);
-      setStatus('Brief copied. Your email client is opening so you remain in control of sending it.');
+      await navigator.clipboard.writeText(`${preview.subject}\n\n${preview.body}`);
+      setStatus('Decision Brief copied to your clipboard.');
+      trackAX1Event('decision_brief_copied');
     } catch {
-      setStatus('Your email client is opening. Review the brief before sending it.');
+      setStatus('Copy was unavailable. Select the brief text and copy it manually.');
     }
-    const subject = encodeURIComponent(`AX1 decision brief: ${values.decision.slice(0, 72)}`);
-    const body = encodeURIComponent(brief);
-    window.location.href = `mailto:info@ax1.capital?subject=${subject}&body=${body}`;
+  };
+
+  const openEmail = () => {
+    if (!preview) return;
+    trackAX1Event('decision_brief_email_opened');
+    const subject = encodeURIComponent(preview.subject);
+    const body = encodeURIComponent(preview.body);
+    window.location.href = `mailto:${recipientEmail()}?subject=${subject}&body=${body}`;
   };
 
   return (
     <section className="cg-brief" id="decision-brief" aria-labelledby="decision-brief-title">
       <div className="cg-shell cg-brief-layout">
         <div className="cg-brief-copy">
-          <span className="cg-eyebrow"><Mail size={15} /> Decision brief</span>
+          <span className="cg-eyebrow"><Mail size={15} /> Decision Brief</span>
           <h2 id="decision-brief-title">Bring the next capital decision, not a requirements list.</h2>
-          <p>Frame one approaching action. AX1 can then examine the decision basis, evidence boundary and controlled first scope without asking you to disclose protected programme data on this page.</p>
+          <p>Frame one approaching action. Review the generated brief on this page, edit it if needed, then decide whether to copy it or open your email client.</p>
           <div className="cg-brief-principle"><ShieldCheck size={18} /><p><strong>Capital, governed by execution.</strong>Configured rules determine readiness. Authorised people determine action.</p></div>
-          <div className="cg-brief-contact"><span>Direct recipient</span><a href="mailto:info@ax1.capital">info@ax1.capital</a></div>
+          <div className="cg-brief-contact"><span>Direct recipient</span><a href={`mailto:${recipientEmail()}`}>{recipientEmail()}</a></div>
+          <p className="cg-brief-privacy">Your entries remain in this browser. AX1 does not receive anything until you choose to send the email.</p>
         </div>
 
-        <form className="cg-brief-form" onSubmit={prepareBrief} noValidate>
-          <div className="cg-form-progress" aria-hidden="true"><span className="is-active" /><span /><span /></div>
-          <label className={errors.decision ? 'is-invalid' : ''} htmlFor={decisionId}>
-            <span>What capital decision is approaching?</span>
-            <textarea id={decisionId} rows={3} value={values.decision} onChange={(event) => update('decision', event.target.value)} placeholder="For example: authorise the next infrastructure release" />
-            {errors.decision && <small>{errors.decision}</small>}
-          </label>
-          <label className={errors.conditions ? 'is-invalid' : ''} htmlFor={conditionsId}>
-            <span>What must be true before it moves?</span>
-            <textarea id={conditionsId} rows={3} value={values.conditions} onChange={(event) => update('conditions', event.target.value)} placeholder="The outcome, evidence and authority conditions that must be satisfied" />
-            {errors.conditions && <small>{errors.conditions}</small>}
-          </label>
-          <div className="cg-brief-form-row">
-            <label className={errors.evidenceLocation ? 'is-invalid' : ''} htmlFor={evidenceId}>
-              <span>Where is the proof today?</span>
-              <select id={evidenceId} value={values.evidenceLocation} onChange={(event) => update('evidenceLocation', event.target.value)}>
-                <option value="">Select current position</option>
-                <option>Open in one current system</option>
-                <option>Split across tools and stakeholders</option>
-                <option>Rebuilt for each decision meeting</option>
-                <option>Not consistently available</option>
-              </select>
-              {errors.evidenceLocation && <small>{errors.evidenceLocation}</small>}
+        <div className="cg-brief-workspace">
+          <form className="cg-brief-form" onSubmit={prepareBrief} noValidate>
+            <div className="cg-form-progress" aria-hidden="true"><span className="is-active" /><span className={preview ? 'is-active' : ''} /><span /></div>
+            <label className={errors.decision ? 'is-invalid' : ''} htmlFor={ids.decision}>
+              <span>What capital decision is approaching?</span>
+              <textarea id={ids.decision} rows={3} value={values.decision} onChange={(event) => update('decision', event.target.value)} placeholder="For example: authorise the next infrastructure release" />
+              {errors.decision && <small>{errors.decision}</small>}
             </label>
-            <label className={errors.workEmail ? 'is-invalid' : ''} htmlFor={emailId}>
-              <span>Work email</span>
-              <input id={emailId} type="email" autoComplete="email" value={values.workEmail} onChange={(event) => update('workEmail', event.target.value)} placeholder="you@organisation.com" />
-              {errors.workEmail && <small>{errors.workEmail}</small>}
+            <div className="cg-brief-form-row cg-brief-form-row-three">
+              <label className={errors.decisionDate ? 'is-invalid' : ''} htmlFor={ids.decisionDate}>
+                <span>When is the next decision?</span>
+                <input id={ids.decisionDate} type="date" value={values.decisionDate} onChange={(event) => update('decisionDate', event.target.value)} />
+                {errors.decisionDate && <small>{errors.decisionDate}</small>}
+              </label>
+              <label className={errors.capitalAffected ? 'is-invalid' : ''} htmlFor={ids.capitalAffected}>
+                <span>Approximate capital affected</span>
+                <div className="cg-brief-money"><select id={ids.currency} aria-label="Capital currency" value={values.currency} onChange={(event) => update('currency', event.target.value as DecisionBriefValues['currency'])}><option>EUR</option><option>GBP</option><option>USD</option></select><input id={ids.capitalAffected} type="number" min="0" step="10000" value={values.capitalAffected} onChange={(event) => update('capitalAffected', event.target.value)} placeholder="12400000" /></div>
+                {errors.capitalAffected && <small>{errors.capitalAffected}</small>}
+              </label>
+            </div>
+            <label className={errors.conditions ? 'is-invalid' : ''} htmlFor={ids.conditions}>
+              <span>What must be true before it moves?</span>
+              <textarea id={ids.conditions} rows={3} value={values.conditions} onChange={(event) => update('conditions', event.target.value)} placeholder="The outcome, evidence and authority conditions that must be satisfied" />
+              {errors.conditions && <small>{errors.conditions}</small>}
             </label>
-          </div>
-          <label htmlFor={contextId}>
-            <span>Optional context</span>
-            <textarea id={contextId} rows={scenario ? 9 : 4} value={values.context} onChange={(event) => update('context', event.target.value)} placeholder="Programme, timing or stakeholder context. Do not include confidential information." />
-          </label>
-          <button className="cg-button cg-button-primary cg-brief-submit" type="submit">Prepare the decision brief <ArrowRight size={16} /></button>
-          <div className="cg-form-boundary"><Copy size={14} /><span>The brief is copied and opened in your email client. Nothing is silently submitted from this website.</span></div>
-          {status && <p className="cg-form-status" role="status"><CheckCircle2 size={15} />{status}</p>}
-        </form>
+            <div className="cg-brief-form-row">
+              <label className={errors.evidenceLocation ? 'is-invalid' : ''} htmlFor={ids.evidenceLocation}>
+                <span>Where is the proof today?</span>
+                <select id={ids.evidenceLocation} value={values.evidenceLocation} onChange={(event) => update('evidenceLocation', event.target.value)}>
+                  <option value="">Select current position</option><option>Open in one current system</option><option>Split across tools and stakeholders</option><option>Rebuilt for each decision meeting</option><option>Not consistently available</option>
+                </select>
+                {errors.evidenceLocation && <small>{errors.evidenceLocation}</small>}
+              </label>
+              <label className={errors.workEmail ? 'is-invalid' : ''} htmlFor={ids.workEmail}>
+                <span>Work email</span>
+                <input id={ids.workEmail} type="email" autoComplete="email" value={values.workEmail} onChange={(event) => update('workEmail', event.target.value)} placeholder="you@organisation.com" />
+                {errors.workEmail && <small>{errors.workEmail}</small>}
+              </label>
+            </div>
+            <label htmlFor={ids.context}>
+              <span>Optional context</span>
+              <textarea id={ids.context} rows={scenario ? 8 : 4} value={values.context} onChange={(event) => update('context', event.target.value)} placeholder="Programme, timing or stakeholder context. Do not include confidential information." />
+            </label>
+            <button className="cg-button cg-button-primary cg-brief-submit" type="submit">Prepare the Decision Brief <ArrowRight size={16} /></button>
+            <div className="cg-form-boundary"><Copy size={14} /><span>Preparing the brief does not submit data or open another application.</span></div>
+            {status && <p className={`cg-form-status ${Object.values(errors).some(Boolean) ? 'is-error' : ''}`} role="status"><CheckCircle2 size={15} />{status}</p>}
+          </form>
+
+          {preview && (
+            <section className="cg-brief-preview" aria-labelledby="cg-brief-preview-title">
+              <div className="cg-brief-preview-head"><div><span>Step 02</span><h3 id="cg-brief-preview-title">Review the email before anything opens.</h3></div><button type="button" onClick={() => setPreview(null)}><ArrowLeft size={15} />Edit inputs</button></div>
+              <label htmlFor={ids.subject}><span>Email subject</span><input id={ids.subject} value={preview.subject} onChange={(event) => updatePreview('subject', event.target.value)} /></label>
+              <label htmlFor={ids.body}><span>Email body</span><textarea id={ids.body} rows={22} value={preview.body} onChange={(event) => updatePreview('body', event.target.value)} /></label>
+              <div className="cg-brief-preview-actions"><button className="cg-button cg-button-secondary" type="button" onClick={copyBrief}><Copy size={16} />Copy brief</button><button className="cg-button cg-button-primary" type="button" onClick={openEmail}><ExternalLink size={16} />Open email</button></div>
+              <p>Nothing is sent automatically. Your email client opens only when you select “Open email”.</p>
+            </section>
+          )}
+        </div>
       </div>
     </section>
   );

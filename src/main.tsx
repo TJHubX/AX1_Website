@@ -34,8 +34,8 @@ const PAGE_METADATA: Record<string, { title: string; description: string }> = {
     description: 'Model cost-overrun, delay and decision exposure while preserving human decision authority and controlled capital action.',
   },
   '/deployment': {
-    title: 'Pilot & Programs | AX1',
-    description: 'Start with a bounded launch programme, then expand AX1 across a single program or a multi-program portfolio.',
+    title: 'Deployment | AX1 Capital Governance',
+    description: 'Start with a bounded Launch Programme, then expand AX1 across one programme or a governed portfolio.',
   },
   '/trust': {
     title: 'Trust, Security & Governance | AX1',

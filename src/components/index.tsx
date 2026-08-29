@@ -22,6 +22,7 @@ import {
   Zap,
 } from 'lucide-react';
 import logo from '../assets/ax1-logo.svg';
+import { trackAX1Event } from '../utils/analytics';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -151,7 +152,7 @@ export function Header(_props: PageProps) {
           <Link to="/trust">Trust</Link>
           <Link to="/deployment">Deployment</Link>
         </div>
-        <a className="nav-cta" href="/#decision-brief">Frame a decision <ArrowRight size={13} /></a>
+        <a className="nav-cta" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'navigation', action: 'decision_brief' })}>Frame a decision <ArrowRight size={13} /></a>
         <button
           className="nav-menu-toggle"
           type="button"
@@ -527,8 +528,7 @@ export function ContactChannelsModal({ onClose }: ModalProps) {
         <h2 id="contact-channels-title">Direct Support Channels</h2>
         <p>Select the relevant department for your inquiry. Our infrastructure team monitors these channels for institutional coordination.</p>
         {[
-          ['Infrastructure Network', 'info@ax1.network'],
-          ['Capital Relations', 'info@ax1.capital'],
+          ['Capital Governance', 'info@ax1.capital'],
         ].map(([label, email]) => (
           <div className="channel-card" key={email}>
             <div className="channel-icon"><Mail size={20} /></div>

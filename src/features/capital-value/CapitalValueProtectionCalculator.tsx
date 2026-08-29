@@ -325,8 +325,8 @@ export function CapitalValueProtectionCalculator({
         <header className="cvp-intro">
           <div className="cvp-intro-copy">
             <Badge>Capital value protection calculator</Badge>
-            <h2 id="decision-cost-title">What is 1% better<br />capital execution<br />worth to you?</h2>
-            <p>Enter four portfolio figures to estimate the value exposed to overruns and delay. Then test what a reduction in that exposure could be worth.</p>
+            <h2 id="decision-cost-title">Where is capital value<br />currently exposed?</h2>
+            <p>Enter your portfolio figures to estimate the value exposed to overruns and delay. Then test transparent reduction scenarios without treating them as guaranteed AX1 savings.</p>
           </div>
           <div className="cvp-intro-actions">
             <label className="cvp-currency">

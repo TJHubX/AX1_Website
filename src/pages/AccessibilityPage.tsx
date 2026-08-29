@@ -50,7 +50,6 @@ export default function AccessibilityPage({ onOpenContact }: PageProps) {
               'If you experience difficulty accessing any part of the Axis One website or have suggestions for improvement, please contact us. We will review all accessibility feedback and aim to respond in a timely manner.',
               'AX1 Structura Ltd',
               '66 Paul Street, London EC2A 4NA, England',
-              'info@ax1.network',
               'info@ax1.capital',
             ],
           },

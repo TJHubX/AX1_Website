@@ -1,114 +1,76 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Layers3, Network, Workflow } from 'lucide-react';
-import {
-  Badge, Button, DeploymentGrid, FinalCTA, Footer,
-  fade, PageProps,
-} from '../components';
+import { ArrowRight, Check, Layers3, Network, Rocket, Users } from 'lucide-react';
+import { AX1MilestoneTrace } from '../components/AX1MilestoneTrace';
+import { Footer, PageProps, fade } from '../components';
+import { trackAX1Event } from '../utils/analytics';
 
-// ─── Sections ─────────────────────────────────────────────────────────────────
+const deploymentTrace = [
+  { number: '01', label: 'Frame one decision' },
+  { number: '02', label: 'Prove the operating value' },
+  { number: '03', label: 'Establish the pattern' },
+  { number: '04', label: 'Expand deliberately' },
+];
 
-function DeploymentOwnershipBlock() {
-  const signals = [
-    'Operators execute.',
-    'Partners coordinate.',
-    'Validators confirm.',
-    'Capital providers decide.',
-    'External providers execute.',
-    'AX1 preserves the governed record.',
-  ];
+const options = [
+  {
+    number: '01', icon: Rocket, title: 'Launch Programme', note: 'Recommended first step',
+    copy: 'Start with one approaching capital decision and a bounded stakeholder group. Establish the baseline, connect the present decision basis and agree how value will be judged.',
+    points: ['One decision boundary', 'Defined participants', 'Current-state baseline', 'Measured review point'],
+  },
+  {
+    number: '02', icon: Network, title: 'Single Programme', note: 'Focused operating scope',
+    copy: 'Operate one programme with its milestones, evidence, ownership and capital decision states connected through a permissioned environment.',
+    points: ['Programme-wide context', 'Role-scoped collaboration', 'Attributable evidence', 'Reviewable decisions'],
+  },
+  {
+    number: '03', icon: Layers3, title: 'Portfolio Expansion', note: 'Scale after proof',
+    copy: 'Extend a proven governance pattern across multiple programmes, entities or capital decision environments without losing local responsibility.',
+    points: ['Multiple programmes', 'Shared governance language', 'Portfolio visibility', 'Controlled expansion'],
+  },
+];
 
+export default function DeploymentPage({ onOpenContact }: PageProps) {
   return (
-    <section className="section dep-ownership-section">
-      <motion.div className="dep-ownership-panel" {...fade}>
-        <Badge>Coordination Context</Badge>
-        <h2>Complex delivery needs shared ownership.</h2>
-        <p>In multi-party programs, execution risk often comes from unclear ownership, scattered evidence and delayed decisions. AX1 gives each stakeholder a permissioned place to act while keeping the complete decision context in one governed record.</p>
-        <div className="dep-ownership-signals">
-          {signals.map((item) => <span key={item}>{item}</span>)}
-        </div>
-      </motion.div>
-    </section>
-  );
-}
-
-function DeploymentWorkflowSection({ onOpenAccess }: { onOpenAccess: () => void }) {
-  const workflows = [
-    {
-      icon: Workflow,
-      label: 'Milestone-Gated Programs',
-      copy: 'Capital programs structured around sequential or parallel outcomes. Each governed checkpoint connects required evidence, assigned validation and decision authority.',
-      steps: ['Define the outcome', 'Attach evidence requirements', 'Assign validation and authority', 'Route the authorised decision'],
-    },
-    {
-      icon: Network,
-      label: 'Multi-Party Execution',
-      copy: 'Programs involving investors, operators, validators, partners and project teams. Each participant has a defined role and scoped visibility. Eligibility follows the agreed process; authorised people make the decision.',
-      steps: ['Assign participant roles', 'Scope visibility and actions', 'Validate across parties', 'Authorised stakeholder decides'],
-    },
-    {
-      icon: Layers3,
-      label: 'Phased Capital Deployment',
-      copy: 'Capital structured in tranches across phases, with mandatory evidence, dependencies and defined decision points. Each phase builds on the governed record of the previous one.',
-      steps: ['Structure the phases', 'Set required dependencies', 'Define readiness conditions', 'Record each capital decision'],
-    },
-  ];
-  return (
-    <section className="section dep-workflow-section">
-      <motion.div className="dep-workflow-head" {...fade}>
-        <Badge>Execution Patterns</Badge>
-        <h2>One system. Different execution patterns.</h2>
-        <p>AX1 adapts to the shape of each capital program. Whether the structure is sequential, multi-party or phased, evidence, validation, authority and decisions remain connected in the same governance framework.</p>
-      </motion.div>
-      <div className="dep-workflow-grid">
-        {workflows.map(({ icon: Icon, label, copy, steps }) => (
-          <motion.div className="dep-workflow-card" key={label} {...fade}>
-            <div className="dep-workflow-card-head">
-              <div className="layer-icon"><Icon size={18} /></div>
-              <strong>{label}</strong>
-            </div>
-            <p>{copy}</p>
-            <ol className="dep-workflow-steps">
-              {steps.map((step, i) => (
-                <li key={step}><span className="dep-step-num">{String(i + 1).padStart(2, '0')}</span><span>{step}</span></li>
-              ))}
-            </ol>
+    <main className="cg-public-page cg-deployment-page">
+      <section className="cg-public-hero" aria-labelledby="deployment-title">
+        <div className="cg-shell cg-public-hero-grid">
+          <motion.div {...fade}>
+            <span className="cg-eyebrow">Deployment</span>
+            <h1 id="deployment-title">Start narrow. Prove value. Expand.</h1>
+            <p>Begin with the capital decision where fragmented evidence, stakeholder coordination and unclear readiness already create friction. Expansion follows proof, not ambition alone.</p>
+            <div className="cg-actions"><a className="cg-button cg-button-primary" href="#deployment-options">Choose the starting scope<ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="/#decision-brief">Frame the decision</a></div>
           </motion.div>
-        ))}
-        <motion.div className="dep-workflow-cta-cell" {...fade}>
-          <p>One governance framework. Any execution structure.</p>
-          <Button onClick={onOpenAccess}>Frame a Capital Decision</Button>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
-export default function DeploymentPage({ onOpenAccess, onOpenContact }: PageProps) {
-  return (
-    <main>
-      <section className="section page-hero">
-        <motion.div className="narrow" {...fade}>
-          <Badge>Pilot &amp; Programs</Badge>
-          <h1>Start with one workflow. Scale with evidence.</h1>
-          <p>Begin with the capital decision where fragmented evidence, stakeholder coordination and unclear readiness already create delay or risk.</p>
-          <div className="actions center-actions"><Button onClick={onOpenAccess}>Frame a Capital Decision</Button><Button variant="ghost" to="/capital">View Decision Exposure</Button></div>
-        </motion.div>
+          <motion.div className="cg-public-trace-card" {...fade}>
+            <div><span>Adoption path</span><strong>A controlled progression from one decision</strong></div>
+            <AX1MilestoneTrace items={deploymentTrace} activeIndex={0} ariaLabel="AX1 deployment progression" theme="dark" />
+            <p><Users size={14} />Different stakeholders collaborate through one context while responsibility remains distinct.</p>
+          </motion.div>
+        </div>
       </section>
-      <section className="section"><DeploymentGrid /></section>
-      <DeploymentWorkflowSection onOpenAccess={onOpenAccess} />
-      <DeploymentOwnershipBlock />
-      <FinalCTA
-        onOpenAccess={onOpenAccess}
-        heading="Prove one governed workflow before expanding."
-        subcopy="A controlled Launch Programme establishes the baseline, measures the result and defines the next rollout decision."
-        primaryLabel="Frame a Capital Decision"
-        showLogo={false}
-        secondaryLabel="Review Capital Governance"
-        secondaryTo="/capital"
-      />
+
+      <section className="cg-public-section is-light" id="deployment-options" aria-labelledby="deployment-options-title"><div className="cg-shell">
+        <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Choose the operating scope</span><h2 id="deployment-options-title">Use the package that matches the decision maturity.</h2><p>A Launch Programme is the default first step. Broader deployment should be earned through a clear operating result.</p></motion.header>
+        <div className="cg-package-grid">{options.map(({ number, icon: Icon, title, note, copy, points }, index) => <motion.article className={index === 0 ? 'is-featured' : ''} key={title} {...fade}>
+          <div className="cg-package-head"><span>{number}</span><Icon size={22} /><small>{note}</small></div><h3>{title}</h3><p>{copy}</p><ul>{points.map((point) => <li key={point}><Check size={15} />{point}</li>)}</ul><a href="/#decision-brief" onClick={() => trackAX1Event('deployment_option_selected', { option: title.toLowerCase().replaceAll(' ', '_') })}>Frame this scope<ArrowRight size={16} /></a>
+        </motion.article>)}</div>
+      </div></section>
+
+      <section className="cg-public-section is-dark" aria-labelledby="deployment-value-title"><div className="cg-shell cg-public-split">
+        <motion.div {...fade}><span className="cg-eyebrow">What the first scope must prove</span><h2 id="deployment-value-title">A credible operating result, not a generic pilot.</h2><p>The first engagement should test whether the decision basis becomes more current, attributable and defensible for the people responsible.</p></motion.div>
+        <motion.div className="cg-deployment-proof" {...fade}>
+          <div><span>01</span><strong>Can the decision basis be opened without reconstruction?</strong></div>
+          <div><span>02</span><strong>Can evidence, ownership and authority be understood together?</strong></div>
+          <div><span>03</span><strong>Can the authorised outcome remain connected to the operating record?</strong></div>
+        </motion.div>
+      </div></section>
+
+      <section className="cg-public-section is-light" aria-labelledby="deployment-collaboration-title"><div className="cg-shell cg-public-split">
+        <motion.div {...fade}><span className="cg-eyebrow">Collaboration infrastructure</span><h2 id="deployment-collaboration-title">One programme reality. Different responsibilities.</h2></motion.div>
+        <motion.div className="cg-public-boundary-card" {...fade}><p>Capital owners, execution teams, assurance participants, partners and workspace administrators work through permissioned views of the same relevant context. Shared visibility does not collapse authority.</p><a href="/#decision-brief">Bring the stakeholder context<ArrowRight size={15} /></a></motion.div>
+      </div></section>
+
+      <section className="cg-public-cta"><div className="cg-shell"><div><span>Recommended first step</span><h2>Frame one live decision for a bounded Launch Programme.</h2></div><a className="cg-button cg-button-primary" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'deployment_footer', action: 'decision_brief' })}>Prepare a Decision Brief<ArrowRight size={16} /></a></div></section>
       <Footer onOpenContact={onOpenContact} />
     </main>
   );

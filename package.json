@@ -9,7 +9,7 @@
     "build:cloudflare": "vite build",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
-    "test": "tsc -p tsconfig.tests.json && node --test .test-dist/capitalValueProtection.test.js",
+    "test": "tsc -p tsconfig.tests.json && node --test .test-dist/capital-value/capitalValueProtection.test.js .test-dist/publicFlows.test.js",
     "deploy:cloudflare": "wrangler pages deploy dist --project-name ax1-website"
   },
   "dependencies": {

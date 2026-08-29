@@ -7,6 +7,8 @@ import {
 import { Footer, PageProps, fade } from '../components';
 import { DecisionExposureSnapshot, type DecisionExposureScenario } from '../features/decision-exposure/DecisionExposureSnapshot';
 import { DecisionBriefSection } from '../features/decision-brief/DecisionBriefSection';
+import { DecisionDiagnostic } from '../features/diagnostic/DecisionDiagnostic';
+import { trackAX1Event } from '../utils/analytics';
 
 const gapSteps = [
   ['01', 'Intent approved', 'Capital and outcomes are agreed.'],
@@ -14,13 +16,6 @@ const gapSteps = [
   ['03', 'Evidence fragments', 'Proof separates across tools, files and people.'],
   ['04', 'Decision rebuilt', 'The current basis is reconstructed for the meeting.'],
   ['05', 'Capital must move', 'Time pressure competes with governance quality.'],
-];
-
-const diagnosticQuestions = [
-  ['01', 'What changed since capital was approved?', 'Current execution, not the last reported position.'],
-  ['02', 'Which milestone controls the next capital action?', 'The governing point, owner and consequence.'],
-  ['03', 'Is the evidence current, attributable and decision-relevant?', 'Not merely present, but usable for this action.'],
-  ['04', 'Who has authority, and what action is permitted now?', 'A visible boundary between readiness and decision.'],
 ];
 
 const states = [
@@ -81,7 +76,7 @@ function Hero() {
           <span className="cg-eyebrow">Capital governance infrastructure</span>
           <h1 id="cg-hero-title"><span>What proves the next capital move?</span>Capital, governed by execution.</h1>
           <p>AX1 connects committed capital to verified milestones, attributable evidence and controlled decision states. Configured rules determine readiness. Authorised people determine action.</p>
-          <div className="cg-actions"><a className="cg-button cg-button-primary" href="#decision-brief">Frame a capital decision <ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="#system">See the system</a></div>
+          <div className="cg-actions"><a className="cg-button cg-button-primary" href="#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'hero', action: 'decision_brief' })}>Frame a capital decision <ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="#system">See the system</a><a className="cg-button cg-button-tertiary" href="#diagnostic">Take the 60-second test</a></div>
           <div className="cg-hero-principle"><LockKeyhole size={15} /><span>Money moves only when execution is proven and an authorised stakeholder decides.</span></div>
         </motion.div>
         <HeroDecisionSurface />
@@ -101,30 +96,29 @@ function GovernanceGap() {
   );
 }
 
-function Diagnostic() {
-  return (
-    <section className="cg-diagnostic" aria-labelledby="cg-diagnostic-title"><div className="cg-shell">
-      <motion.header className="cg-section-heading cg-section-heading-dark" {...fade}><span className="cg-eyebrow">A 60 second test</span><h2 id="cg-diagnostic-title">Can the next action be defended without another report?</h2><p>Four questions expose whether the decision basis is current or still has to be reconstructed.</p></motion.header>
-      <div className="cg-question-rail">{diagnosticQuestions.map(([number, question, explanation], index) => <motion.article key={number} {...fade}><div className="cg-question-index"><span>{number}</span><i className={index === 0 ? 'is-active' : ''} /></div><h3>{question}</h3><p>{explanation}</p></motion.article>)}</div>
-    </div></section>
-  );
-}
-
 function GovernedObject() {
-  const [validated, setValidated] = useState(false);
-  const milestones = [
-    ['M01', 'Commitment approved', 'complete'], ['M02', 'Execution active', 'complete'],
-    ['M03', validated ? 'Evidence validated' : 'Evidence review', validated ? 'complete' : 'current'],
-    ['M04', validated ? 'Decision available' : 'Decision controlled', validated ? 'current' : 'future'],
+  const [step, setStep] = useState(0);
+  const stages = [
+    { state: 'CHANGE VISIBLE', evidence: 'Execution update received', review: 'Evidence review required', consequence: 'Hold current position', button: 'Connect current evidence' },
+    { state: 'PARTIAL', evidence: 'Current evidence connected', review: 'Assigned review in progress', consequence: 'Conditional or hold', button: 'Complete assigned review' },
+    { state: 'VALIDATED', evidence: 'Decision basis is current', review: 'Review position recorded', consequence: 'Authorised action available', button: 'Record authorised action' },
+    { state: 'RECORDED', evidence: 'Current basis retained', review: 'Authorised action attributable', consequence: 'Decision record complete', button: 'Reset illustration' },
   ];
+  const current = stages[step];
+  const milestoneLabels = ['Execution changed', 'Evidence current', 'Readiness visible', 'Action recorded'];
+  const advance = () => {
+    const nextStep = step === stages.length - 1 ? 0 : step + 1;
+    setStep(nextStep);
+    trackAX1Event('decision_room_advanced', { from_step: step + 1, to_step: nextStep + 1 });
+  };
   return (
-    <motion.div className={`cg-governed-object ${validated ? 'is-validated' : ''}`} {...fade}>
-      <div className="cg-object-header"><div><span>Governed object</span><strong>Infrastructure delivery / Gate 03</strong></div><span className={`cg-state-badge ${validated ? 'is-validated' : 'is-partial'}`}>{validated ? 'VALIDATED' : 'PARTIAL'}</span></div>
+    <motion.div className={`cg-governed-object is-step-${step}`} {...fade}>
+      <div className="cg-object-header"><div><span>Illustrative Decision Room</span><strong>Infrastructure delivery / Decision 03</strong></div><span className={`cg-state-badge ${step >= 2 ? 'is-validated' : 'is-partial'}`}>{current.state}</span></div>
       <div className="cg-object-body">
-        <div className="cg-object-milestones">{milestones.map(([number, label, state]) => <div className={`is-${state}`} key={number}><span>{number}</span><i /><strong>{label}</strong></div>)}</div>
-        <div className="cg-object-detail"><span>Current evidence position</span><strong>{validated ? '18 of 18 accepted' : '17 of 18 accepted'}</strong><div><span>Assigned review</span><b>{validated ? 'Complete' : 'Final verification pending'}</b></div><div><span>Capital consequence</span><b>{validated ? 'Release path available' : 'Conditional or hold'}</b></div><button type="button" onClick={() => setValidated((current) => !current)}>{validated ? <><Clock3 size={15} /> Reset illustration</> : <><CheckCircle2 size={15} /> Validate final evidence</>}</button></div>
+        <div className="cg-object-milestones">{milestoneLabels.map((label, index) => <div className={index < step ? 'is-complete' : index === step ? 'is-current' : 'is-future'} key={label}><span>M0{index + 1}</span><i /><strong>{label}</strong></div>)}</div>
+        <div className="cg-object-detail"><span>Current evidence position</span><strong>{current.evidence}</strong><div><span>Review position</span><b>{current.review}</b></div><div><span>Capital consequence</span><b>{current.consequence}</b></div><button type="button" onClick={advance}>{step === stages.length - 1 ? <Clock3 size={15} /> : <CheckCircle2 size={15} />}{current.button}</button></div>
       </div>
-      <p>Public illustration. The state change is visible; AX1 policy rules, thresholds and configuration remain protected.</p>
+      <p>Public illustration. It shows causality between execution, evidence, readiness and human action without disclosing AX1 rules or configuration.</p>
     </motion.div>
   );
 }
@@ -184,13 +178,15 @@ function TrustBoundaries() {
   const claims = [
     ['Authority', 'Human authority remains explicit.', 'AX1 does not make investment or release decisions.'],
     ['Evidence', 'Material proof remains attributable and reviewable.', 'AX1 does not certify evidence outside configured review responsibilities.'],
+    ['Decision trace', 'Material changes and decisions remain connected.', 'AX1 does not replace the underlying source records or responsible parties.'],
     ['State', 'Current readiness and consequence are visible.', 'AX1 does not guarantee programme performance or savings.'],
+    ['Security', 'Visibility follows a permissioned operating boundary.', 'Public illustrations do not represent a live client environment or security certification.'],
     ['Boundaries', 'Capital execution remains non-custodial.', 'AX1 does not hold, transfer or manage client funds.'],
   ];
   return (
     <section className="cg-trust" id="trust" aria-labelledby="cg-trust-title"><div className="cg-shell cg-trust-layout">
       <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Trust through boundaries</span><h2 id="cg-trust-title">Institutional claims should come with visible boundaries.</h2><p>AX1 is designed to make responsibility, evidence and decision state clearer without obscuring where the platform stops.</p><a className="cg-text-link" href="/trust">Review trust and governance <ArrowRight size={15} /></a></motion.header>
-      <div className="cg-claim-list">{claims.map(([title, claim, boundary]) => <motion.article key={title} {...fade}><span>{title}</span><div><strong>{claim}</strong><p>{boundary}</p></div><ShieldCheck size={17} /></motion.article>)}</div>
+      <div><div className="cg-claim-list">{claims.map(([title, claim, boundary]) => <motion.article key={title} {...fade}><span>{title}</span><div><strong>{claim}</strong><p>{boundary}</p></div><ShieldCheck size={17} /></motion.article>)}</div><aside className="cg-not-block"><strong>What AX1 is not</strong><p>Not a bank, custodian, autonomous allocator, guarantee of performance or substitute for authorised judgement.</p></aside></div>
     </div></section>
   );
 }
@@ -204,7 +200,7 @@ function Deployment() {
   return (
     <section className="cg-deployment" id="deployment" aria-labelledby="cg-deployment-title"><div className="cg-shell">
       <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Start narrow. Prove value. Expand.</span><h2 id="cg-deployment-title">Begin where capital decision friction matters now.</h2><p>A bounded first scope creates a credible basis for expansion without requiring an enterprise-wide transformation.</p></motion.header>
-      <div className="cg-deployment-list">{options.map(([number, title, copy, note], index) => <motion.article className={index === 0 ? 'is-featured' : ''} key={number} {...fade}><span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div><small>{note}</small>{index === 0 && <a href="#decision-brief" aria-label="Frame a launch programme decision"><ArrowRight size={18} /></a>}</motion.article>)}</div>
+      <div className="cg-deployment-list">{options.map(([number, title, copy, note], index) => <motion.article className={index === 0 ? 'is-featured' : ''} key={number} {...fade}><span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div><small>{note}</small><a href="#decision-brief" aria-label={`Frame a ${title.toLowerCase()} decision`} onClick={() => trackAX1Event('deployment_option_selected', { option: title.toLowerCase().replaceAll(' ', '_') })}><ArrowRight size={18} /></a></motion.article>)}</div>
     </div></section>
   );
 }
@@ -215,5 +211,5 @@ export default function HomePage({ onOpenContact }: PageProps) {
     setScenario(nextScenario);
     window.requestAnimationFrame(() => document.querySelector('#decision-brief')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   };
-  return <main className="cg-home"><Hero /><GovernanceGap /><Diagnostic /><SystemReveal /><DecisionExposureSnapshot onUseScenario={useScenario} /><DecisionStates /><RoleViews /><TrustBoundaries /><Deployment /><DecisionBriefSection scenario={scenario} /><Footer onOpenContact={onOpenContact} /></main>;
+  return <main className="cg-home"><Hero /><GovernanceGap /><DecisionDiagnostic /><SystemReveal /><DecisionExposureSnapshot onUseScenario={useScenario} /><DecisionStates /><RoleViews /><TrustBoundaries /><Deployment /><DecisionBriefSection scenario={scenario} /><Footer onOpenContact={onOpenContact} /></main>;
 }

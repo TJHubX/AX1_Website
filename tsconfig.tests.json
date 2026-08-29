@@ -11,7 +11,11 @@
   "include": [
     "src/features/capital-value/capitalValueProtection.ts",
     "src/features/capital-value/capitalValueProtection.test.ts",
-    "src/features/capital-value/industryEvidence.ts"
+    "src/features/capital-value/industryEvidence.ts",
+    "src/features/decision-brief/decisionBrief.ts",
+    "src/features/diagnostic/diagnosticModel.ts",
+    "src/features/decision-exposure/decisionExposure.ts",
+    "src/features/publicFlows.test.ts"
   ],
   "exclude": []
 }
