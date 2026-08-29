@@ -26,7 +26,7 @@ export default function DisclaimerPage({ onOpenContact }: PageProps) {
           {
             heading: '3. Non-custodial positioning',
             paragraphs: [
-              'AX1 is described as non-custodial global decision infrastructure for governed capital execution. AX1 Structura Ltd does not hold, custody, transfer, or guarantee the movement of funds through the public website. Release logic and governance workflows are separate from capital custody and provider execution.',
+              'Axis One is described as non-custodial global decision infrastructure for governed capital execution. AX1 Structura Ltd does not hold, custody, transfer, or guarantee the movement of funds through the public website. Release logic and governance workflows are separate from capital custody and provider execution.',
             ],
           },
           {
@@ -54,10 +54,10 @@ export default function DisclaimerPage({ onOpenContact }: PageProps) {
             ],
           },
           {
-            heading: '8. AX1 intelligence system',
+            heading: '8. Axis One intelligence system',
             paragraphs: [
-              'The AX1 intelligence system helps authorised users understand recorded execution state, evidence coverage, unresolved commitments and decision context within the platform.',
-              'Its outputs do not replace human judgement, validation, legal review, financial advice, investment advice or the authority of the responsible decision-maker. AX1 does not autonomously approve or reject capital action, move funds, guarantee settlement or make investment decisions.',
+              'The Axis One intelligence system helps authorised users understand recorded execution state, evidence coverage, unresolved commitments and decision context within the platform.',
+              'Its outputs do not replace human judgement, validation, legal review, financial advice, investment advice or the authority of the responsible decision-maker. Axis One does not autonomously approve or reject capital action, move funds, guarantee settlement or make investment decisions.',
               'Platform intelligence should be understood as decision support based on the records available to the authorised user, not as a final recommendation or regulated advice.',
             ],
           },

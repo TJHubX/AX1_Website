@@ -14,9 +14,9 @@ const capitalTrace = [
 ];
 
 const interpretation = [
-  { icon: Calculator, title: 'An exposure estimate', copy: 'The calculator organises the figures you enter. It is not a forecast of AX1 savings or programme performance.' },
+  { icon: Calculator, title: 'An exposure estimate', copy: 'The calculator organises the figures you enter. It is not a forecast of Axis One savings or programme performance.' },
   { icon: CircleDollarSign, title: 'A value-at-risk conversation', copy: 'The result helps expose where capital, delay and execution assumptions deserve closer governance attention.' },
-  { icon: Gavel, title: 'A human decision input', copy: 'AX1 can make the basis clearer. It does not approve, transfer or autonomously allocate capital.' },
+  { icon: Gavel, title: 'A human decision input', copy: 'Axis One can make the basis clearer. It does not approve, transfer or autonomously allocate capital.' },
 ];
 
 export default function CapitalPage({ onOpenContact }: PageProps) {
@@ -32,7 +32,7 @@ export default function CapitalPage({ onOpenContact }: PageProps) {
           <motion.div {...fade}>
             <span className="cg-eyebrow">Capital decision exposure</span>
             <h1 id="capital-title">See the exposure. Keep the decision human.</h1>
-            <p>Model the financial burden around overrun and delay using your own assumptions. AX1 does not convert the result into a promised saving or automatic capital action.</p>
+            <p>Model the financial burden around overrun and delay using your own assumptions. Axis One does not convert the result into a promised saving or automatic capital action.</p>
             <div className="cg-actions"><a className="cg-button cg-button-primary" href="#decision-cost">Open the full exposure model<ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="/#decision-brief">Frame the decision</a></div>
           </motion.div>
           <motion.div className="cg-public-trace-card" {...fade}>
@@ -46,7 +46,7 @@ export default function CapitalPage({ onOpenContact }: PageProps) {
       <CapitalValueProtectionCalculator onOpenAccess={openDecisionBrief} />
 
       <section className="cg-public-section is-light" aria-labelledby="capital-meaning-title"><div className="cg-shell">
-        <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Interpret the number correctly</span><h2 id="capital-meaning-title">Exposure is not the same as guaranteed value.</h2><p>Use the model to frame questions and assumptions that deserve investigation, not to claim a predetermined AX1 result.</p></motion.header>
+        <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Interpret the number correctly</span><h2 id="capital-meaning-title">Exposure is not the same as guaranteed value.</h2><p>Use the model to frame questions and assumptions that deserve investigation, not to claim a predetermined Axis One result.</p></motion.header>
         <div className="cg-public-card-grid is-three">{interpretation.map(({ icon: Icon, title, copy }, index) => <motion.article key={title} {...fade}><span>0{index + 1}</span><Icon size={21} /><h3>{title}</h3><p>{copy}</p></motion.article>)}</div>
       </div></section>
 

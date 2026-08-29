@@ -26,7 +26,7 @@ export function buildDecisionBrief(values: DecisionBriefValues): string {
     : 'Not specified';
 
   return [
-    'AX1 CAPITAL DECISION BRIEF',
+    'AXIS ONE CAPITAL DECISION BRIEF',
     '',
     'DECISION',
     values.decision.trim(),
@@ -49,14 +49,13 @@ export function buildDecisionBrief(values: DecisionBriefValues): string {
     'CONTACT',
     values.workEmail.trim(),
     '',
-    'This brief frames an initial conversation. It does not authorise a capital action or disclose AX1 operating rules.',
+    'This brief frames an initial conversation. It does not authorise a capital action or disclose Axis One operating rules.',
   ].join('\n');
 }
 
 export function buildDecisionEmail(values: DecisionBriefValues): DecisionBriefEmail {
   return {
-    subject: `AX1 decision brief: ${values.decision.trim().slice(0, 72)}`,
+    subject: `Axis One decision brief: ${values.decision.trim().slice(0, 72)}`,
     body: buildDecisionBrief(values),
   };
 }
-

@@ -13,6 +13,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import { Badge, Button } from '../../components';
+import { BrandedSelect } from '../../components/BrandedSelect';
 import {
   buildCalculationSummary,
   calculateCapitalValueProtection,
@@ -326,23 +327,26 @@ export function CapitalValueProtectionCalculator({
           <div className="cvp-intro-copy">
             <Badge>Capital value protection calculator</Badge>
             <h2 id="decision-cost-title">Where is capital value<br />currently exposed?</h2>
-            <p>Enter your portfolio figures to estimate the value exposed to overruns and delay. Then test transparent reduction scenarios without treating them as guaranteed AX1 savings.</p>
+            <p>Enter your portfolio figures to estimate the value exposed to overruns and delay. Then test transparent reduction scenarios without treating them as guaranteed Axis One savings.</p>
           </div>
           <div className="cvp-intro-actions">
-            <label className="cvp-currency">
-              <span>Currency <small>Display only, no FX conversion</small></span>
-              <select
+            <div className="cvp-currency">
+              <label htmlFor="cvp-currency-select">Currency <small>Display only, no FX conversion</small></label>
+              <BrandedSelect
+                id="cvp-currency-select"
                 value={currency}
-                onChange={(event) => {
-                  setCurrency(event.target.value as CurrencyCode);
+                ariaLabel="Display currency"
+                options={[
+                  { value: 'GBP', label: 'GBP (£)' },
+                  { value: 'EUR', label: 'EUR (€)' },
+                  { value: 'USD', label: 'USD ($)' },
+                ]}
+                onChange={(nextCurrency) => {
+                  setCurrency(nextCurrency);
                   markEdited('currency');
                 }}
-              >
-                <option value="GBP">GBP (£)</option>
-                <option value="EUR">EUR (€)</option>
-                <option value="USD">USD ($)</option>
-              </select>
-            </label>
+              />
+            </div>
             <div className="cvp-reset-actions">
               <button type="button" onClick={resetExample}><RefreshCcw size={13} />Reset example</button>
               <button type="button" onClick={clearAll}><Trash2 size={13} />Clear all</button>
@@ -568,7 +572,7 @@ export function CapitalValueProtectionCalculator({
               <div className="cvp-one-percent">
                 <span>Every 1% improvement is worth approximately</span>
                 <strong>{fullMoney(result.valueOfOnePercent)}</strong>
-                <small>One percent of the identified exposure, not a predicted AX1 result.</small>
+                <small>One percent of the identified exposure, not a predicted Axis One result.</small>
               </div>
 
               <div className="cvp-scenario">
@@ -613,7 +617,7 @@ export function CapitalValueProtectionCalculator({
                 </div>
               </div>
 
-              <p className="cvp-result-notice">This scenario applies your selected improvement percentage to the exposure identified from your inputs. It is not a guarantee, accounting valuation or predicted AX1 result.</p>
+              <p className="cvp-result-notice">This scenario applies your selected improvement percentage to the exposure identified from your inputs. It is not a guarantee, accounting valuation or predicted Axis One result.</p>
 
               <div className="cvp-basis-list">
                 <span>Estimate basis</span>
@@ -684,11 +688,11 @@ export function CapitalValueProtectionCalculator({
             </article>)}
           </div>
 
-          <p className="cvp-research-disclaimer">Independent research context. The figures above come from different sectors, geographies, project types, methodologies and intervention scopes. They are not AX1 results, are not applied automatically in this calculator and do not represent guaranteed savings. Company names are used for source attribution only; no affiliation or endorsement is implied.</p>
+          <p className="cvp-research-disclaimer">Independent research context. The figures above come from different sectors, geographies, project types, methodologies and intervention scopes. They are not Axis One results, are not applied automatically in this calculator and do not represent guaranteed savings. Company names are used for source attribution only; no affiliation or endorsement is implied.</p>
         </section>
 
         <div className="cvp-cta">
-          <div><CircleDollarSign size={22} /><span><strong>Validate this against a live capital programme</strong><small>Use the estimate as a starting point. AX1 can help structure the milestones, evidence, ownership and release controls behind a live capital decision.</small></span></div>
+          <div><CircleDollarSign size={22} /><span><strong>Validate this against a live capital programme</strong><small>Use the estimate as a starting point. Axis One can help structure the milestones, evidence, ownership and release controls behind a live capital decision.</small></span></div>
           <div className="cvp-cta-actions">
             <Button onClick={onOpenAccess}>Review a live programme</Button>
             <button type="button" className="cvp-copy-button" onClick={copySummary} disabled={!result}>

@@ -43,7 +43,7 @@ export default function DeploymentPage({ onOpenContact }: PageProps) {
           </motion.div>
           <motion.div className="cg-public-trace-card" {...fade}>
             <div><span>Adoption path</span><strong>A controlled progression from one decision</strong></div>
-            <AX1MilestoneTrace items={deploymentTrace} activeIndex={0} ariaLabel="AX1 deployment progression" theme="dark" />
+            <AX1MilestoneTrace items={deploymentTrace} activeIndex={0} ariaLabel="Axis One deployment progression" theme="dark" />
             <p><Users size={14} />Different stakeholders collaborate through one context while responsibility remains distinct.</p>
           </motion.div>
         </div>

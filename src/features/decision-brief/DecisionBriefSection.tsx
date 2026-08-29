@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useState } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, Copy, ExternalLink, Mail, ShieldCheck } from 'lucide-react';
+import { BrandedSelect } from '../../components/BrandedSelect';
 import type { DecisionExposureScenario } from '../decision-exposure/DecisionExposureSnapshot';
 import { trackAX1Event } from '../../utils/analytics';
 import {
@@ -124,7 +125,7 @@ export function DecisionBriefSection({ scenario }: Props) {
           <p>Frame one approaching action. Review the generated brief on this page, edit it if needed, then decide whether to copy it or open your email client.</p>
           <div className="cg-brief-principle"><ShieldCheck size={18} /><p><strong>Capital, governed by execution.</strong>Configured rules determine readiness. Authorised people determine action.</p></div>
           <div className="cg-brief-contact"><span>Direct recipient</span><a href={`mailto:${recipientEmail()}`}>{recipientEmail()}</a></div>
-          <p className="cg-brief-privacy">Your entries remain in this browser. AX1 does not receive anything until you choose to send the email.</p>
+          <p className="cg-brief-privacy">Your entries remain in this browser. Axis One does not receive anything until you choose to send the email.</p>
         </div>
 
         <div className="cg-brief-workspace">
@@ -141,11 +142,11 @@ export function DecisionBriefSection({ scenario }: Props) {
                 <input id={ids.decisionDate} type="date" value={values.decisionDate} onChange={(event) => update('decisionDate', event.target.value)} />
                 {errors.decisionDate && <small>{errors.decisionDate}</small>}
               </label>
-              <label className={errors.capitalAffected ? 'is-invalid' : ''} htmlFor={ids.capitalAffected}>
-                <span>Approximate capital affected</span>
-                <div className="cg-brief-money"><select id={ids.currency} aria-label="Capital currency" value={values.currency} onChange={(event) => update('currency', event.target.value as DecisionBriefValues['currency'])}><option>EUR</option><option>GBP</option><option>USD</option></select><input id={ids.capitalAffected} type="number" min="0" step="10000" value={values.capitalAffected} onChange={(event) => update('capitalAffected', event.target.value)} placeholder="12400000" /></div>
+              <div className={`cg-brief-field ${errors.capitalAffected ? 'is-invalid' : ''}`.trim()}>
+                <label htmlFor={ids.capitalAffected}>Approximate capital affected</label>
+                <div className="cg-brief-money"><BrandedSelect id={ids.currency} className="is-money" ariaLabel="Capital currency" value={values.currency} options={[{ value: 'EUR', label: 'EUR' }, { value: 'GBP', label: 'GBP' }, { value: 'USD', label: 'USD' }]} onChange={(nextCurrency) => update('currency', nextCurrency)} /><input id={ids.capitalAffected} type="number" min="0" step="10000" value={values.capitalAffected} onChange={(event) => update('capitalAffected', event.target.value)} placeholder="12400000" /></div>
                 {errors.capitalAffected && <small>{errors.capitalAffected}</small>}
-              </label>
+              </div>
             </div>
             <label className={errors.conditions ? 'is-invalid' : ''} htmlFor={ids.conditions}>
               <span>What must be true before it moves?</span>
@@ -153,13 +154,24 @@ export function DecisionBriefSection({ scenario }: Props) {
               {errors.conditions && <small>{errors.conditions}</small>}
             </label>
             <div className="cg-brief-form-row">
-              <label className={errors.evidenceLocation ? 'is-invalid' : ''} htmlFor={ids.evidenceLocation}>
-                <span>Where is the proof today?</span>
-                <select id={ids.evidenceLocation} value={values.evidenceLocation} onChange={(event) => update('evidenceLocation', event.target.value)}>
-                  <option value="">Select current position</option><option>Open in one current system</option><option>Split across tools and stakeholders</option><option>Rebuilt for each decision meeting</option><option>Not consistently available</option>
-                </select>
+              <div className={`cg-brief-field ${errors.evidenceLocation ? 'is-invalid' : ''}`.trim()}>
+                <label htmlFor={ids.evidenceLocation}>Where is the proof today?</label>
+                <BrandedSelect
+                  id={ids.evidenceLocation}
+                  value={values.evidenceLocation}
+                  invalid={Boolean(errors.evidenceLocation)}
+                  ariaLabel="Where the proof is today"
+                  options={[
+                    { value: '', label: 'Select current position' },
+                    { value: 'Open in one current system', label: 'Open in one current system' },
+                    { value: 'Split across tools and stakeholders', label: 'Split across tools and stakeholders' },
+                    { value: 'Rebuilt for each decision meeting', label: 'Rebuilt for each decision meeting' },
+                    { value: 'Not consistently available', label: 'Not consistently available' },
+                  ]}
+                  onChange={(nextLocation) => update('evidenceLocation', nextLocation)}
+                />
                 {errors.evidenceLocation && <small>{errors.evidenceLocation}</small>}
-              </label>
+              </div>
               <label className={errors.workEmail ? 'is-invalid' : ''} htmlFor={ids.workEmail}>
                 <span>Work email</span>
                 <input id={ids.workEmail} type="email" autoComplete="email" value={values.workEmail} onChange={(event) => update('workEmail', event.target.value)} placeholder="you@organisation.com" />

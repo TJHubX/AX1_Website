@@ -91,12 +91,12 @@ export const deploymentUseCases = [
 // ─── UI Primitives ────────────────────────────────────────────────────────────
 
 export function Logo({ className = '' }: { className?: string }) {
-  return <img className={`ax1-logo ${className}`} src={logo} alt="AX1" />;
+  return <img className={`ax1-logo ${className}`} src={logo} alt="Axis One" />;
 }
 
 export function ModuleMark({ name }: { name: string }) {
   return (
-    <span className="module-mark" aria-label={`AX1 ${name}`}>
+    <span className="module-mark" aria-label={`Axis One ${name}`}>
       <Logo className="module-mark-logo" />
       <span className="module-mark-divider" aria-hidden="true" />
       <span className="module-mark-name">{name}</span>
@@ -146,7 +146,7 @@ export function Header(_props: PageProps) {
         <Link to="/" className="logo-link" aria-label="Axis One home"><Logo /></Link>
         <div className="nav-tag"><span />Capital governance infrastructure</div>
         <div className="nav-links">
-          <a href="/#why-ax1">Why AX1</a>
+          <a href="/#why-ax1">Why Axis One</a>
           <Link to="/system">System</Link>
           <a href="/#decision-exposure">Decision exposure</a>
           <Link to="/trust">Trust</Link>
@@ -179,7 +179,7 @@ export function Header(_props: PageProps) {
               <span>Navigation</span>
               <button type="button" onClick={closeMobileMenu} aria-label="Close navigation menu"><X size={16} /></button>
             </div>
-            <a href="/#why-ax1" onClick={closeMobileMenu}>Why AX1</a>
+            <a href="/#why-ax1" onClick={closeMobileMenu}>Why Axis One</a>
             <Link to="/system" onClick={closeMobileMenu}>System</Link>
             <a href="/#decision-exposure" onClick={closeMobileMenu}>Decision exposure</a>
             <Link to="/trust" onClick={closeMobileMenu}>Trust</Link>
@@ -196,46 +196,63 @@ export function Header(_props: PageProps) {
 export function Footer(_props: { onOpenContact: () => void }) {
   return (
     <footer className="footer">
-      <div className="footer-inner">
-        <div className="footer-brand">
-          <p>
-            <img className="footer-inline-logo" src={logo} alt="Axis One" />
-            is capital governance infrastructure connecting committed capital to verified milestones, attributable evidence and controlled decision states.
-          </p>
-          <div className="footer-links">
+      <div className="footer-signal" aria-hidden="true"><i /><i /><i /></div>
+      <div className="footer-frame">
+        <div className="footer-masthead">
+          <Link to="/" className="footer-logo-link" aria-label="Axis One home"><Logo /></Link>
+          <span className="footer-position"><i />Global decision infrastructure</span>
+          <a className="footer-cta" href="/#decision-brief">Frame a decision <ArrowRight size={14} /></a>
+        </div>
+
+        <div className="footer-main">
+          <section className="footer-brand" aria-labelledby="footer-brand-title">
+            <span>Capital governance infrastructure</span>
+            <h2 id="footer-brand-title">Capital, <span>governed by</span> execution.</h2>
+            <p>Axis One connects committed capital to verified milestones, attributable evidence and controlled decision states.</p>
+          </section>
+
+          <nav className="footer-nav" aria-label="Footer navigation">
+            <div>
+              <strong>Explore</strong>
+              <Link to="/">Home</Link>
+              <a href="/#why-ax1">Why Axis One</a>
+              <Link to="/system">System</Link>
+              <a href="/#decision-exposure">Decision exposure</a>
+            </div>
+            <div>
+              <strong>Company</strong>
+              <Link to="/deployment">Deployment</Link>
+              <Link to="/trust">Trust</Link>
+              <Link to="/founder">Founder</Link>
+              <a href="mailto:info@ax1.capital">Contact</a>
+            </div>
+          </nav>
+
+          <aside className="footer-company" aria-label="Company information">
+            <span>Operating company</span>
+            <strong>AX1 Structura Ltd</strong>
+            <p>66 Paul Street<br />London EC2A 4NA<br />England</p>
+            <small>Registered in England and Wales<br />Company No. 17151320</small>
+          </aside>
+        </div>
+
+        <div className="footer-boundary">
+          <span>Non-custodial by design</span>
+          <p>Axis One does not hold, transfer, manage or guarantee client capital. Authorised external financial providers execute any transfer.</p>
+        </div>
+
+        <div className="footer-bottom">
+          <span>© 2026 AX1 Structura Ltd. All rights reserved.</span>
+          <nav aria-label="Legal navigation">
             <Link to="/privacy">Privacy</Link>
-            <span aria-hidden="true">&middot;</span>
             <Link to="/cookies">Cookies</Link>
-            <span aria-hidden="true">&middot;</span>
             <Link to="/terms">Terms</Link>
-            <span aria-hidden="true">&middot;</span>
             <Link to="/disclaimer">Disclaimer</Link>
-            <span aria-hidden="true">&middot;</span>
-            <Link to="/trust">Trust</Link>
-            <span aria-hidden="true">&middot;</span>
             <Link to="/legal">Legal</Link>
-            <span aria-hidden="true">&middot;</span>
             <Link to="/accessibility">Accessibility</Link>
-          </div>
-        </div>
-        <div className="footer-nav">
-          <Link to="/">HOME</Link>
-          <a href="/#why-ax1">Why AX1</a>
-          <Link to="/system">System</Link>
-          <a href="/#decision-exposure">Decision exposure</a>
-          <Link to="/trust">Trust</Link>
-          <Link to="/deployment">Deployment</Link>
-          <Link to="/founder">Founder</Link>
-        </div>
-        <div className="footer-legal">
-          <strong>AX1 Structura Ltd</strong>
-          <span>66 Paul Street, London EC2A 4NA, England</span>
-          <span>Registered in England and Wales</span>
-          <span>Company Registration No. 17151320</span>
-          <span className="footer-disclaimer">AX1 does not hold, transfer, manage, or guarantee client capital. Authorised external financial providers execute any transfer.</span>
+          </nav>
         </div>
       </div>
-      <div className="footer-bottom">© 2026 AX1 Structura Ltd • CAPITAL GOVERNANCE INFRASTRUCTURE • GLOBAL DECISION INFRASTRUCTURE • ALL RIGHTS RESERVED</div>
     </footer>
   );
 }
@@ -403,7 +420,7 @@ export function RequestAccessModal({ onClose }: ModalProps) {
     }
 
     const summaryText = [
-      'AX1 CAPITAL DECISION BRIEF',
+      'AXIS ONE CAPITAL DECISION BRIEF',
       '---------------------------------',
       `Full Name:     ${values.fullName}`,
       `Work Email:    ${values.workEmail}`,
@@ -428,7 +445,7 @@ export function RequestAccessModal({ onClose }: ModalProps) {
   };
 
   const handleEmailFallback = () => {
-    const subject = encodeURIComponent('AX1 Capital Decision Brief');
+    const subject = encodeURIComponent('Axis One Capital Decision Brief');
     const body = encodeURIComponent(summary);
     window.location.href = `mailto:info@ax1.capital?subject=${subject}&body=${body}`;
   };
@@ -441,7 +458,7 @@ export function RequestAccessModal({ onClose }: ModalProps) {
         <div className="access-success">
           <div className="access-success-icon"><CheckCircle2 size={28} /></div>
           <h3 ref={preparedHeadingRef} tabIndex={-1}>Decision brief prepared</h3>
-          <p>Review and send the prepared email so the AX1 team can examine the decision boundary. No request has been transmitted yet.</p>
+          <p>Review and send the prepared email so the Axis One team can examine the decision boundary. No request has been transmitted yet.</p>
           <pre className="access-summary" aria-label="Request summary">{summary}</pre>
           <div className="access-fallback-actions">
             <button type="button" className="submit-request" onClick={handleCopy}>
@@ -517,8 +534,8 @@ export function RequestAccessModal({ onClose }: ModalProps) {
 export function ContactChannelsModal({ onClose }: ModalProps) {
   const copy = (email: string) => void navigator.clipboard?.writeText(email);
   const openEmail = (email: string, channel: string) => {
-    const subject = encodeURIComponent(`AX1 Inquiry - ${channel}`);
-    const body = encodeURIComponent('Hello AX1 team,%0D%0A%0D%0AI would like to discuss:%0D%0A');
+    const subject = encodeURIComponent(`Axis One Inquiry - ${channel}`);
+    const body = encodeURIComponent('Hello Axis One team,%0D%0A%0D%0AI would like to discuss:%0D%0A');
     window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
   };
   return (
@@ -551,17 +568,17 @@ export function BoundarySection() {
       <motion.div className="boundary-panel" {...fade}>
         <div className="boundary-copy">
           <Badge>Non-custodial boundary</Badge>
-          <h2>AX1 governs the decision. It never holds the money.</h2>
-          <p>AX1 connects proven execution to release readiness, confirms the applicable authority and preserves the decision record. Custody and transfer remain with authorised external financial providers.</p>
+          <h2>Axis One governs the decision. It never holds the money.</h2>
+          <p>Axis One connects proven execution to release readiness, confirms the applicable authority and preserves the decision record. Custody and transfer remain with authorised external financial providers.</p>
         </div>
         <div className="boundary-layers">
-          <div className="boundary-layer"><Landmark size={18} /><strong>Bank, custodian or authorised provider</strong><span>Client capital remains outside AX1 custody.</span></div>
+          <div className="boundary-layer"><Landmark size={18} /><strong>Bank, custodian or authorised provider</strong><span>Client capital remains outside Axis One custody.</span></div>
           <ChevronDown className="layer-arrow" size={18} />
-          <div className="boundary-layer highlight"><Workflow size={18} /><strong>AX1 governed execution record</strong><span>Evidence, validation, readiness, responsibility and authority stay connected.</span></div>
+          <div className="boundary-layer highlight"><Workflow size={18} /><strong>Axis One governed execution record</strong><span>Evidence, validation, readiness, responsibility and authority stay connected.</span></div>
           <ChevronDown className="layer-arrow" size={18} />
           <div className="boundary-layer"><Users size={18} /><strong>Authorised stakeholder decision</strong><span>The responsible party approves, holds, rejects or requests more evidence.</span></div>
           <ChevronDown className="layer-arrow" size={18} />
-          <div className="boundary-layer"><RouteIcon size={18} /><strong>External execution and record</strong><span>The provider executes; AX1 records the status and preserves the audit trail.</span></div>
+          <div className="boundary-layer"><RouteIcon size={18} /><strong>External execution and record</strong><span>The provider executes; Axis One records the status and preserves the audit trail.</span></div>
         </div>
       </motion.div>
     </section>

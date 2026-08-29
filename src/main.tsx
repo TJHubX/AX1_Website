@@ -22,28 +22,28 @@ const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 
 const PAGE_METADATA: Record<string, { title: string; description: string }> = {
   '/': {
-    title: 'AX1 | Capital Governance Infrastructure',
-    description: 'AX1 connects committed capital to verified milestones, attributable evidence and controlled decision states.',
+    title: 'Axis One | Capital Governance Infrastructure',
+    description: 'Axis One connects committed capital to verified milestones, attributable evidence and controlled decision states.',
   },
   '/system': {
-    title: 'AX1 System | Capital Governance Infrastructure',
-    description: 'See how AX1 connects execution, evidence, validation, authority and controlled capital decision states.',
+    title: 'Axis One System | Capital Governance Infrastructure',
+    description: 'See how Axis One connects execution, evidence, validation, authority and controlled capital decision states.',
   },
   '/capital': {
-    title: 'Decision Exposure | AX1 Capital Governance',
+    title: 'Decision Exposure | Axis One Capital Governance',
     description: 'Model cost-overrun, delay and decision exposure while preserving human decision authority and controlled capital action.',
   },
   '/deployment': {
-    title: 'Deployment | AX1 Capital Governance',
-    description: 'Start with a bounded Launch Programme, then expand AX1 across one programme or a governed portfolio.',
+    title: 'Deployment | Axis One Capital Governance',
+    description: 'Start with a bounded Launch Programme, then expand Axis One across one programme or a governed portfolio.',
   },
   '/trust': {
-    title: 'Trust, Security & Governance | AX1',
-    description: 'Review AX1 product boundaries, permissioned collaboration model, attributable records and non-custodial approach.',
+    title: 'Trust, Security & Governance | Axis One',
+    description: 'Review Axis One product boundaries, permissioned collaboration model, attributable records and non-custodial approach.',
   },
   '/founder': {
-    title: 'Founder Story | AX1',
-    description: 'Why AX1 was built to connect proven execution, stakeholder authority and governed capital decisions.',
+    title: 'Founder Story | Axis One',
+    description: 'Why Axis One was built to connect proven execution, stakeholder authority and governed capital decisions.',
   },
 };
 
@@ -65,7 +65,7 @@ function PageMetadata() {
   const { pathname } = useLocation();
   useEffect(() => {
     const fallback = {
-      title: 'AX1 | Capital Governance Infrastructure',
+      title: 'Axis One | Capital Governance Infrastructure',
       description: 'Capital governance infrastructure connecting proven execution to governed capital action in a non-custodial, permissioned environment.',
     };
     const metadata = PAGE_METADATA[pathname] ?? fallback;

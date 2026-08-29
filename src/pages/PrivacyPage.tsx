@@ -106,7 +106,7 @@ export default function PrivacyPage({ onOpenContact }: PageProps) {
           {
             heading: '11. Platform intelligence and submitted information',
             paragraphs: [
-              'The AX1 intelligence system may organise and present authorised platform records to support user guidance and decision context. Its operation remains subject to applicable access controls, data minimisation, security measures and contractual terms.',
+              'The Axis One intelligence system may organise and present authorised platform records to support user guidance and decision context. Its operation remains subject to applicable access controls, data minimisation, security measures and contractual terms.',
               'Users should not submit unnecessary sensitive personal data through public website forms, request-access forms, or general inquiry channels.',
               'Information submitted through the website or platform may be processed where necessary to provide the relevant service or functionality, subject to applicable privacy, security and contractual controls.',
             ],

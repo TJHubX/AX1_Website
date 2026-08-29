@@ -51,7 +51,7 @@ const roleViews = [
 
 function HeroDecisionSurface() {
   return (
-    <motion.div className="cg-decision-surface" {...fade} transition={{ duration: 0.7, delay: 0.12 }} aria-label="Illustrative AX1 programme decision state">
+    <motion.div className="cg-decision-surface" {...fade} transition={{ duration: 0.7, delay: 0.12 }} aria-label="Illustrative Axis One programme decision state">
       <div className="cg-surface-topline"><div><span>Programme</span><strong>AX-1048</strong></div><div className="cg-live-state"><i /> Current state</div></div>
       <div className="cg-surface-commitment"><span>Capital commitment</span><strong>€12,400,000</strong></div>
       <div className="cg-surface-milestone"><div><span>Gate 03</span><strong>Infrastructure delivery</strong></div><span className="cg-state-badge is-validated"><Check size={13} /> VALIDATED</span></div>
@@ -75,7 +75,7 @@ function Hero() {
         <motion.div className="cg-hero-copy" {...fade}>
           <span className="cg-eyebrow">Capital governance infrastructure</span>
           <h1 id="cg-hero-title"><span className="cg-hero-question">What proves the next capital move?</span>Capital,<br /><span className="cg-hero-keep">governed by</span><br />execution.</h1>
-          <p>AX1 connects committed capital to verified milestones, attributable evidence and controlled decision states. Configured rules determine readiness. Authorised people determine action.</p>
+          <p>Axis One connects committed capital to verified milestones, attributable evidence and controlled decision states. Configured rules determine readiness. Authorised people determine action.</p>
           <div className="cg-actions"><a className="cg-button cg-button-primary" href="#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'hero', action: 'decision_brief' })}>Frame a capital decision <ArrowRight size={16} /></a><a className="cg-button cg-button-secondary" href="#system">See the system</a><a className="cg-button cg-button-tertiary" href="#diagnostic">Take the 60-second test</a></div>
           <div className="cg-hero-principle"><LockKeyhole size={15} /><span>Money moves only when execution is proven and an authorised stakeholder decides.</span></div>
         </motion.div>
@@ -118,7 +118,7 @@ function GovernedObject() {
         <div className="cg-object-milestones">{milestoneLabels.map((label, index) => <div className={index < step ? 'is-complete' : index === step ? 'is-current' : 'is-future'} key={label}><span>M0{index + 1}</span><i /><strong>{label}</strong></div>)}</div>
         <div className="cg-object-detail"><span>Current evidence position</span><strong>{current.evidence}</strong><div><span>Review position</span><b>{current.review}</b></div><div><span>Capital consequence</span><b>{current.consequence}</b></div><button type="button" onClick={advance}>{step === stages.length - 1 ? <Clock3 size={15} /> : <CheckCircle2 size={15} />}{current.button}</button></div>
       </div>
-      <p>Public illustration. It shows causality between execution, evidence, readiness and human action without disclosing AX1 rules or configuration.</p>
+      <p>Public illustration. It shows causality between execution, evidence, readiness and human action without disclosing Axis One rules or configuration.</p>
     </motion.div>
   );
 }
@@ -128,11 +128,11 @@ function SystemReveal() {
   return (
     <section className="cg-system" id="system" aria-labelledby="cg-system-title"><div className="cg-shell">
       <div className="cg-system-layout">
-        <motion.div className="cg-system-copy" {...fade}><span className="cg-eyebrow">The AX1 system</span><h2 id="cg-system-title">One governed object from commitment to release.</h2><p>AX1 keeps execution, proof, ownership and authority connected to the capital decision they support. Different stakeholders work through one permissioned context without sharing the same authority.</p><ul><li><FileCheck2 size={17} /><span><strong>Verified milestones</strong>Progress is linked to the proof required for the current decision.</span></li><li><Users size={17} /><span><strong>Attributable evidence</strong>Material inputs retain their source, actor and review position.</span></li><li><Gavel size={17} /><span><strong>Controlled decision states</strong>Readiness and authorised action remain distinct.</span></li></ul></motion.div>
+        <motion.div className="cg-system-copy" {...fade}><span className="cg-eyebrow">The Axis One system</span><h2 id="cg-system-title">One governed object from commitment to release.</h2><p>Axis One keeps execution, proof, ownership and authority connected to the capital decision they support. Different stakeholders work through one permissioned context without sharing the same authority.</p><ul><li><FileCheck2 size={17} /><span><strong>Verified milestones</strong>Progress is linked to the proof required for the current decision.</span></li><li><Users size={17} /><span><strong>Attributable evidence</strong>Material inputs retain their source, actor and review position.</span></li><li><Gavel size={17} /><span><strong>Controlled decision states</strong>Readiness and authorised action remain distinct.</span></li></ul></motion.div>
         <GovernedObject />
       </div>
-      <div className="cg-operating-rail" aria-label="Public editorial progression, not an internal AX1 workflow">{rail.map((label, index) => <React.Fragment key={label}><div className={label === 'DECIDE' ? 'is-active' : ''}><span>{String(index + 1).padStart(2, '0')}</span><strong>{label}</strong></div>{index < rail.length - 1 && <i />}</React.Fragment>)}</div>
-      <p className="cg-public-boundary"><LockKeyhole size={14} />Editorial progression only. It does not disclose AX1 gate policies, thresholds, scoring, automation or decision mechanics.</p>
+      <div className="cg-operating-rail" aria-label="Public editorial progression, not an internal Axis One workflow">{rail.map((label, index) => <React.Fragment key={label}><div className={label === 'DECIDE' ? 'is-active' : ''}><span>{String(index + 1).padStart(2, '0')}</span><strong>{label}</strong></div>{index < rail.length - 1 && <i />}</React.Fragment>)}</div>
+      <p className="cg-public-boundary"><LockKeyhole size={14} />Editorial progression only. It does not disclose Axis One gate policies, thresholds, scoring, automation or decision mechanics.</p>
     </div></section>
   );
 }
@@ -165,7 +165,7 @@ function RoleViews() {
   return (
     <section className="cg-roles" aria-labelledby="cg-roles-title"><div className="cg-shell">
       <motion.header className="cg-section-heading cg-section-heading-dark" {...fade}><span className="cg-eyebrow">Permissioned collaboration</span><h2 id="cg-roles-title">One programme reality. Different responsibilities.</h2><p>Shared context does not mean shared authority. Each participant sees the decision through the responsibility they hold.</p></motion.header>
-      <div className="cg-role-tabs" role="tablist" aria-label="AX1 stakeholder views">{roleViews.map((role, roleIndex) => <button id={`role-tab-${role.id}`} key={role.id} type="button" role="tab" aria-selected={activeRole === role.id} aria-controls="role-panel" tabIndex={activeRole === role.id ? 0 : -1} className={activeRole === role.id ? 'is-active' : ''} onClick={() => setActiveRole(role.id)} onKeyDown={(event) => handleTabKey(event, roleIndex)}>{role.tab}</button>)}</div>
+      <div className="cg-role-tabs" role="tablist" aria-label="Axis One stakeholder views">{roleViews.map((role, roleIndex) => <button id={`role-tab-${role.id}`} key={role.id} type="button" role="tab" aria-selected={activeRole === role.id} aria-controls="role-panel" tabIndex={activeRole === role.id ? 0 : -1} className={activeRole === role.id ? 'is-active' : ''} onClick={() => setActiveRole(role.id)} onKeyDown={(event) => handleTabKey(event, roleIndex)}>{role.tab}</button>)}</div>
       <motion.div className="cg-role-panel" id="role-panel" role="tabpanel" aria-labelledby={`role-tab-${current.id}`} key={current.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
         <div className="cg-role-copy"><Icon size={24} /><span>{current.eyebrow}</span><h3>{current.headline}</h3><p>{current.copy}</p></div>
         <div className="cg-role-surface"><div className="cg-role-metrics">{current.metrics.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div><div className="cg-role-checks">{current.checks.map((check) => <div key={check}><Check size={14} />{check}</div>)}</div><small>Illustrative role-scoped view</small></div>
@@ -176,17 +176,17 @@ function RoleViews() {
 
 function TrustBoundaries() {
   const claims = [
-    ['Authority', 'Human authority remains explicit.', 'AX1 does not make investment or release decisions.'],
-    ['Evidence', 'Material proof remains attributable and reviewable.', 'AX1 does not certify evidence outside configured review responsibilities.'],
-    ['Decision trace', 'Material changes and decisions remain connected.', 'AX1 does not replace the underlying source records or responsible parties.'],
-    ['State', 'Current readiness and consequence are visible.', 'AX1 does not guarantee programme performance or savings.'],
+    ['Authority', 'Human authority remains explicit.', 'Axis One does not make investment or release decisions.'],
+    ['Evidence', 'Material proof remains attributable and reviewable.', 'Axis One does not certify evidence outside configured review responsibilities.'],
+    ['Decision trace', 'Material changes and decisions remain connected.', 'Axis One does not replace the underlying source records or responsible parties.'],
+    ['State', 'Current readiness and consequence are visible.', 'Axis One does not guarantee programme performance or savings.'],
     ['Security', 'Visibility follows a permissioned operating boundary.', 'Public illustrations do not represent a live client environment or security certification.'],
-    ['Boundaries', 'Capital execution remains non-custodial.', 'AX1 does not hold, transfer or manage client funds.'],
+    ['Boundaries', 'Capital execution remains non-custodial.', 'Axis One does not hold, transfer or manage client funds.'],
   ];
   return (
     <section className="cg-trust" id="trust" aria-labelledby="cg-trust-title"><div className="cg-shell cg-trust-layout">
-      <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Trust through boundaries</span><h2 id="cg-trust-title">Institutional claims should come with visible boundaries.</h2><p>AX1 is designed to make responsibility, evidence and decision state clearer without obscuring where the platform stops.</p><a className="cg-text-link" href="/trust">Review trust and governance <ArrowRight size={15} /></a></motion.header>
-      <div><div className="cg-claim-list">{claims.map(([title, claim, boundary]) => <motion.article key={title} {...fade}><span>{title}</span><div><strong>{claim}</strong><p>{boundary}</p></div><ShieldCheck size={17} /></motion.article>)}</div><aside className="cg-not-block"><strong>What AX1 is not</strong><p>Not a bank, custodian, autonomous allocator, guarantee of performance or substitute for authorised judgement.</p></aside></div>
+      <motion.header className="cg-section-heading" {...fade}><span className="cg-eyebrow">Trust through boundaries</span><h2 id="cg-trust-title">Institutional claims should come with visible boundaries.</h2><p>Axis One is designed to make responsibility, evidence and decision state clearer without obscuring where the platform stops.</p><a className="cg-text-link" href="/trust">Review trust and governance <ArrowRight size={15} /></a></motion.header>
+      <div><div className="cg-claim-list">{claims.map(([title, claim, boundary]) => <motion.article key={title} {...fade}><span>{title}</span><div><strong>{claim}</strong><p>{boundary}</p></div><ShieldCheck size={17} /></motion.article>)}</div><aside className="cg-not-block"><strong>What Axis One is not</strong><p>Not a bank, custodian, autonomous allocator, guarantee of performance or substitute for authorised judgement.</p></aside></div>
     </div></section>
   );
 }

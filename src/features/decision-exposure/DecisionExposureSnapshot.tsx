@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ArrowRight, Calculator, Check, Clock3, Eye, EyeOff, Plus, TriangleAlert } from 'lucide-react';
+import { BrandedSelect } from '../../components/BrandedSelect';
 import { trackAX1Event } from '../../utils/analytics';
 import { calculateDecisionExposure } from './decisionExposure';
 
@@ -136,16 +137,14 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
               <div><strong>Frame the decision</strong><small>Use a live decision or a realistic scenario.</small></div>
             </div>
 
-            <label htmlFor={capitalId}>
-              <span>Capital governed through the next decision</span>
+            <div className="cg-exposure-field">
+              <label htmlFor={capitalId}>Capital governed through the next decision</label>
               <div className="cg-money-input">
-                <select id={currencyId} aria-label="Display currency" value={currency} onChange={(event) => setCurrency(event.target.value as CurrencyCode)}>
-                  {currencyOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-                </select>
+                <BrandedSelect<CurrencyCode> id={currencyId} className="is-money" ariaLabel="Display currency" value={currency} options={currencyOptions} onChange={setCurrency} />
                 <input id={capitalId} type="number" min="0" step="10000" value={capital} onChange={(event) => setCapital(cleanNumber(event.target.value))} />
               </div>
               <small>Currency changes display only. No exchange-rate conversion is performed.</small>
-            </label>
+            </div>
 
             <div className="cg-input-pair">
               <label htmlFor={daysId}>
@@ -216,7 +215,7 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
         </div>
 
         <div className="cg-exposure-footer">
-          <p className="cg-exposure-boundary">Illustrative decision-exposure estimate. It excludes delay impacts beyond the entered carrying rate, opportunity cost, disputes, rework and unverified assumptions. AX1 does not guarantee savings or delivery outcomes.</p>
+          <p className="cg-exposure-boundary">Illustrative decision-exposure estimate. It excludes delay impacts beyond the entered carrying rate, opportunity cost, disputes, rework and unverified assumptions. Axis One does not guarantee savings or delivery outcomes.</p>
           <a href="/capital">Open the full exposure model <ArrowRight size={14} /></a>
         </div>
       </div>

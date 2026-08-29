@@ -33,7 +33,7 @@ export default function SystemVisual() {
       whileInView={fade.whileInView}
       viewport={fade.viewport}
       transition={reduceMotion ? { duration: 0 } : fade.transition}
-      aria-label="Animated illustration of execution signals converging into AX1 global decision infrastructure"
+      aria-label="Animated illustration of execution signals converging into Axis One global decision infrastructure"
     >
       <div className="system-visual-grid" aria-hidden="true" />
 
@@ -72,7 +72,7 @@ export default function SystemVisual() {
         <div className="system-brand-label">Global Decision Infrastructure</div>
         <div className="system-brand-row">
           <span />
-          <img className="system-brand-logo" src={logo} alt="AX1" />
+          <img className="system-brand-logo" src={logo} alt="Axis One" />
           <span />
         </div>
       </div>

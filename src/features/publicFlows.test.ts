@@ -46,6 +46,6 @@ test('Decision Brief includes the decision, date, capital, evidence and boundary
 
 test('Decision Brief email is inspectable before launch', () => {
   const email = buildDecisionEmail(briefValues);
-  assert.match(email.subject, /^AX1 decision brief:/);
+  assert.match(email.subject, /^Axis One decision brief:/);
   assert.equal(email.body, buildDecisionBrief(briefValues));
 });
