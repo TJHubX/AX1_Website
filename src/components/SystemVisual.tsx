@@ -1,6 +1,10 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import logo from '../assets/ax1-logo.png';
+import logo from '../assets/ax1-logo.svg';
+
+type SystemVisualProps = {
+  compact?: boolean;
+};
 
 const fade = {
   initial: { opacity: 0, y: 26 },
@@ -9,7 +13,7 @@ const fade = {
   transition: { duration: 0.72 },
 };
 
-export default function SystemVisual() {
+export default function SystemVisual({ compact = false }: SystemVisualProps) {
   const reduceMotion = useReducedMotion();
   const signals = [
     { top: 18, side: 'left', width: 39, node: 72, delay: 0.12 },
@@ -26,9 +30,13 @@ export default function SystemVisual() {
     { top: 73, side: 'right', width: 43, node: 86, delay: 0.76 },
   ] as const;
 
+  const visibleSignals = compact
+    ? signals.filter((_, index) => [0, 2, 3, 5, 6, 8, 10, 11].includes(index))
+    : signals;
+
   return (
     <motion.div
-      className="loop-diagram system-visual"
+      className={`loop-diagram system-visual${compact ? ' system-visual-compact' : ''}`}
       initial={reduceMotion ? false : fade.initial}
       whileInView={fade.whileInView}
       viewport={fade.viewport}
@@ -45,7 +53,7 @@ export default function SystemVisual() {
         transition={reduceMotion ? { duration: 0 } : { duration: 1.2, ease: 'easeOut' }}
       />
 
-      {signals.map((signal, index) => (
+      {visibleSignals.map((signal, index) => (
         <motion.div
           key={`${signal.side}-${index}`}
           className={`system-signal system-signal-${signal.side}`}
@@ -60,10 +68,10 @@ export default function SystemVisual() {
             style={{ left: `${signal.node}%` }}
             animate={reduceMotion ? { opacity: 0.72, scale: 1 } : {
               left: ['2%', '98%'],
-              opacity: [0, 0.95, 0.95, 0],
-              scale: [0.86, 1.08, 1.08, 0.86],
+              opacity: compact ? [0, 0.72, 0.72, 0] : [0, 0.95, 0.95, 0],
+              scale: compact ? [0.9, 1, 1, 0.9] : [0.86, 1.08, 1.08, 0.86],
             }}
-            transition={reduceMotion ? { duration: 0 } : { duration: 2.6 + index * 0.11, delay: signal.delay, repeat: Infinity, ease: 'linear' }}
+            transition={reduceMotion ? { duration: 0 } : { duration: (compact ? 3.6 : 2.6) + index * 0.11, delay: signal.delay, repeat: Infinity, ease: 'linear' }}
           />
         </motion.div>
       ))}
@@ -75,6 +83,7 @@ export default function SystemVisual() {
           <img className="system-brand-logo" src={logo} alt="Axis One" />
           <span />
         </div>
+        {compact && <div className="system-brand-name">Axis One</div>}
       </div>
     </motion.div>
   );

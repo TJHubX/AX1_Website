@@ -24,6 +24,7 @@ import {
 import logo from '../assets/ax1-logo.svg';
 import { trackAX1Event } from '../utils/analytics';
 import type { PackageName } from '../features/package-inquiry/packageInquiry';
+import SystemVisual from './SystemVisual';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -201,7 +202,9 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
       <div className="footer-signal" aria-hidden="true"><i /><i /><i /></div>
       <div className="footer-frame">
         <div className="footer-masthead">
-          <Link to="/" className="footer-wordmark" aria-label="Axis One home"><Logo /><span><strong>Axis One</strong><small>Global decision infrastructure</small></span></Link>
+          <Link to="/" className="footer-brand-signal" aria-label="Axis One, Global decision infrastructure, home">
+            <SystemVisual compact />
+          </Link>
           <button className="footer-cta" type="button" onClick={() => { trackAX1Event('primary_cta_selected', { location: 'footer_masthead', action: 'contact' }); onOpenContact({ source: 'footer_masthead' }); }}>Contact Axis One <ArrowRight size={14} /></button>
         </div>
 
