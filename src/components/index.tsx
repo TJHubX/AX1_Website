@@ -228,16 +228,16 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
             <p>Axis One connects committed capital to verified milestones, attributable evidence and controlled decision states.</p>
           </section>
 
+          <Link to="/" className="footer-brand-signal" aria-label="Axis One, Global decision infrastructure, home">
+            <SystemVisual compact />
+          </Link>
+
           <aside className="footer-company" aria-label="Company information">
             <span>Operating company</span>
             <strong>AX1 Structura Ltd</strong>
             <p>66 Paul Street<br />London EC2A 4NA<br />England</p>
             <small>Registered in England and Wales<br />Company No. 17151320</small>
           </aside>
-
-          <Link to="/" className="footer-brand-signal" aria-label="Axis One, Global decision infrastructure, home">
-            <SystemVisual compact />
-          </Link>
         </div>
 
         <div className="footer-boundary">
