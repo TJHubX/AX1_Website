@@ -5099,7 +5099,7 @@ section[id] { scroll-margin-top: 96px; }
 .footer-position i { width: 7px; height: 7px; border-radius: 50%; background: #3478f6; box-shadow: 0 0 0 6px rgba(52,120,246,.1), 0 0 18px rgba(52,120,246,.42); }
 .footer-cta { min-height: 46px; display: inline-flex; align-items: center; gap: 18px; padding: 0 17px; color: #f6f9ff; background: #2b63c5; border: 1px solid #3975db; border-radius: 8px 8px 8px 2px; font: inherit; font-size: .78rem; font-weight: 760; text-decoration: none; cursor: pointer; }
 .footer-cta:hover { background: #3472dc; }
-.footer-main { display: grid; grid-template-columns: minmax(0,1.12fr) repeat(2,minmax(250px,.62fr)); gap: clamp(28px,3.4vw,52px); align-items: center; padding: 62px 0; }
+.footer-main { display: grid; grid-template-columns: minmax(0,1.12fr) repeat(2,minmax(250px,.62fr)); gap: clamp(28px,3.4vw,52px); align-items: start; padding: 62px 0; }
 .footer-brand { display: block; }
 .footer-brand > span,
 .footer-company > span,
