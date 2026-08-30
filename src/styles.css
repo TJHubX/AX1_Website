@@ -4750,7 +4750,7 @@ body .cvp-shell select { font-size: var(--type-caption); line-height: 1.5; }
 .cg-brief-privacy { margin-top: 28px; color: #7d8ca1; font-size: .82rem; }
 .cg-brief-workspace { display: grid; gap: 24px; }
 .cg-brief-form input, .cg-brief-form select, .cg-brief-form textarea, .cg-brief-preview input, .cg-brief-preview textarea { font-size: .95rem; }
-.cg-brief-money { display: grid; grid-template-columns: 88px 1fr; }
+.cg-brief-money { display: grid; grid-template-columns: 112px minmax(0, 1fr); }
 .cg-brief-money select, .cg-brief-money input { border-radius: 0; }
 .cg-brief-money select { border-radius: 8px 0 0 2px; border-right: 0; }
 .cg-brief-money input { border-radius: 0 8px 2px 0; }
@@ -5018,7 +5018,7 @@ section[id] { scroll-margin-top: 96px; }
 .cg-money-input .ax1-select.is-money { width: 120px; flex: 0 0 120px; }
 .cg-money-input .ax1-select-trigger { height: 100%; min-height: 48px; border: 0; border-right: 1px solid #334158; border-radius: 7px 0 0 2px; background: #152137; }
 .cg-money-input > input { border-radius: 0 7px 2px 0; }
-.cg-brief-money .ax1-select.is-money { min-width: 0; }
+.cg-brief-money .ax1-select.is-money { width: 112px; min-width: 112px; }
 .cg-brief-money .ax1-select-trigger { min-height: 49px; border-radius: 8px 0 0 2px; border-right: 0; }
 .cg-brief-money > input { border-radius: 0 8px 2px 0; }
 .cvp-currency > label { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted-2); font-size: .75rem; font-weight: 820; letter-spacing: .1em; text-transform: uppercase; }
