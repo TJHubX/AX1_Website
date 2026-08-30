@@ -41,6 +41,8 @@ Decision Brief and enquiry content is prepared in the visitor’s browser. Axis 
 - https://ax1-website.pages.dev/legal
 - https://ax1-website.pages.dev/accessibility
 
+Interactive financial displays support GBP, EUR, USD, CZK, HUF, RSD, AED and SAR. Currency selection changes the denomination and formatting only and does not perform foreign-exchange conversion.
+
 ## Company and contact
 
 AX1 Structura Ltd is registered in England and Wales under company number 17151320. Registered office: 66 Paul Street, London EC2A 4NA, England. Founder: Tania Jokic. Contact: info@ax1.capital.

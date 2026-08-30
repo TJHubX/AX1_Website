@@ -2,6 +2,7 @@ import React, { useEffect, useId, useState } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, Copy, ExternalLink, Mail, ShieldCheck } from 'lucide-react';
 import { BrandedDatePicker } from '../../components/BrandedDatePicker';
 import { BrandedSelect } from '../../components/BrandedSelect';
+import { currencyOptions } from '../../currency';
 import type { DecisionExposureScenario } from '../decision-exposure/DecisionExposureSnapshot';
 import { trackAX1Event } from '../../utils/analytics';
 import {
@@ -167,7 +168,7 @@ export function DecisionBriefSection({ scenario }: Props) {
                   onClick={() => trackAX1Event('decision_brief_email_opened', { location: 'recipient_link' })}
                 >
                   <Mail size={14} aria-hidden="true" />
-                  Email {recipient}
+                  Open email app
                   <ExternalLink size={13} aria-hidden="true" />
                 </a>
                 <button type="button" onClick={copyRecipient}>
@@ -176,7 +177,7 @@ export function DecisionBriefSection({ scenario }: Props) {
                 </button>
               </div>
               <span className={`cg-brief-recipient-status${recipientStatus === 'error' ? ' is-error' : ''}`} role="status" aria-live="polite">
-                {recipientStatus === 'error' ? `Copy unavailable. The address is ${recipient}.` : ''}
+                {recipientStatus === 'error' ? `Copy unavailable. The address is ${recipient}.` : <>To {recipient} · Uses your device’s configured email app. · <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy</a></>}
               </span>
             </div>
           </div>
@@ -202,7 +203,7 @@ export function DecisionBriefSection({ scenario }: Props) {
               </div>
               <div className={`cg-brief-field ${errors.capitalAffected ? 'is-invalid' : ''}`.trim()}>
                 <label htmlFor={ids.capitalAffected}>Approximate capital affected</label>
-                <div className="cg-brief-money"><BrandedSelect id={ids.currency} className="is-money" ariaLabel="Capital currency" value={values.currency} options={[{ value: 'EUR', label: 'EUR' }, { value: 'GBP', label: 'GBP' }, { value: 'USD', label: 'USD' }]} onChange={(nextCurrency) => update('currency', nextCurrency)} /><input id={ids.capitalAffected} type="text" inputMode="decimal" value={capitalFocused ? values.capitalAffected : formatCapitalInput(values.capitalAffected)} onFocus={() => setCapitalFocused(true)} onBlur={() => setCapitalFocused(false)} onChange={(event) => update('capitalAffected', sanitiseCapitalInput(event.target.value))} placeholder="12,400,000" /></div>
+                <div className="cg-brief-money"><BrandedSelect id={ids.currency} className="is-money" ariaLabel="Capital currency" value={values.currency} options={currencyOptions} onChange={(nextCurrency) => update('currency', nextCurrency)} /><input id={ids.capitalAffected} type="text" inputMode="decimal" value={capitalFocused ? values.capitalAffected : formatCapitalInput(values.capitalAffected)} onFocus={() => setCapitalFocused(true)} onBlur={() => setCapitalFocused(false)} onChange={(event) => update('capitalAffected', sanitiseCapitalInput(event.target.value))} placeholder="12,400,000" /></div>
                 {errors.capitalAffected && <small>{errors.capitalAffected}</small>}
               </div>
             </div>

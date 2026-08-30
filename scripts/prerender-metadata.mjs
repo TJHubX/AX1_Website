@@ -47,28 +47,31 @@ const pages = {
     title: 'Accessibility Statement | Axis One',
     description: 'The Axis One accessibility approach, current status, supported features and feedback channel.',
   },
-  'en-us': { lang: 'en-US', title: 'Capital, governed by execution. | Axis One', description: 'Axis One connects committed capital to verified milestones, attributable evidence, and controlled decision states—without taking custody of client capital.' },
-  es: { lang: 'es', title: 'Capital, gobernado por la ejecución. | Axis One', description: 'Axis One conecta el capital comprometido con hitos verificados, evidencia atribuible y estados de decisión controlados, sin custodiar el capital del cliente.' },
-  de: { lang: 'de', title: 'Kapital, gesteuert durch Ausführung. | Axis One', description: 'Axis One verbindet zugesagtes Kapital mit verifizierten Meilensteinen, zurechenbaren Nachweisen und kontrollierten Entscheidungszuständen.' },
-  it: { lang: 'it', title: 'Capitale, governato dall’esecuzione. | Axis One', description: 'Axis One collega il capitale impegnato a traguardi verificati, prove attribuibili e stati decisionali controllati.' },
-  pt: { lang: 'pt-PT', title: 'Capital, governado pela execução. | Axis One', description: 'A Axis One liga capital comprometido a marcos verificados, evidência atribuível e estados de decisão controlados.' },
-  fr: { lang: 'fr', title: 'Le capital, gouverné par l’exécution. | Axis One', description: 'Axis One relie le capital engagé à des jalons vérifiés, des preuves attribuables et des états de décision contrôlés.' },
-  cs: { lang: 'cs', title: 'Kapitál řízený skutečným plněním. | Axis One', description: 'Axis One propojuje přidělený kapitál s ověřenými milníky, přiřaditelnými důkazy a kontrolovanými rozhodnutími.' },
-  hu: { lang: 'hu', title: 'A végrehajtás által irányított tőke. | Axis One', description: 'Az Axis One az elkötelezett tőkét ellenőrzött mérföldkövekhez, bizonyítékokhoz és szabályozott döntésekhez kapcsolja.' },
-  sr: { lang: 'sr-Latn', title: 'Kapital kojim upravlja izvršenje. | Axis One', description: 'Axis One povezuje angažovani kapital sa potvrđenim prekretnicama, pripisivim dokazima i kontrolisanim odlukama.' },
-  ar: { lang: 'ar', dir: 'rtl', title: 'رأس مال تحكمه نتائج التنفيذ. | Axis One', description: 'تربط Axis One رأس المال الملتزم به بالمراحل المتحقق منها والأدلة المنسوبة وحالات القرار المنضبطة.' },
 };
 
 const escapeAttribute = (value) => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
 const template = await readFile(join('dist', 'index.html'), 'utf8');
-const localeAlternates = [
-  ['en-GB', '/'], ['en-US', '/en-us'], ['es', '/es'], ['de', '/de'], ['it', '/it'], ['pt', '/pt'],
-  ['fr', '/fr'], ['cs', '/cs'], ['hu', '/hu'], ['sr-Latn', '/sr'], ['ar', '/ar'], ['x-default', '/'],
-];
-const alternateMarkup = localeAlternates.map(([lang, path]) => `  <link rel="alternate" hreflang="${lang}" href="${origin}${path}" data-ax1-hreflang="true" />`).join('\n');
-const withAlternates = (html) => html.replace('</head>', `${alternateMarkup}\n</head>`);
+const withPageSchema = (html, canonicalUrl, metadata) => {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${canonicalUrl}#webpage`,
+    url: canonicalUrl,
+    name: metadata.title,
+    description: metadata.description,
+    inLanguage: metadata.lang ?? 'en-GB',
+    isPartOf: { '@id': `${origin}/#website` },
+    about: { '@id': `${origin}/#organization` },
+  };
+  return html.replace('</head>', `  <script id="ax1-static-page-schema" type="application/ld+json">${JSON.stringify(schema).replaceAll('<', '\\u003c')}</script>\n</head>`);
+};
 
-await writeFile(join('dist', 'index.html'), withAlternates(template), 'utf8');
+const rootMetadata = {
+  lang: 'en-GB',
+  title: 'Axis One | Capital Governance Infrastructure',
+  description: 'Axis One connects committed capital to verified milestones, attributable evidence and controlled decision states.',
+};
+await writeFile(join('dist', 'index.html'), withPageSchema(template, `${origin}/`, rootMetadata), 'utf8');
 
 for (const [route, metadata] of Object.entries(pages)) {
   const canonicalUrl = `${origin}/${route}`;
@@ -84,10 +87,7 @@ for (const [route, metadata] of Object.entries(pages)) {
     .replace(/(<meta name="twitter:title" content=")[^"]*("\s*\/?>)/, `$1${title}$2`)
     .replace(/(<meta name="twitter:description" content=")[^"]*("\s*\/?>)/, `$1${description}$2`);
 
-  if (metadata.lang) {
-    html = html.replace('lang="en-GB"', `lang="${metadata.lang}"${metadata.dir ? ` dir="${metadata.dir}"` : ''}`);
-    html = withAlternates(html);
-  }
+  html = withPageSchema(html, canonicalUrl, metadata);
 
   await writeFile(join('dist', `${route}.html`), html, 'utf8');
 }

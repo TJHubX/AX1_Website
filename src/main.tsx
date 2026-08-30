@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { MotionConfig } from 'motion/react';
 import { Header, type ContactIntent } from './components';
 import { PackageInquiryModal } from './features/package-inquiry/PackageInquiryModal';
-import { localeCodes, localeContent, localeFromPath, localeHome } from './i18n';
 import '@fontsource-variable/inter';
 import './styles.css';
 
@@ -21,7 +20,6 @@ const TrustPage = React.lazy(() => import('./pages/TrustPage'));
 const LegalPage = React.lazy(() => import('./pages/LegalPage'));
 const AccessibilityPage = React.lazy(() => import('./pages/AccessibilityPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
-const LocalizedOverviewPage = React.lazy(() => import('./pages/LocalizedOverviewPage'));
 
 const PAGE_METADATA: Record<string, { title: string; description: string }> = {
   '/': {
@@ -119,18 +117,12 @@ function PageMetadata() {
   const { pathname } = useLocation();
   useEffect(() => {
     const normalizedPath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
-    const locale = localeFromPath(normalizedPath);
-    const localeCopy = localeContent[locale];
-    const isLocaleLanding = locale !== 'en-gb' && normalizedPath === localeHome(locale);
     const fallback = {
       title: 'Axis One | Capital Governance Infrastructure',
       description: 'Capital governance infrastructure connecting proven execution to governed capital action in a non-custodial, permissioned environment.',
     };
-    const isKnownPage = Boolean(PAGE_METADATA[normalizedPath]) || isLocaleLanding;
-    const metadata = isLocaleLanding ? {
-      title: `${localeCopy.page.title} | Axis One`,
-      description: localeCopy.page.intro,
-    } : PAGE_METADATA[normalizedPath] ?? {
+    const isKnownPage = Boolean(PAGE_METADATA[normalizedPath]);
+    const metadata = PAGE_METADATA[normalizedPath] ?? {
       ...fallback,
       title: 'Page not found | Axis One',
       description: 'The requested Axis One page could not be found.',
@@ -138,12 +130,12 @@ function PageMetadata() {
     const canonicalPath = isKnownPage ? normalizedPath : window.location.pathname;
     const canonicalUrl = `https://ax1-website.pages.dev${canonicalPath === '/' ? '/' : canonicalPath}`;
     document.title = metadata.title;
-    document.documentElement.lang = localeCopy.htmlLang;
-    document.documentElement.dir = localeCopy.dir;
+    document.documentElement.lang = 'en-GB';
+    document.documentElement.dir = 'ltr';
     document.querySelector('meta[name="description"]')?.setAttribute('content', metadata.description);
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', canonicalUrl);
     document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonicalUrl);
-    document.querySelector('meta[property="og:locale"]')?.setAttribute('content', localeCopy.hreflang.replace('-', '_'));
+    document.querySelector('meta[property="og:locale"]')?.setAttribute('content', 'en_GB');
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', metadata.title);
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', metadata.description);
     document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', metadata.title);
@@ -153,21 +145,7 @@ function PageMetadata() {
       isKnownPage ? 'index, follow, max-image-preview:large' : 'noindex, nofollow',
     );
 
-    document.querySelectorAll('link[data-ax1-hreflang]').forEach((element) => element.remove());
-    if (normalizedPath === '/' || isLocaleLanding) {
-      const alternates = [
-        ...localeCodes.map((code) => ({ hreflang: localeContent[code].hreflang, href: `https://ax1-website.pages.dev${localeHome(code)}` })),
-        { hreflang: 'x-default', href: 'https://ax1-website.pages.dev/' },
-      ];
-      alternates.forEach(({ hreflang, href }) => {
-        const link = document.createElement('link');
-        link.rel = 'alternate';
-        link.hreflang = hreflang;
-        link.href = href;
-        link.dataset.ax1Hreflang = 'true';
-        document.head.appendChild(link);
-      });
-    }
+    document.querySelectorAll('link[data-ax1-hreflang], meta[data-ax1-og-locale]').forEach((element) => element.remove());
 
     const schemaId = 'ax1-page-schema';
     let schemaElement = document.getElementById(schemaId) as HTMLScriptElement | null;
@@ -184,7 +162,7 @@ function PageMetadata() {
       url: canonicalUrl,
       name: metadata.title,
       description: metadata.description,
-      inLanguage: localeCopy.htmlLang,
+      inLanguage: 'en-GB',
       isPartOf: { '@id': 'https://ax1-website.pages.dev/#website' },
       about: { '@id': 'https://ax1-website.pages.dev/#organization' },
     };
@@ -229,9 +207,6 @@ function App() {
             <Route path="/trust" element={<TrustPage {...pageProps} />} />
             <Route path="/legal" element={<LegalPage {...pageProps} />} />
             <Route path="/accessibility" element={<AccessibilityPage {...pageProps} />} />
-            {localeCodes.filter((code) => code !== 'en-gb').map((code) => (
-              <Route key={code} path={`/${code}`} element={<LocalizedOverviewPage {...pageProps} />} />
-            ))}
             <Route path="*" element={<NotFoundPage {...pageProps} />} />
           </Routes>
         </Suspense>

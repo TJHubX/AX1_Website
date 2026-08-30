@@ -5116,10 +5116,10 @@ section[id] { scroll-margin-top: 96px; }
 .cg-brief-field.is-invalid .ax1-select-trigger,
 .cg-brief-field.is-invalid input { border-color: #db6471; }
 .cg-money-input { overflow: visible; }
-.cg-money-input .ax1-select.is-money { width: 120px; flex: 0 0 120px; }
+.cg-money-input .ax1-select.is-money { width: 152px; flex: 0 0 152px; }
 .cg-money-input .ax1-select-trigger { height: 100%; min-height: 48px; border: 0; border-right: 1px solid #334158; border-radius: 7px 0 0 2px; background: #152137; }
 .cg-money-input > input { border-radius: 0 7px 2px 0; }
-.cg-brief-money .ax1-select.is-money { width: 112px; min-width: 112px; }
+.cg-brief-money .ax1-select.is-money { width: 152px; min-width: 152px; }
 .cg-brief-money .ax1-select-trigger { min-height: 49px; border-radius: 8px 0 0 2px; border-right: 0; }
 .cg-brief-money > input { border-radius: 0 8px 2px 0; }
 .cvp-currency > label { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted-2); font-size: .75rem; font-weight: 820; letter-spacing: .1em; text-transform: uppercase; }
@@ -5427,6 +5427,7 @@ section[id] { scroll-margin-top: 96px; }
 .package-inquiry-privacy svg { margin-top: 2px; color: #67a0fa; }
 .package-inquiry-privacy p { margin: 0; font-size: .8rem; line-height: 1.55; }
 .package-inquiry-privacy strong { display: block; color: #b8c6d9; font-weight: 720; }
+.package-inquiry-privacy a,.cg-brief-recipient-status a { color: #8bb7fb; text-decoration: underline; text-underline-offset: 3px; }
 .package-inquiry-primary,
 .package-inquiry-secondary {
   min-height: 51px;
@@ -7219,10 +7220,15 @@ section[id] { scroll-margin-top: 96px; }
 .localized-exposure-layout { display: grid; grid-template-columns: minmax(0,.68fr) minmax(480px,.72fr); align-items: start; gap: clamp(54px,8vw,118px); }
 .localized-exposure-tool { padding: 30px; background: #fff; border: 1px solid #cbd7e6; border-radius: 16px 16px 16px 5px; box-shadow: 0 24px 64px rgba(18,39,68,.08); }
 .localized-exposure-inputs { display: grid; grid-template-columns: 1.35fr .75fr .85fr; gap: 10px; }
-.localized-exposure-inputs label { min-height: 82px; display: grid; grid-template-columns: auto 1fr auto; align-items: end; gap: 8px; padding: 13px 14px; color: #20334f; background: #f5f8fc; border: 1px solid #ccdae9; border-radius: 8px; }
-.localized-exposure-inputs label > span { grid-column: 1 / -1; color: #657894; font-size: .68rem; font-weight: 700; }
+.localized-exposure-inputs label,.localized-exposure-inputs > .localized-capital-input { min-height: 82px; display: grid; grid-template-columns: auto 1fr auto; align-items: end; gap: 8px; padding: 13px 14px; color: #20334f; background: #f5f8fc; border: 1px solid #ccdae9; border-radius: 8px; }
+.localized-exposure-inputs label > span,.localized-exposure-inputs > .localized-capital-input > span { grid-column: 1 / -1; color: #657894; font-size: .68rem; font-weight: 700; }
 .localized-exposure-inputs input { min-width: 0; width: 100%; padding: 0; color: #0d1a2d; background: transparent; border: 0; font: inherit; font-weight: 760; }
 .localized-exposure-inputs b { color: #2b63c5; font-size: .72rem; }
+.localized-exposure-inputs .localized-capital-input { grid-template-columns: minmax(82px,.7fr) minmax(0,1fr); }
+.localized-exposure-inputs .localized-capital-input > span { grid-column: 1 / -1; }
+.localized-currency-select .ax1-select-trigger { min-height: 34px; padding: 0 9px; color: #173050; background: #fff; border-color: #b8c9dc; font-size: .7rem; }
+.localized-currency-select .ax1-select-trigger svg { color: #2b63c5; }
+.localized-currency-select .ax1-select-menu { min-width: 170px; color: #dce8f7; }
 .localized-exposure-result { min-height: 230px; display: flex; flex-direction: column; margin-top: 12px; padding: 28px; color: #fff; background: radial-gradient(circle at 90% 0,rgba(52,120,246,.2),transparent 40%),#0b192d; border: 1px solid #263e5e; border-radius: 11px 11px 11px 3px; }
 .localized-exposure-result span { color: #80a2d0; font-size: .68rem; font-weight: 780; letter-spacing: .12em; text-transform: uppercase; }
 .localized-exposure-result strong { margin: 36px 0 18px; font-size: clamp(2.8rem,5vw,4.6rem); letter-spacing: -.06em; }

@@ -1,6 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ArrowRight, Check, Fingerprint, Landmark, Scale, ShieldCheck, Users, Waypoints, Workflow } from 'lucide-react';
 import { Footer, type PageProps } from '../components';
+import { BrandedSelect } from '../components/BrandedSelect';
+import { currencyOptions, defaultCurrencyForLocale, type CurrencyCode } from '../currency';
 import { localeContent, localeFromPath } from '../i18n';
 import { localizedExperienceCopy } from '../localizedExperience';
 import { useLocation } from 'react-router-dom';
@@ -20,6 +22,7 @@ export default function LocalizedOverviewPage({ onOpenContact }: PageProps) {
   const [diagnosticAnswers, setDiagnosticAnswers] = useState<Array<number | null>>([null, null, null, null]);
   const [activeRole, setActiveRole] = useState(0);
   const [capital, setCapital] = useState(12_400_000);
+  const [currency, setCurrency] = useState<CurrencyCode>(() => defaultCurrencyForLocale(locale));
   const [days, setDays] = useState(21);
   const [rate, setRate] = useState(8);
   const answered = diagnosticAnswers.filter((answer) => answer !== null).length;
@@ -28,7 +31,9 @@ export default function LocalizedOverviewPage({ onOpenContact }: PageProps) {
   const stateNames = ['VALIDATED', 'PARTIAL', 'BLOCKED', 'FAILED'];
   const roleIcons = [Landmark, Workflow, ShieldCheck];
   const ActiveRoleIcon = roleIcons[activeRole];
-  const money = new Intl.NumberFormat(copy.htmlLang, { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+  const money = new Intl.NumberFormat(copy.htmlLang, { style: 'currency', currency, maximumFractionDigits: 0 });
+
+  useEffect(() => setCurrency(defaultCurrencyForLocale(locale)), [locale]);
 
   const englishDetail = (path: string) => (
     <a className="localized-detail-link" href={path} lang="en">
@@ -132,7 +137,7 @@ export default function LocalizedOverviewPage({ onOpenContact }: PageProps) {
             </header>
             <div className="localized-exposure-tool">
               <div className="localized-exposure-inputs">
-                <label><span>{experience.exposure.capital}</span><b>EUR</b><input type="number" min="0" step="100000" value={capital} onChange={(event) => setCapital(Number(event.target.value))} /></label>
+                <div className="localized-capital-input"><span>{experience.exposure.capital}</span><BrandedSelect<CurrencyCode> className="localized-currency-select" ariaLabel={experience.exposure.capital} value={currency} options={currencyOptions} onChange={setCurrency} /><input aria-label={experience.exposure.capital} type="number" min="0" step="100000" value={capital} onChange={(event) => setCapital(Number(event.target.value))} /></div>
                 <label><span>{experience.exposure.days}</span><input type="number" min="0" max="365" value={days} onChange={(event) => setDays(Number(event.target.value))} /></label>
                 <label><span>{experience.exposure.rate}</span><input type="number" min="0" max="100" step="0.5" value={rate} onChange={(event) => setRate(Number(event.target.value))} /><b>%</b></label>
               </div>

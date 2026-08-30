@@ -226,7 +226,7 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
             </label>
             <div className="package-inquiry-privacy">
               <LockKeyhole size={16} aria-hidden="true" />
-              <p><strong>Private until you choose to send.</strong>Your entries remain in this browser and are used only to prepare an email you can review.</p>
+              <p><strong>Private until you choose to send.</strong>Your entries remain in this browser and are used only to prepare an email you can review. <a href="/privacy" target="_blank" rel="noopener noreferrer">Read the Privacy Policy.</a></p>
             </div>
             <button type="submit" className="package-inquiry-primary is-wide">
               Review the inquiry<ArrowRight size={16} />

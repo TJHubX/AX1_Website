@@ -121,6 +121,11 @@ test('currency switching changes formatting and does not convert the number', ()
   assert.equal(formatCurrency(value as number, 'GBP'), '£11,000,000');
   assert.equal(formatCurrency(value as number, 'EUR'), '€11,000,000');
   assert.equal(formatCurrency(value as number, 'USD'), 'US$11,000,000');
+  assert.equal(formatCurrency(value as number, 'CZK'), 'CZK\u00a011,000,000');
+  assert.equal(formatCurrency(value as number, 'HUF'), 'HUF\u00a011,000,000');
+  assert.equal(formatCurrency(value as number, 'RSD'), 'RSD\u00a011,000,000');
+  assert.equal(formatCurrency(value as number, 'AED'), 'AED\u00a011,000,000');
+  assert.equal(formatCurrency(value as number, 'SAR'), 'SAR\u00a011,000,000');
 });
 
 test('empty and partially typed inputs remain incomplete', () => {

@@ -13,20 +13,7 @@ Axis One is non-custodial. It does not hold, transfer, settle, manage or guarant
 - [Trust](https://ax1-website.pages.dev/trust): Permissioned access, product boundaries, collaboration model and current security position.
 - [Founder](https://ax1-website.pages.dev/founder): Tania Jokic and the operating problem behind Axis One.
 
-## Localised discovery pages
-
-- [English (US)](https://ax1-website.pages.dev/en-us)
-- [Español](https://ax1-website.pages.dev/es)
-- [Deutsch](https://ax1-website.pages.dev/de)
-- [Italiano](https://ax1-website.pages.dev/it)
-- [Português](https://ax1-website.pages.dev/pt)
-- [Français](https://ax1-website.pages.dev/fr)
-- [Čeština](https://ax1-website.pages.dev/cs)
-- [Magyar](https://ax1-website.pages.dev/hu)
-- [Srpski](https://ax1-website.pages.dev/sr)
-- [العربية](https://ax1-website.pages.dev/ar)
-
-The UK English homepage is the default and `x-default` version. Locale pages provide translated product positioning and link to the English source legal documents.
+Interactive currency displays support GBP, EUR, USD, CZK, HUF, RSD, AED and SAR. Selecting a currency changes the denomination and formatting only; Axis One does not perform an exchange-rate conversion.
 
 ## Legal and factual boundaries
 
@@ -40,5 +27,7 @@ The UK English homepage is the default and `x-default` version. Locale pages pro
 ## Company
 
 AX1 Structura Ltd is registered in England and Wales, company number 17151320. Registered office: 66 Paul Street, London EC2A 4NA, England. Contact: info@ax1.capital.
+
+Website enquiry and Decision Brief tools prepare a `mailto:` message in the visitor's browser. They open the visitor's configured email application only after the visitor chooses to do so; the website does not submit or send the message automatically.
 
 For a fuller factual reference, see [llms-full.txt](https://ax1-website.pages.dev/llms-full.txt).

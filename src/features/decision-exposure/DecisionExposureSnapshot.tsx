@@ -1,6 +1,7 @@
 import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ArrowRight, Calculator, Check, Clock3, Eye, EyeOff, Plus, TriangleAlert } from 'lucide-react';
 import { BrandedSelect } from '../../components/BrandedSelect';
+import { currencyOptions, formatMoney, type CurrencyCode } from '../../currency';
 import { trackAX1Event } from '../../utils/analytics';
 import { calculateDecisionExposure } from './decisionExposure';
 
@@ -15,18 +16,11 @@ export type DecisionExposureScenario = {
   summary: string;
 };
 
-type CurrencyCode = 'EUR' | 'GBP' | 'USD';
 type EvidenceVisibility = 'yes' | 'partly' | 'no';
 
 type Props = {
   onUseScenario: (scenario: DecisionExposureScenario) => void;
 };
-
-const currencyOptions: Array<{ value: CurrencyCode; label: string }> = [
-  { value: 'EUR', label: 'EUR (€)' },
-  { value: 'GBP', label: 'GBP (£)' },
-  { value: 'USD', label: 'USD ($)' },
-];
 
 const visibilityCopy: Record<EvidenceVisibility, { title: string; copy: string }> = {
   yes: {
@@ -63,11 +57,7 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
   const [evidenceVisibility, setEvidenceVisibility] = useState<EvidenceVisibility>('partly');
   const initialCalculation = useRef(true);
 
-  const formatMoney = (value: number, maximumFractionDigits = 0) => new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency,
-    maximumFractionDigits,
-  }).format(value);
+  const formatCurrency = (value: number, maximumFractionDigits = 0) => formatMoney(value, currency, 'en-GB', maximumFractionDigits);
 
   const compactMoney = (value: number) => new Intl.NumberFormat('en-GB', {
     style: 'currency',
@@ -101,12 +91,12 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
 
   const buildScenario = (): DecisionExposureScenario => {
     const summary = [
-      `Capital governed through the next decision: ${formatMoney(capital)}`,
+      `Capital governed through the next decision: ${formatCurrency(capital)}`,
       `Decision basis incomplete for: ${days} day${days === 1 ? '' : 's'}`,
       `Annual carrying or financing rate: ${annualRate}%`,
-      `Minimum visible carrying burden: ${formatMoney(carryingBurden)}`,
-      `Each additional 7 days: ${formatMoney(sevenDayBurden)}`,
-      additionalBurden > 0 ? `Separate verified burden: ${formatMoney(additionalBurden)}` : '',
+      `Minimum visible carrying burden: ${formatCurrency(carryingBurden)}`,
+      `Each additional 7 days: ${formatCurrency(sevenDayBurden)}`,
+      additionalBurden > 0 ? `Separate verified burden: ${formatCurrency(additionalBurden)}` : '',
       `Can the current decision basis be opened now? ${evidenceVisibility === 'yes' ? 'Yes' : evidenceVisibility === 'partly' ? 'Partly' : 'No'}`,
     ].filter(Boolean).join('\n');
 
@@ -175,21 +165,21 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
             </div>
             <div className="cg-result-primary">
               <span>Minimum visible carrying burden</span>
-              <strong>{formatMoney(carryingBurden)}</strong>
+              <strong>{formatCurrency(carryingBurden)}</strong>
               <small>{compactMoney(capital)} governed for {days} days at {annualRate}% per year</small>
             </div>
             <div className="cg-result-ledger">
-              <div><span>Capital governed</span><strong>{formatMoney(capital)}</strong></div>
+              <div><span>Capital governed</span><strong>{formatCurrency(capital)}</strong></div>
               <div><span>Decision latency</span><strong>{days} days</strong></div>
-              <div><span>Each additional 7 days</span><strong>{formatMoney(sevenDayBurden)}</strong></div>
-              {additionalBurden > 0 && <div><span>Combined visible burden</span><strong>{formatMoney(combinedVisibleBurden)}</strong></div>}
+              <div><span>Each additional 7 days</span><strong>{formatCurrency(sevenDayBurden)}</strong></div>
+              {additionalBurden > 0 && <div><span>Combined visible burden</span><strong>{formatCurrency(combinedVisibleBurden)}</strong></div>}
             </div>
             <div className="cg-exposure-timeline" aria-label="Decision latency timeline">
               {[0, 7, 14, days].filter((value, index, values) => values.indexOf(value) === index).sort((a, b) => a - b).map((day, index, values) => (
                 <div className={index === values.length - 1 ? 'is-current' : ''} key={day}><i /><span>Day {day}</span></div>
               ))}
             </div>
-            <p className="cg-result-interpretation">The number worth investigating is not only <strong>{formatMoney(carryingBurden)}</strong>. It is whether <strong>{compactMoney(capital)}</strong> is governed through current, attributable evidence or reconstructed for the decision meeting.</p>
+            <p className="cg-result-interpretation">The number worth investigating is not only <strong>{formatCurrency(carryingBurden)}</strong>. It is whether <strong>{compactMoney(capital)}</strong> is governed through current, attributable evidence or reconstructed for the decision meeting.</p>
           </div>
         </div>
 

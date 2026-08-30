@@ -26,8 +26,7 @@ import logo from '../assets/ax1-logo.svg';
 import { trackAX1Event } from '../utils/analytics';
 import type { PackageName } from '../features/package-inquiry/packageInquiry';
 import SystemVisual from './SystemVisual';
-import { BrandedSelect } from './BrandedSelect';
-import { isLocalizedLanding, localeCodes, localeContent, localeFromPath, localeHome, type LocaleCode } from '../i18n';
+import { englishSiteCopy } from '../englishSiteCopy';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -131,14 +130,8 @@ export function Button({ children, variant = 'primary', onClick, to }: { childre
 export function Header(_props: PageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { pathname } = useLocation();
-  const locale = localeFromPath(pathname);
-  const copy = localeContent[locale];
-  const localized = isLocalizedLanding(pathname);
-  const homePath = localeHome(locale);
-  const sectionPath = (id: string, englishPath?: string) => localized ? `${homePath}#${id}` : (englishPath ?? `/#${id}`);
-  const changeLocale = (nextLocale: LocaleCode) => {
-    window.location.assign(`${localeHome(nextLocale)}${window.location.hash}`);
-  };
+  const copy = englishSiteCopy;
+  const sectionPath = (id: string, englishPath?: string) => englishPath ?? `/#${id}`;
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -165,25 +158,15 @@ export function Header(_props: PageProps) {
     <>
     <a className="skip-link" href="#main-content">{copy.nav.skip}</a>
     <header className="header">
-      <nav className="nav" data-locale={locale} data-nav-density={locale === 'en-gb' || locale === 'en-us' ? 'standard' : 'dense'} aria-label="Primary navigation">
-        <Link to={homePath} className="logo-link" aria-label={`Axis One · ${copy.footer.home}`}><Logo /></Link>
+      <nav className="nav" data-locale="en-gb" data-nav-density="standard" aria-label="Primary navigation">
+        <Link to="/" className="logo-link" aria-label={`Axis One · ${copy.footer.home}`}><Logo /></Link>
         <div className="nav-tag"><span />{copy.page.eyebrow}</div>
         <div className="nav-links">
           <a href={sectionPath('why-ax1')}>{copy.nav.why}</a>
-          {localized ? <a href={sectionPath('system')}>{copy.nav.system}</a> : <Link to="/system">{copy.nav.system}</Link>}
+          <Link to="/system">{copy.nav.system}</Link>
           <a href={sectionPath('decision-exposure')}>{copy.nav.exposure}</a>
-          {localized ? <a href={sectionPath('trust')}>{copy.nav.trust}</a> : <Link to="/trust">{copy.nav.trust}</Link>}
-          {localized ? <a href={sectionPath('deployment')}>{copy.nav.deployment}</a> : <Link to="/deployment">{copy.nav.deployment}</Link>}
-        </div>
-        <div className="locale-select locale-select-desktop">
-          <Globe size={14} aria-hidden="true" />
-          <BrandedSelect
-            value={locale}
-            options={localeCodes.map((code) => ({ value: code, label: localeContent[code].label }))}
-            onChange={changeLocale}
-            ariaLabel="Language"
-            className="locale-branded-select"
-          />
+          <Link to="/trust">{copy.nav.trust}</Link>
+          <Link to="/deployment">{copy.nav.deployment}</Link>
         </div>
         <a className="nav-cta" href={sectionPath('decision-brief')} onClick={() => trackAX1Event('primary_cta_selected', { location: 'navigation', action: 'decision_brief' })}>{copy.nav.frame} <ArrowRight size={13} /></a>
         <button
@@ -213,15 +196,14 @@ export function Header(_props: PageProps) {
               <span>{copy.nav.navigation}</span>
               <button type="button" onClick={closeMobileMenu} aria-label={copy.nav.close}><X size={16} /></button>
             </div>
-            <Link to={homePath} onClick={closeMobileMenu}>{copy.footer.home}</Link>
+            <Link to="/" onClick={closeMobileMenu}>{copy.footer.home}</Link>
             <a href={sectionPath('why-ax1')} onClick={closeMobileMenu}>{copy.nav.why}</a>
-            {localized ? <a href={sectionPath('system')} onClick={closeMobileMenu}>{copy.nav.system}</a> : <Link to="/system" onClick={closeMobileMenu}>{copy.nav.system}</Link>}
+            <Link to="/system" onClick={closeMobileMenu}>{copy.nav.system}</Link>
             <a href={sectionPath('decision-exposure')} onClick={closeMobileMenu}>{copy.nav.exposure}</a>
-            {localized ? <a href={sectionPath('trust')} onClick={closeMobileMenu}>{copy.nav.trust}</a> : <Link to="/trust" onClick={closeMobileMenu}>{copy.nav.trust}</Link>}
-            {localized ? <a href={sectionPath('deployment')} onClick={closeMobileMenu}>{copy.nav.deployment}</a> : <Link to="/deployment" onClick={closeMobileMenu}>{copy.nav.deployment}</Link>}
-            <Link to="/founder" lang="en" onClick={closeMobileMenu}>{copy.footer.founder}</Link>
+            <Link to="/trust" onClick={closeMobileMenu}>{copy.nav.trust}</Link>
+            <Link to="/deployment" onClick={closeMobileMenu}>{copy.nav.deployment}</Link>
+            <Link to="/founder" onClick={closeMobileMenu}>{copy.footer.founder}</Link>
             <div className="mobile-nav-divider" />
-            <div className="locale-select locale-select-mobile"><Globe size={15} aria-hidden="true" /><BrandedSelect value={locale} options={localeCodes.map((code) => ({ value: code, label: localeContent[code].label }))} onChange={changeLocale} ariaLabel="Language" className="locale-branded-select" /></div>
             <a className="mobile-nav-request" href={sectionPath('decision-brief')} onClick={closeMobileMenu}>{copy.nav.frame}</a>
           </div>
         </div>,
@@ -232,12 +214,8 @@ export function Header(_props: PageProps) {
 }
 
 export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
-  const { pathname } = useLocation();
-  const locale = localeFromPath(pathname);
-  const copy = localeContent[locale];
-  const localized = isLocalizedLanding(pathname);
-  const homePath = localeHome(locale);
-  const sectionPath = (id: string) => localized ? `${homePath}#${id}` : `/#${id}`;
+  const copy = englishSiteCopy;
+  const sectionPath = (id: string) => `/#${id}`;
   return (
     <footer className="footer">
       <div className="footer-signal" aria-hidden="true"><i /><i /><i /></div>
@@ -246,16 +224,16 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
           <nav className="footer-nav footer-nav-masthead" aria-label="Footer navigation">
             <div>
               <strong>{copy.footer.explore}</strong>
-              <Link to={homePath}>{copy.footer.home}</Link>
+              <Link to="/">{copy.footer.home}</Link>
               <a href={sectionPath('why-ax1')}>{copy.nav.why}</a>
-              {localized ? <a href={sectionPath('system')}>{copy.nav.system}</a> : <Link to="/system">{copy.nav.system}</Link>}
+              <Link to="/system">{copy.nav.system}</Link>
               <a href={sectionPath('decision-exposure')}>{copy.nav.exposure}</a>
             </div>
             <div>
               <strong>{copy.footer.company}</strong>
-              {localized ? <a href={sectionPath('deployment')}>{copy.nav.deployment}</a> : <Link to="/deployment">{copy.nav.deployment}</Link>}
-              {localized ? <a href={sectionPath('trust')}>{copy.nav.trust}</a> : <Link to="/trust">{copy.nav.trust}</Link>}
-              <Link to="/founder" lang="en">{copy.footer.founder}</Link>
+              <Link to="/deployment">{copy.nav.deployment}</Link>
+              <Link to="/trust">{copy.nav.trust}</Link>
+              <Link to="/founder">{copy.footer.founder}</Link>
               <button
                 className="footer-nav-contact"
                 type="button"
@@ -295,7 +273,6 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
 
         <div className="footer-bottom">
           <span>© 2026 AX1 Structura Ltd. {copy.footer.rights}</span>
-          {localized && <span className="footer-language-note">{copy.footer.englishNotice}</span>}
           <nav aria-label="Legal navigation">
             <Link to="/privacy">Privacy</Link>
             <Link to="/cookies">Cookies</Link>

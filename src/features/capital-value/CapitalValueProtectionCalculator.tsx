@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { Badge, Button } from '../../components';
 import { BrandedSelect } from '../../components/BrandedSelect';
+import { currencyOptions, currencySymbol } from '../../currency';
 import {
   buildCalculationSummary,
   calculateCapitalValueProtection,
@@ -55,8 +56,6 @@ type NumberFieldProps = {
   error?: string;
   basis?: string;
 };
-
-const CURRENCY_SYMBOLS: Record<CurrencyCode, string> = { GBP: '£', EUR: '€', USD: '$' };
 
 function formatInputNumber(value: number | null) {
   if (value === null || !Number.isFinite(value)) return '';
@@ -377,11 +376,7 @@ export function CapitalValueProtectionCalculator({
                 id="cvp-currency-select"
                 value={currency}
                 ariaLabel="Display currency"
-                options={[
-                  { value: 'GBP', label: 'GBP (£)' },
-                  { value: 'EUR', label: 'EUR (€)' },
-                  { value: 'USD', label: 'USD ($)' },
-                ]}
+                options={currencyOptions}
                 onChange={(nextCurrency) => {
                   setCurrency(nextCurrency);
                   markEdited('currency');
@@ -414,7 +409,7 @@ export function CapitalValueProtectionCalculator({
                   min={0}
                   max={1_000_000_000_000_000}
                   step={100_000}
-                  prefix={CURRENCY_SYMBOLS[currency]}
+                  prefix={currencySymbol(currency)}
                   error={errors.capitalUnderExecution}
                   basis={basisFor('capitalUnderExecution')}
                 />
@@ -459,7 +454,7 @@ export function CapitalValueProtectionCalculator({
                       min={0}
                       max={1_000_000_000_000_000}
                       step={100_000}
-                      prefix={CURRENCY_SYMBOLS[currency]}
+                      prefix={currencySymbol(currency)}
                       error={errors.knownCostOverrunAmount}
                     />
                   )}
@@ -535,7 +530,7 @@ export function CapitalValueProtectionCalculator({
                     min={0}
                     max={1_000_000_000_000_000}
                     step={10_000}
-                    prefix={CURRENCY_SYMBOLS[currency]}
+                    prefix={currencySymbol(currency)}
                     error={errors.optionalReworkCost}
                     basis={basisFor('optionalReworkCost')}
                   />}
@@ -555,7 +550,7 @@ export function CapitalValueProtectionCalculator({
                     min={0}
                     max={1_000_000_000_000_000}
                     step={10_000}
-                    prefix={CURRENCY_SYMBOLS[currency]}
+                    prefix={currencySymbol(currency)}
                     error={errors.optionalDelayedOperatingValue}
                     basis={basisFor('optionalDelayedOperatingValue')}
                   />}
@@ -572,7 +567,7 @@ export function CapitalValueProtectionCalculator({
                       <NumberField label="Decisions / month" helper="Repeated decisions in the same period." value={governanceInputs.decisionsPerMonth} onChange={updateGovernance('decisionsPerMonth')} min={0} max={10_000} />
                       <NumberField label="People / decision" helper="People contributing to each decision." value={governanceInputs.peoplePerDecision} onChange={updateGovernance('peoplePerDecision')} min={0} max={10_000} />
                       <NumberField label="Hours / person" helper="Preparation hours per person." value={governanceInputs.preparationHoursPerPerson} onChange={updateGovernance('preparationHoursPerPerson')} min={0} max={10_000} step={0.25} suffix="hrs" />
-                      <NumberField label="Blended hourly cost" helper="Approved blended internal cost." value={governanceInputs.blendedHourlyCost} onChange={updateGovernance('blendedHourlyCost')} min={0} max={100_000} step={5} prefix={CURRENCY_SYMBOLS[currency]} />
+                      <NumberField label="Blended hourly cost" helper="Approved blended internal cost." value={governanceInputs.blendedHourlyCost} onChange={updateGovernance('blendedHourlyCost')} min={0} max={100_000} step={5} prefix={currencySymbol(currency)} />
                     </div>
                     <div className="cvp-capacity-result">
                       <span>Capacity value</span>

@@ -1,4 +1,6 @@
-export type CurrencyCode = 'GBP' | 'EUR' | 'USD';
+import { currencySymbol, formatMoney, type CurrencyCode } from '../../currency.js';
+
+export type { CurrencyCode } from '../../currency.js';
 
 export type CostOverrunMode = 'percentage' | 'amount';
 
@@ -239,20 +241,11 @@ export function calculateCapitalValueProtection(
 }
 
 export function formatCurrency(value: number, currency: CurrencyCode): string {
-  return new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency,
-    maximumFractionDigits: 0,
-  }).format(value);
+  return formatMoney(value, currency);
 }
 
 export function formatCompactCurrency(value: number, currency: CurrencyCode): string {
-  const symbol = new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency,
-    currencyDisplay: 'narrowSymbol',
-    maximumFractionDigits: 0,
-  }).formatToParts(0).find((part) => part.type === 'currency')?.value ?? currency;
+  const symbol = currencySymbol(currency);
 
   const absolute = Math.abs(value);
   const sign = value < 0 ? '-' : '';

@@ -9,7 +9,7 @@
     "build:cloudflare": "vite build && node scripts/prerender-metadata.mjs",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
-    "test": "tsc -p tsconfig.tests.json && node --test .test-dist/capital-value/capitalValueProtection.test.js .test-dist/publicFlows.test.js",
+    "test": "tsc -p tsconfig.tests.json && node --test .test-dist/features/capital-value/capitalValueProtection.test.js .test-dist/features/publicFlows.test.js",
     "predeploy:cloudflare": "npm run build",
     "deploy:cloudflare": "wrangler pages deploy dist --project-name ax1-website"
   },

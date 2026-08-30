@@ -1,8 +1,10 @@
+import { currencySymbol, type CurrencyCode } from '../../currency.js';
+
 export type DecisionBriefValues = {
   decision: string;
   decisionDate: string;
   capitalAffected: string;
-  currency: 'EUR' | 'GBP' | 'USD';
+  currency: CurrencyCode;
   conditions: string;
   evidenceLocation: string;
   workEmail: string;
@@ -14,15 +16,9 @@ export type DecisionBriefEmail = {
   body: string;
 };
 
-const currencySymbols: Record<DecisionBriefValues['currency'], string> = {
-  EUR: '€',
-  GBP: '£',
-  USD: '$',
-};
-
 export function buildDecisionBrief(values: DecisionBriefValues): string {
   const capital = values.capitalAffected.trim()
-    ? `${currencySymbols[values.currency]}${values.capitalAffected.trim()} ${values.currency}`
+    ? `${currencySymbol(values.currency)}${values.capitalAffected.trim()} ${values.currency}`
     : 'Not specified';
 
   return [
