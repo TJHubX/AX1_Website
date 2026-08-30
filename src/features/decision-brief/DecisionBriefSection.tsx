@@ -55,7 +55,9 @@ export function DecisionBriefSection({ scenario }: Props) {
   const [errors, setErrors] = useState<Errors>({});
   const [preview, setPreview] = useState<DecisionBriefEmail | null>(null);
   const [status, setStatus] = useState('');
+  const [recipientStatus, setRecipientStatus] = useState<'idle' | 'copied' | 'error'>('idle');
   const [capitalFocused, setCapitalFocused] = useState(false);
+  const recipient = recipientEmail();
 
   useEffect(() => {
     if (!scenario) return;
@@ -124,12 +126,22 @@ export function DecisionBriefSection({ scenario }: Props) {
     }
   };
 
+  const copyRecipient = async () => {
+    try {
+      await navigator.clipboard.writeText(recipient);
+      setRecipientStatus('copied');
+      trackAX1Event('decision_brief_copied', { content: 'recipient_address' });
+    } catch {
+      setRecipientStatus('error');
+    }
+  };
+
   const openEmail = () => {
     if (!preview) return;
     trackAX1Event('decision_brief_email_opened');
     const subject = encodeURIComponent(preview.subject);
     const body = encodeURIComponent(preview.body);
-    window.location.href = `mailto:${recipientEmail()}?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -143,12 +155,29 @@ export function DecisionBriefSection({ scenario }: Props) {
           <div className="cg-brief-meta">
             <p>Frame one approaching action. Review the generated brief on this page, edit it if needed, then choose whether to copy it or open your email client.</p>
             <div className="cg-brief-utility" aria-label="Decision Brief privacy and recipient">
-              <ShieldCheck size={16} aria-hidden="true" />
-              <span>Prepared in your browser</span>
-              <i aria-hidden="true">·</i>
-              <span>Sent only when you choose</span>
-              <i aria-hidden="true">·</i>
-              <a href={`mailto:${recipientEmail()}`}>To {recipientEmail()}</a>
+              <div className="cg-brief-utility-note">
+                <ShieldCheck size={16} aria-hidden="true" />
+                <span>Prepared in your browser</span>
+                <i aria-hidden="true">·</i>
+                <span>Sent only when you choose</span>
+              </div>
+              <div className="cg-brief-recipient-actions">
+                <a
+                  href={`mailto:${recipient}?subject=${encodeURIComponent('Axis One Decision Brief')}`}
+                  onClick={() => trackAX1Event('decision_brief_email_opened', { location: 'recipient_link' })}
+                >
+                  <Mail size={14} aria-hidden="true" />
+                  Email {recipient}
+                  <ExternalLink size={13} aria-hidden="true" />
+                </a>
+                <button type="button" onClick={copyRecipient}>
+                  {recipientStatus === 'copied' ? <CheckCircle2 size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
+                  {recipientStatus === 'copied' ? 'Copied' : 'Copy address'}
+                </button>
+              </div>
+              <span className={`cg-brief-recipient-status${recipientStatus === 'error' ? ' is-error' : ''}`} role="status" aria-live="polite">
+                {recipientStatus === 'error' ? `Copy unavailable. The address is ${recipient}.` : ''}
+              </span>
             </div>
           </div>
         </div>
