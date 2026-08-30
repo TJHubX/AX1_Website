@@ -137,7 +137,7 @@ export function Header(_props: PageProps) {
   const homePath = localeHome(locale);
   const sectionPath = (id: string, englishPath?: string) => localized ? `${homePath}#${id}` : (englishPath ?? `/#${id}`);
   const changeLocale = (nextLocale: LocaleCode) => {
-    window.location.assign(localeHome(nextLocale));
+    window.location.assign(`${localeHome(nextLocale)}${window.location.hash}`);
   };
 
   useEffect(() => {
@@ -165,7 +165,7 @@ export function Header(_props: PageProps) {
     <>
     <a className="skip-link" href="#main-content">{copy.nav.skip}</a>
     <header className="header">
-      <nav className="nav" aria-label="Primary navigation">
+      <nav className="nav" data-locale={locale} data-nav-density={locale === 'en-gb' || locale === 'en-us' ? 'standard' : 'dense'} aria-label="Primary navigation">
         <Link to={homePath} className="logo-link" aria-label={`Axis One · ${copy.footer.home}`}><Logo /></Link>
         <div className="nav-tag"><span />{copy.page.eyebrow}</div>
         <div className="nav-links">
@@ -213,11 +213,13 @@ export function Header(_props: PageProps) {
               <span>{copy.nav.navigation}</span>
               <button type="button" onClick={closeMobileMenu} aria-label={copy.nav.close}><X size={16} /></button>
             </div>
+            <Link to={homePath} onClick={closeMobileMenu}>{copy.footer.home}</Link>
             <a href={sectionPath('why-ax1')} onClick={closeMobileMenu}>{copy.nav.why}</a>
             {localized ? <a href={sectionPath('system')} onClick={closeMobileMenu}>{copy.nav.system}</a> : <Link to="/system" onClick={closeMobileMenu}>{copy.nav.system}</Link>}
             <a href={sectionPath('decision-exposure')} onClick={closeMobileMenu}>{copy.nav.exposure}</a>
             {localized ? <a href={sectionPath('trust')} onClick={closeMobileMenu}>{copy.nav.trust}</a> : <Link to="/trust" onClick={closeMobileMenu}>{copy.nav.trust}</Link>}
             {localized ? <a href={sectionPath('deployment')} onClick={closeMobileMenu}>{copy.nav.deployment}</a> : <Link to="/deployment" onClick={closeMobileMenu}>{copy.nav.deployment}</Link>}
+            <Link to="/founder" lang="en" onClick={closeMobileMenu}>{copy.footer.founder}</Link>
             <div className="mobile-nav-divider" />
             <div className="locale-select locale-select-mobile"><Globe size={15} aria-hidden="true" /><BrandedSelect value={locale} options={localeCodes.map((code) => ({ value: code, label: localeContent[code].label }))} onChange={changeLocale} ariaLabel="Language" className="locale-branded-select" /></div>
             <a className="mobile-nav-request" href={sectionPath('decision-brief')} onClick={closeMobileMenu}>{copy.nav.frame}</a>
