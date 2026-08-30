@@ -1,0 +1,46 @@
+# Axis One factual reference
+
+## What Axis One is
+
+Axis One is capital governance infrastructure operated by AX1 Structura Ltd. Its product model keeps four things connected to a capital decision: the current execution position, attributable evidence, explicit responsibility and authority, and a reviewable decision record.
+
+The intended outcome is a clearer basis for authorised people to decide whether a capital action is ready. Configured rules can evaluate whether agreed conditions are complete; authorised people determine the action.
+
+## What Axis One is not
+
+Axis One is non-custodial. It does not hold, custody, transfer, settle, manage or guarantee client capital. It does not autonomously approve or reject a capital action, provide regulated financial advice or replace the responsible human decision-maker. Any capital movement would be executed by an appropriately authorised external financial provider under the relevant arrangement.
+
+Website programme states, system interfaces and capital values are illustrative and are not customer data, proof of deployment or guaranteed outcomes. Calculator outputs are directional estimates based on user inputs and stated assumptions. Independent industry statistics are attributed to their original sources; they are not Axis One results and do not imply affiliation or endorsement.
+
+## Deployment model
+
+- AX1.Pilot frames one approaching capital decision with a bounded stakeholder group and measured review point.
+- AX1.Core applies the governance pattern across a single programme with role-scoped collaboration and attributable evidence.
+- AX1.Enterprise extends a proven governance pattern across multiple programmes or entities without removing local responsibility.
+
+## Trust position
+
+The public product description emphasises permissioned access, scoped roles, attributable programme records, explicit authority and non-custodial boundaries. Axis One does not claim a third-party certification unless it is expressly stated after independent achievement.
+
+## Website data position
+
+Decision Brief and enquiry content is prepared in the visitor’s browser. Axis One does not receive entries merely because they are typed. Information is sent only if the visitor chooses to send a prepared email or contacts the company through another channel. The public site does not currently deploy advertising trackers or a non-essential browser analytics provider.
+
+## Canonical page map
+
+- https://ax1-website.pages.dev/
+- https://ax1-website.pages.dev/system
+- https://ax1-website.pages.dev/capital
+- https://ax1-website.pages.dev/deployment
+- https://ax1-website.pages.dev/trust
+- https://ax1-website.pages.dev/founder
+- https://ax1-website.pages.dev/privacy
+- https://ax1-website.pages.dev/cookies
+- https://ax1-website.pages.dev/terms
+- https://ax1-website.pages.dev/disclaimer
+- https://ax1-website.pages.dev/legal
+- https://ax1-website.pages.dev/accessibility
+
+## Company and contact
+
+AX1 Structura Ltd is registered in England and Wales under company number 17151320. Registered office: 66 Paul Street, London EC2A 4NA, England. Founder: Tania Jokic. Contact: info@ax1.capital.

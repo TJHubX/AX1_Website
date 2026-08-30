@@ -43,8 +43,32 @@ const PAGE_METADATA: Record<string, { title: string; description: string }> = {
     description: 'Review Axis One product boundaries, permissioned collaboration model, attributable records and non-custodial approach.',
   },
   '/founder': {
-    title: 'Founder Story | Axis One',
+    title: 'Tania Jokic, Founder | Axis One',
     description: 'Why Axis One was built to connect proven execution, stakeholder authority and governed capital decisions.',
+  },
+  '/privacy': {
+    title: 'Privacy Policy | Axis One',
+    description: 'How AX1 Structura Ltd handles personal information connected with the Axis One public website and enquiries.',
+  },
+  '/cookies': {
+    title: 'Cookie Policy | Axis One',
+    description: 'The current cookie and similar-technology position for the Axis One public website.',
+  },
+  '/terms': {
+    title: 'Terms of Use | Axis One',
+    description: 'Terms governing access to and use of the public Axis One website operated by AX1 Structura Ltd.',
+  },
+  '/disclaimer': {
+    title: 'Website Disclaimer | Axis One',
+    description: 'Important boundaries concerning Axis One website content, product descriptions, benchmarks and decision-support materials.',
+  },
+  '/legal': {
+    title: 'Legal Notice | Axis One',
+    description: 'Company, operator and legal information for Axis One and AX1 Structura Ltd.',
+  },
+  '/accessibility': {
+    title: 'Accessibility Statement | Axis One',
+    description: 'The Axis One accessibility approach, current status, supported features and feedback channel.',
   },
 };
 
@@ -92,12 +116,18 @@ function ScrollToTop() {
 function PageMetadata() {
   const { pathname } = useLocation();
   useEffect(() => {
+    const normalizedPath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
     const fallback = {
       title: 'Axis One | Capital Governance Infrastructure',
       description: 'Capital governance infrastructure connecting proven execution to governed capital action in a non-custodial, permissioned environment.',
     };
-    const metadata = PAGE_METADATA[pathname] ?? fallback;
-    const canonicalPath = PAGE_METADATA[pathname] ? pathname : '/';
+    const isKnownPage = Boolean(PAGE_METADATA[normalizedPath]);
+    const metadata = PAGE_METADATA[normalizedPath] ?? {
+      ...fallback,
+      title: 'Page not found | Axis One',
+      description: 'The requested Axis One page could not be found.',
+    };
+    const canonicalPath = isKnownPage ? normalizedPath : window.location.pathname;
     const canonicalUrl = `https://ax1-website.pages.dev${canonicalPath === '/' ? '/' : canonicalPath}`;
     document.title = metadata.title;
     document.querySelector('meta[name="description"]')?.setAttribute('content', metadata.description);
@@ -107,6 +137,40 @@ function PageMetadata() {
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', metadata.description);
     document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', metadata.title);
     document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', metadata.description);
+    document.querySelector('meta[name="robots"]')?.setAttribute(
+      'content',
+      isKnownPage ? 'index, follow, max-image-preview:large' : 'noindex, nofollow',
+    );
+
+    const schemaId = 'ax1-page-schema';
+    let schemaElement = document.getElementById(schemaId) as HTMLScriptElement | null;
+    if (!schemaElement) {
+      schemaElement = document.createElement('script');
+      schemaElement.id = schemaId;
+      schemaElement.type = 'application/ld+json';
+      document.head.appendChild(schemaElement);
+    }
+    const pageSchema: Record<string, unknown> = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${canonicalUrl}#webpage`,
+      url: canonicalUrl,
+      name: metadata.title,
+      description: metadata.description,
+      inLanguage: 'en-GB',
+      isPartOf: { '@id': 'https://ax1-website.pages.dev/#website' },
+      about: { '@id': 'https://ax1-website.pages.dev/#organization' },
+    };
+    if (isKnownPage && normalizedPath !== '/') {
+      pageSchema.breadcrumb = {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ax1-website.pages.dev/' },
+          { '@type': 'ListItem', position: 2, name: metadata.title.split(' | ')[0], item: canonicalUrl },
+        ],
+      };
+    }
+    schemaElement.textContent = JSON.stringify(pageSchema);
   }, [pathname]);
   return null;
 }
@@ -123,6 +187,7 @@ function App() {
         <ScrollToTop />
         <PageMetadata />
         <Header {...pageProps} />
+        <div id="main-content" tabIndex={-1}>
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<HomePage {...pageProps} />} />
@@ -140,6 +205,7 @@ function App() {
             <Route path="*" element={<NotFoundPage {...pageProps} />} />
           </Routes>
         </Suspense>
+        </div>
         {contactIntent && <PackageInquiryModal packageName={contactIntent.packageName} source={contactIntent.source} onClose={() => setContactIntent(null)} />}
       </BrowserRouter>
     </MotionConfig>

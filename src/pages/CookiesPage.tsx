@@ -8,64 +8,51 @@ export default function CookiesPage({ onOpenContact }: PageProps) {
       <LegalPageLayout
         label="Cookies"
         title="Cookie Policy"
-        lastUpdated="May 2026"
-        intro="This Cookie Policy explains how AX1 Structura Ltd may use cookies and similar technologies on the Axis One website."
+        lastUpdated="30 August 2026"
+        intro="This policy describes the current use of cookies and similar technologies on the public Axis One website. The short version: Axis One does not currently set non-essential analytics or advertising cookies."
+        onContact={() => onOpenContact({ source: 'cookie_policy' })}
         sections={[
           {
-            heading: '1. What cookies are',
+            heading: 'Current position',
             paragraphs: [
-              'Cookies are small text files placed on your device when you visit a website. They are widely used to make websites function correctly, improve performance, and provide information to the website operator.',
+              'The public Axis One website does not currently use advertising cookies, cross-site tracking pixels or a non-essential browser analytics provider. It does not set cookies to build marketing profiles.',
+              'The Decision Brief and enquiry tools prepare information locally in your browser. Entries are not transferred to Axis One unless you choose to send them through your own email client.',
             ],
           },
           {
-            heading: '2. Types of cookies we may use',
+            heading: 'Strictly necessary technology',
             paragraphs: [
-              'The Axis One website may use the following categories of cookies.',
-            ],
-            bullets: [
-              'Strictly necessary cookies: required for the website to function correctly',
-              'Preference cookies: remember choices you make to improve your experience',
-              'Analytics cookies: help understand how visitors use the website',
-              'Embedded content cookies: may be set by third-party embeds such as fonts or video',
+              'Website hosting, network delivery and security providers may use short-lived or equivalent technical measures where necessary to deliver pages, balance traffic, prevent abuse or protect the service. These measures are not used by Axis One for advertising.',
             ],
           },
           {
-            heading: '3. Strictly necessary cookies',
+            heading: 'Local browser state',
             paragraphs: [
-              'These cookies support core website functionality and security. They do not require consent and cannot be disabled without affecting how the website operates.',
+              'Interactive interface state may exist temporarily while a page is open. The current public site does not use localStorage or sessionStorage to create a persistent marketing or analytics profile.',
             ],
           },
           {
-            heading: '4. Analytics cookies',
+            heading: 'External services and links',
             paragraphs: [
-              'The Axis One website may introduce privacy-conscious analytics in the future. Any non-essential analytics cookies will be handled in accordance with applicable consent requirements and will be disclosed in an updated version of this policy.',
+              'If you follow a link to another website or open your email provider, that service may use its own cookies or similar technologies. Its own policy and settings apply after you leave Axis One.',
             ],
           },
           {
-            heading: '5. Marketing cookies',
+            heading: 'Future changes and consent',
             paragraphs: [
-              'AX1 Structura Ltd does not currently rely on advertising or marketing cookies for the basic request-access flow. If this changes, this policy and any consent controls will be updated accordingly.',
+              'If Axis One introduces non-essential analytics or similar technology, this policy will be updated and an appropriate consent control will be provided before that technology is activated where required by law.',
             ],
           },
           {
-            heading: '6. Managing cookies',
+            heading: 'Browser controls',
             paragraphs: [
-              'You can control or delete cookies through your browser settings. Most browsers allow you to refuse new cookies, delete existing cookies, or be notified when a new cookie is placed.',
-              'Please note that disabling certain cookies may affect the functionality of the Axis One website.',
+              'Most browsers let you inspect, block and delete cookies. Blocking strictly necessary technology may affect website availability or security. Consult your browser help documentation for device-specific controls.',
             ],
           },
           {
-            heading: '7. Updates',
+            heading: 'Policy updates',
             paragraphs: [
-              'AX1 Structura Ltd may update this Cookie Policy from time to time to reflect changes in technology, legal requirements, or the way the website operates.',
-            ],
-          },
-          {
-            heading: '8. Contact',
-            paragraphs: [
-              'AX1 Structura Ltd',
-              '66 Paul Street, London EC2A 4NA, England',
-              'info@ax1.capital',
+              'We may revise this policy when the website, its providers or applicable requirements change. The current position and effective date will remain available on this page.',
             ],
           },
         ]}

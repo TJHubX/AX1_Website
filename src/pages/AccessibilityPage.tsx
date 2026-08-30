@@ -8,55 +8,52 @@ export default function AccessibilityPage({ onOpenContact }: PageProps) {
       <LegalPageLayout
         label="Accessibility"
         title="Accessibility Statement"
-        lastUpdated="May 2026"
-        intro="AX1 Structura Ltd is committed to making the Axis One website accessible and usable for as many people as possible."
+        lastUpdated="30 August 2026"
+        intro="AX1 Structura Ltd wants the Axis One website to be clear, operable and usable across devices, input methods and access needs. This statement describes the present position and how to report a barrier."
+        onContact={() => onOpenContact({ source: 'accessibility_statement' })}
         sections={[
           {
-            heading: '1. Our approach',
+            heading: 'Our accessibility aim',
             paragraphs: [
-              'The Axis One website is being designed with accessibility, readability, keyboard navigation, contrast, reduced-motion support, and responsive layouts in mind. AX1 Structura Ltd treats accessibility as an ongoing commitment, not a one-time task.',
+              'We use the Web Content Accessibility Guidelines (WCAG) 2.2 Level AA as the target for the public website. Accessibility is treated as an ongoing product-quality requirement rather than a one-time certification exercise.',
             ],
           },
           {
-            heading: '2. Current status',
+            heading: 'Current status',
             paragraphs: [
-              'We are actively improving the website and aim to align with recognised accessibility best practices over time. We do not currently claim full WCAG 2.1 AA compliance, as formal testing is ongoing.',
+              'The website has been designed with semantic structure, keyboard use, visible focus, responsive layouts, contrast and reduced motion in mind. It has not yet completed an independent accessibility audit, so AX1 Structura Ltd does not currently claim full WCAG 2.2 AA conformance.',
             ],
           },
           {
-            heading: '3. Features we support or are working toward',
-            paragraphs: [
-              'The following features are implemented or actively being developed across the Axis One website.',
-            ],
+            heading: 'Features currently supported',
+            paragraphs: ['The current public website includes:'],
             bullets: [
-              'Keyboard-accessible navigation throughout the site',
-              'Visible focus states on interactive elements',
-              'Responsive layouts that adapt to different screen sizes and orientations',
-              'Readable colour contrast ratios for body text and interface elements',
-              'Reduced-motion support via prefers-reduced-motion media query',
-              'Accessible modal behaviour including focus trapping and Escape key dismissal',
-              'Semantic headings and descriptive link text',
+              'Keyboard-operable primary navigation, forms, buttons and modal controls',
+              'A skip link to bypass repeated navigation',
+              'Visible focus indicators and descriptive labels for interactive controls',
+              'Responsive layouts for mobile, tablet and desktop widths',
+              'Reduced-motion behaviour that follows the user’s operating-system preference',
+              'Modal focus management, Escape-key dismissal and focus return',
+              'Structured headings, landmarks and descriptive alternative text',
             ],
           },
           {
-            heading: '4. Known limitations',
+            heading: 'Known limitations',
             paragraphs: [
-              'There may be areas of the website that are still being improved, particularly as new content and features are added during the pre-launch phase. We welcome feedback to help us identify and address any issues.',
+              'Some dense product illustrations and interactive calculator results may require further assistive-technology refinement. External source pages and the user’s email client are outside our control. We continue to review new and revised content as the site develops.',
             ],
           },
           {
-            heading: '5. Feedback',
+            heading: 'Alternative access and feedback',
             paragraphs: [
-              'If you experience difficulty accessing any part of the Axis One website or have suggestions for improvement, please contact us. We will review all accessibility feedback and aim to respond in a timely manner.',
-              'AX1 Structura Ltd',
-              '66 Paul Street, London EC2A 4NA, England',
-              'info@ax1.capital',
+              'If you cannot access information or complete an action, contact info@ax1.capital and describe the page, task and assistive technology involved where possible. You may also request the relevant information in a reasonable alternative format.',
+              'We will review accessibility feedback and aim to provide an initial response within five working days.',
             ],
           },
           {
-            heading: '6. Updates',
+            heading: 'Assessment and review',
             paragraphs: [
-              'This Accessibility Statement may be updated as the Axis One website improves and as accessibility testing progresses.',
+              'This statement is based on internal design and code review of the current public website. It will be updated after material changes or more formal accessibility testing.',
             ],
           },
         ]}

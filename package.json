@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
-    "build:cloudflare": "vite build",
+    "build": "vite build && node scripts/prerender-metadata.mjs",
+    "build:cloudflare": "vite build && node scripts/prerender-metadata.mjs",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
     "test": "tsc -p tsconfig.tests.json && node --test .test-dist/capital-value/capitalValueProtection.test.js .test-dist/publicFlows.test.js",
+    "predeploy:cloudflare": "npm run build",
     "deploy:cloudflare": "wrangler pages deploy dist --project-name ax1-website"
   },
   "dependencies": {

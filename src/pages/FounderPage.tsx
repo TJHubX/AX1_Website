@@ -43,10 +43,10 @@ export default function FounderPage({ onOpenContact }: PageProps) {
 
           <figure className="founder-editorial-portrait">
             <div className="founder-editorial-portrait-frame">
-              <img src={portrait} alt="Tania Jokic, Founder and CEO of Axis One" loading="eager" decoding="async" />
+              <img src={portrait} alt="Tania Jokic, Founder of Axis One" loading="eager" decoding="async" />
             </div>
             <figcaption>
-              <span>Founder &amp; CEO</span>
+              <span>Founder</span>
               <strong>Tania Jokic</strong>
               <small>AX1 Structura Ltd</small>
             </figcaption>
@@ -133,7 +133,7 @@ export default function FounderPage({ onOpenContact }: PageProps) {
           <div className="founder-closing-footer">
             <div>
               <strong>Tania Jokic</strong>
-              <small>Founder &amp; CEO, Axis One</small>
+              <small>Founder, Axis One</small>
             </div>
             <div className="actions">
               <Button onClick={openDecisionBrief}>Frame a Capital Decision</Button>

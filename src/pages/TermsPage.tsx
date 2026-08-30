@@ -8,94 +8,74 @@ export default function TermsPage({ onOpenContact }: PageProps) {
       <LegalPageLayout
         label="Terms"
         title="Terms of Use"
-        lastUpdated="May 2026"
-        intro="These Terms of Use govern access to and use of the public Axis One website operated by AX1 Structura Ltd."
+        lastUpdated="30 August 2026"
+        intro="These terms govern access to and use of the public Axis One website. They do not replace any separate written product or commercial agreement."
+        onContact={() => onOpenContact({ source: 'terms_of_use' })}
         sections={[
           {
-            heading: '1. Who we are',
+            heading: 'Website operator and acceptance',
             paragraphs: [
-              'AX1 Structura Ltd',
-              '66 Paul Street, London EC2A 4NA, England',
-              'Registered in England and Wales',
-              'Company Registration No. 17151320',
+              'This website is operated by AX1 Structura Ltd, registered in England and Wales under company number 17151320. By using the website, you agree to these Terms of Use. If you do not agree, please do not use the website.',
             ],
           },
           {
-            heading: '2. Website use',
+            heading: 'Informational purpose',
             paragraphs: [
-              'Visitors may use the Axis One website for lawful informational and inquiry purposes only. Use of the website is subject to these Terms of Use.',
+              'The website provides general information about Axis One, its intended product architecture and related capital-governance concepts. Content is not financial, investment, legal, tax, accounting, regulatory or other professional advice.',
             ],
           },
           {
-            heading: '3. No offer or advice',
+            heading: 'Decision Briefs and enquiries',
             paragraphs: [
-              'Content published on the Axis One website is for general informational purposes only. Nothing on this website constitutes or should be relied upon as financial, investment, legal, tax, regulatory, or professional advice of any kind.',
+              'Decision Brief and enquiry content is generated in your browser from information you choose to enter. You are responsible for checking that content before copying or sending it and for ensuring you are authorised to share it.',
+              'Sending an enquiry does not create a client relationship, guarantee a response, confirm product access or constitute acceptance of proposed commercial terms.',
             ],
           },
           {
-            heading: '4. Request access',
+            heading: 'Permitted use',
             paragraphs: [
-              'Submitting a request-access form does not guarantee access, onboarding, demo availability, commercial terms, or acceptance by AX1 Structura Ltd. Submission is an expression of interest only.',
+              'You may view, link to and quote limited portions of the public website for lawful informational purposes with clear attribution. Standard search and AI crawlers may access public pages in accordance with robots.txt and applicable law.',
             ],
           },
           {
-            heading: '5. Intellectual property',
-            paragraphs: [
-              'Website content, design, copy, graphics, Axis One marks, branding, and related materials are owned by or licensed to AX1 Structura Ltd. No right, title, or licence is granted to reproduce or use any materials without written permission.',
-            ],
-          },
-          {
-            heading: '6. Prohibited use',
-            paragraphs: [
-              'When accessing or using the Axis One website you must not:',
-            ],
+            heading: 'Prohibited use',
+            paragraphs: ['You must not use the website to:'],
             bullets: [
-              'Use the website for any unlawful purpose',
-              'Scrape, copy, or systematically extract website content',
-              'Attempt to reverse engineer any part of the website or platform',
-              'Probe, scan, or test the security of website systems',
-              'Misuse contact or request-access forms',
-              'Impersonate AX1 Structura Ltd or any individual',
-              'Introduce malware, viruses, or other harmful code',
-              'Infringe the intellectual property rights of AX1 Structura Ltd or others',
+              'Break the law, infringe rights or misrepresent your identity or affiliation',
+              'Bypass access controls, probe security or attempt unauthorised access',
+              'Introduce malware, disrupt availability or place unreasonable load on the service',
+              'Use automated means in a way that degrades the service, bypasses controls or infringes intellectual-property rights',
+              'Misuse an enquiry channel or submit information you are not authorised to disclose',
             ],
           },
           {
-            heading: '7. Third-party links and providers',
+            heading: 'Intellectual property',
             paragraphs: [
-              'The Axis One website may reference or link to third-party providers, platforms, or services. AX1 Structura Ltd is not responsible for the content, accuracy, or practices of any third-party website or service.',
+              'Unless otherwise stated, website design, copy, graphics, marks, product names and system visuals are owned by or licensed to AX1 Structura Ltd. Except for the limited permitted use above, no licence is granted without prior written permission.',
             ],
           },
           {
-            heading: '8. Availability',
+            heading: 'Third-party material and links',
             paragraphs: [
-              'AX1 Structura Ltd may change, pause, or discontinue the Axis One website or any part of it at any time without notice. AX1 Structura Ltd makes no guarantee of continuous, uninterrupted availability.',
+              'The website may cite independent research or link to third-party services. References are provided for context and attribution. AX1 Structura Ltd does not control and is not responsible for third-party content, availability or practices.',
             ],
           },
           {
-            heading: '9. Limitation of liability',
+            heading: 'Accuracy, availability and change',
             paragraphs: [
-              'To the fullest extent permitted by applicable law, AX1 Structura Ltd excludes liability for any loss or damage arising from your use of, or inability to use, the Axis One website or its content. This includes indirect, incidental, or consequential loss.',
+              'We aim to keep public information clear and current, but do not guarantee that every item is complete, error-free or continuously available. We may update, suspend or withdraw website content without notice.',
             ],
           },
           {
-            heading: '10. Changes to terms',
+            heading: 'Liability',
             paragraphs: [
-              'AX1 Structura Ltd may update these Terms of Use from time to time. Continued use of the website after any changes constitutes acceptance of the updated terms.',
+              'Nothing in these terms excludes liability that cannot lawfully be excluded. Subject to that limitation, AX1 Structura Ltd is not liable for indirect or consequential loss arising solely from reliance on the public website, or for loss caused by third-party services outside its control.',
             ],
           },
           {
-            heading: '11. Governing law',
+            heading: 'Governing law and changes',
             paragraphs: [
-              'These Terms of Use are governed by and construed in accordance with the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales.',
-            ],
-          },
-          {
-            heading: '12. Contact',
-            paragraphs: [
-              'AX1 Structura Ltd',
-              '66 Paul Street, London EC2A 4NA, England',
-              'info@ax1.capital',
+              'These terms are governed by the laws of England and Wales, and the courts of England and Wales have exclusive jurisdiction. We may update these terms from time to time; the current version and effective date will remain available here.',
             ],
           },
         ]}

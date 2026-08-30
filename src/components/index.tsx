@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';
 import {
@@ -141,9 +142,18 @@ export function Header(_props: PageProps) {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [mobileMenuOpen]);
+
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
+    <>
+    <a className="skip-link" href="#main-content">Skip to main content</a>
     <header className="header">
       <nav className="nav" aria-label="Primary navigation">
         <Link to="/" className="logo-link" aria-label="Axis One home"><Logo /></Link>
@@ -168,7 +178,8 @@ export function Header(_props: PageProps) {
           Menu
         </button>
       </nav>
-      {mobileMenuOpen && (
+    </header>
+      {mobileMenuOpen && createPortal(
         <div className="mobile-nav-backdrop" onMouseDown={closeMobileMenu}>
           <div
             className="mobile-nav-panel"
@@ -190,9 +201,10 @@ export function Header(_props: PageProps) {
             <div className="mobile-nav-divider" />
             <a className="mobile-nav-request" href="/#decision-brief" onClick={closeMobileMenu}>Frame a decision</a>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
-    </header>
+    </>
   );
 }
 
@@ -215,7 +227,14 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
               <Link to="/deployment">Deployment</Link>
               <Link to="/trust">Trust</Link>
               <Link to="/founder">Founder</Link>
-              <a href="mailto:info@ax1.capital?subject=Axis%20One%20inquiry">Email Axis One</a>
+              <button
+                className="footer-nav-contact"
+                type="button"
+                onClick={() => {
+                  trackAX1Event('primary_cta_selected', { location: 'footer_navigation', action: 'contact' });
+                  onOpenContact({ source: 'footer_navigation_email' });
+                }}
+              >Email Axis One</button>
             </div>
           </nav>
           <button className="footer-cta" type="button" onClick={() => { trackAX1Event('primary_cta_selected', { location: 'footer_masthead', action: 'contact' }); onOpenContact({ source: 'footer_masthead' }); }}>Contact Axis One <ArrowRight size={14} /></button>

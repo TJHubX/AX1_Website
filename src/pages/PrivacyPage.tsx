@@ -8,121 +8,75 @@ export default function PrivacyPage({ onOpenContact }: PageProps) {
       <LegalPageLayout
         label="Privacy"
         title="Privacy Policy"
-        lastUpdated="May 2026"
-        intro="This Privacy Policy explains how AX1 Structura Ltd collects, uses, stores, and protects personal information submitted through the Axis One website, request-access forms, contact channels, and related pre-launch communications."
+        lastUpdated="30 August 2026"
+        intro="This policy explains how AX1 Structura Ltd handles personal information connected with the public Axis One website and enquiries. It is written to reflect the website as it operates today."
+        onContact={() => onOpenContact({ source: 'privacy_policy' })}
         sections={[
           {
-            heading: '1. Who we are',
+            heading: 'Controller and contact',
             paragraphs: [
-              'AX1 Structura Ltd',
-              '66 Paul Street, London EC2A 4NA, England',
-              'Registered in England and Wales',
-              'Company Registration No. 17151320',
+              'AX1 Structura Ltd is the controller for personal information covered by this policy. The company is registered in England and Wales under company number 17151320, with its registered office at 66 Paul Street, London EC2A 4NA, England.',
+              'Privacy questions and rights requests can be sent to info@ax1.capital.',
             ],
           },
           {
-            heading: '2. Information we collect',
+            heading: 'Information you choose to provide',
             paragraphs: [
-              'When you engage with Axis One through the website and request-access flow, AX1 Structura Ltd may collect the following information.',
-            ],
-            bullets: [
-              'Full name',
-              'Work email',
-              'Organization',
-              'Role or inquiry context, if provided',
-              'Industry',
-              'Project value range',
-              'Brief intent or deployment scope',
-              'Communication preferences',
-              'Technical information such as browser, device, IP address, and website usage data if analytics are enabled',
+              'The Decision Brief and enquiry experiences are prepared in your browser. Axis One does not receive those entries merely because you type them on the website. Information is sent only if you choose to open your email client and send the prepared message, or contact us through another channel.',
+              'An enquiry may include your name, work email, organisation, role, decision context, package interest and any other information you choose to include. Please do not include confidential, special-category or otherwise sensitive personal information unless it is necessary and you are authorised to share it.',
             ],
           },
           {
-            heading: '3. How we use information',
+            heading: 'Website and technical information',
             paragraphs: [
-              'AX1 Structura Ltd may use submitted information to support the website and pre-launch communication process.',
-            ],
-            bullets: [
-              'Respond to inquiries',
-              'Evaluate request-access submissions',
-              'Arrange demos or pre-launch communications',
-              'Improve website and product messaging',
-              'Maintain security and abuse prevention',
-              'Comply with legal obligations',
+              'When you visit the website, hosting and security infrastructure may process routine request information such as IP address, browser and device details, timestamps, requested pages and security events. This information is used to deliver and protect the website.',
+              'Axis One does not currently deploy advertising trackers or a non-essential browser analytics service on this public website. If that position changes, this policy and the Cookie Policy will be updated before the relevant technology is used where notice or consent is required.',
             ],
           },
           {
-            heading: '4. Legal basis / lawful grounds',
+            heading: 'Purposes and lawful bases',
             paragraphs: [
-              'Where applicable, AX1 Structura Ltd relies on legitimate interests, consent where required, pre-contractual steps, and legal obligations as lawful grounds for processing personal information.',
+              'We use information to respond to enquiries, consider potential engagements, maintain correspondence, operate and secure the website, keep appropriate business records and meet legal obligations.',
+              'Depending on the context, the lawful basis may be taking steps at your request before a contract, our legitimate interests in operating and developing the business, consent where it is specifically requested, or compliance with a legal obligation.',
             ],
           },
           {
-            heading: '5. Sharing of information',
+            heading: 'Sharing and service providers',
             paragraphs: [
-              'AX1 Structura Ltd may share information with service providers supporting hosting, analytics, communications, CRM, email, or security functions. AX1 Structura Ltd does not sell personal data.',
+              'Information may be shared with service providers that support website hosting, security, business email and professional advice, but only where needed for the relevant purpose. We may also disclose information where required by law, to protect legal rights or in connection with a corporate transaction.',
+              'AX1 Structura Ltd does not sell personal information.',
             ],
           },
           {
-            heading: '6. International transfers',
+            heading: 'International transfers',
             paragraphs: [
-              'Some service providers may process data outside the UK or EEA. Where required, AX1 Structura Ltd may use appropriate safeguards for international transfers.',
+              'Some providers may process information outside the United Kingdom. Where UK data-protection law requires it, we use an applicable adequacy decision, approved contractual safeguards or another lawful transfer mechanism.',
             ],
           },
           {
-            heading: '7. Data retention',
+            heading: 'Retention',
             paragraphs: [
-              'AX1 Structura Ltd retains personal data only for as long as reasonably necessary for inquiry handling, demo access, legal compliance, security, and legitimate business purposes.',
+              'We keep personal information only for as long as reasonably needed for the purpose for which it was obtained, including enquiry follow-up, relationship management, security, record-keeping and legal requirements. Retention periods depend on the nature of the communication and any resulting relationship.',
             ],
           },
           {
-            heading: '8. Security',
+            heading: 'Your rights',
             paragraphs: [
-              'AX1 Structura Ltd applies reasonable technical and organizational measures to protect personal information. No system or transmission method can be guaranteed to be fully secure.',
+              'Subject to applicable law and any exemptions, you may ask for access, correction, deletion, restriction, portability or objection to processing. You may withdraw consent where processing relies on consent. You also have the right to complain to the UK Information Commissioner’s Office at ico.org.uk.',
+              'We may need to verify your identity before acting on a request.',
             ],
           },
           {
-            heading: '9. Your rights',
+            heading: 'Security and links',
             paragraphs: [
-              'Depending on applicable law, you may have rights regarding your personal information.',
-            ],
-            bullets: [
-              'Access',
-              'Correction',
-              'Deletion',
-              'Objection',
-              'Restriction',
-              'Portability',
-              'Withdrawal of consent where applicable',
-              'Complaint rights with a relevant supervisory authority',
+              'We use proportionate organisational and technical measures to protect personal information. No online service or transmission method can be guaranteed to be completely secure.',
+              'The website may link to third-party services. Their privacy practices are governed by their own notices, not this policy.',
             ],
           },
           {
-            heading: '10. Cookies and analytics',
+            heading: 'Changes to this policy',
             paragraphs: [
-              'For information about cookies and related technologies, please review the Cookie Policy at /cookies.',
-            ],
-          },
-          {
-            heading: '11. Platform intelligence and submitted information',
-            paragraphs: [
-              'The Axis One intelligence system may organise and present authorised platform records to support user guidance and decision context. Its operation remains subject to applicable access controls, data minimisation, security measures and contractual terms.',
-              'Users should not submit unnecessary sensitive personal data through public website forms, request-access forms, or general inquiry channels.',
-              'Information submitted through the website or platform may be processed where necessary to provide the relevant service or functionality, subject to applicable privacy, security and contractual controls.',
-            ],
-          },
-          {
-            heading: '12. Contact',
-            paragraphs: [
-              'AX1 Structura Ltd',
-              '66 Paul Street, London EC2A 4NA, England',
-              'info@ax1.capital',
-            ],
-          },
-          {
-            heading: '13. Changes to this policy',
-            paragraphs: [
-              'AX1 Structura Ltd may update this Privacy Policy from time to time to reflect legal, operational, or product changes.',
+              'We may update this policy to reflect legal, operational or technical changes. The current version and effective date will remain available on this page.',
             ],
           },
         ]}

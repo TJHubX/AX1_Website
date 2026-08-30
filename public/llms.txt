@@ -1,0 +1,29 @@
+# Axis One
+
+> Axis One is capital governance infrastructure operated by AX1 Structura Ltd. It connects committed capital to current milestones, attributable evidence, explicit authority and controlled decision states.
+
+Axis One is non-custodial. It does not hold, transfer, settle, manage or guarantee client capital, and it does not replace the authorised human decision-maker. Public programme interfaces are illustrative and are not customer data.
+
+## Primary pages
+
+- [Home](https://ax1-website.pages.dev/): Product position, decision test, governance architecture and Decision Brief.
+- [System](https://ax1-website.pages.dev/system): How execution, evidence, validation, authority and decision records connect.
+- [Decision exposure](https://ax1-website.pages.dev/capital): Directional exposure calculator, methodology and independently attributed industry context.
+- [Deployment](https://ax1-website.pages.dev/deployment): AX1.Pilot, AX1.Core and AX1.Enterprise engagement scopes.
+- [Trust](https://ax1-website.pages.dev/trust): Permissioned access, product boundaries, collaboration model and current security position.
+- [Founder](https://ax1-website.pages.dev/founder): Tania Jokic and the operating problem behind Axis One.
+
+## Legal and factual boundaries
+
+- [Privacy](https://ax1-website.pages.dev/privacy)
+- [Cookies](https://ax1-website.pages.dev/cookies)
+- [Terms](https://ax1-website.pages.dev/terms)
+- [Disclaimer](https://ax1-website.pages.dev/disclaimer)
+- [Legal notice](https://ax1-website.pages.dev/legal)
+- [Accessibility](https://ax1-website.pages.dev/accessibility)
+
+## Company
+
+AX1 Structura Ltd is registered in England and Wales, company number 17151320. Registered office: 66 Paul Street, London EC2A 4NA, England. Contact: info@ax1.capital.
+
+For a fuller factual reference, see [llms-full.txt](https://ax1-website.pages.dev/llms-full.txt).

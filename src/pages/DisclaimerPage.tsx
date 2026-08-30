@@ -7,72 +7,63 @@ export default function DisclaimerPage({ onOpenContact }: PageProps) {
     <>
       <LegalPageLayout
         label="Disclaimer"
-        title="Disclaimer"
-        lastUpdated="May 2026"
-        intro="The information on the Axis One website is provided for general informational purposes only."
+        title="Website Disclaimer"
+        lastUpdated="30 August 2026"
+        intro="This notice sets the boundaries around the public Axis One website, product descriptions, illustrative interfaces, calculators and independent benchmarks."
+        onContact={() => onOpenContact({ source: 'website_disclaimer' })}
         sections={[
           {
-            heading: '1. No financial, investment, legal, tax, or regulatory advice',
+            heading: 'General information only',
             paragraphs: [
-              'Nothing on the Axis One website should be relied upon as financial, investment, legal, tax, accounting, regulatory, or professional advice of any kind. Visitors should seek independent professional advice before making any decisions based on website content.',
+              'Website content is provided for general information. It is not financial, investment, legal, tax, accounting, regulatory or other professional advice. Obtain advice appropriate to your circumstances before making a decision.',
             ],
           },
           {
-            heading: '2. No offer or solicitation',
+            heading: 'No offer or regulated service',
             paragraphs: [
-              'Content published on the Axis One website does not constitute an offer to sell securities, a solicitation of investment, the provision of regulated financial services, or an invitation to enter into any transaction. No part of this website should be interpreted as such.',
+              'Nothing on this website is an offer or solicitation to buy or sell a security, an invitation to invest, or the provision of a regulated financial service. Unless expressly stated in a separate written disclosure, AX1 Structura Ltd is not presenting itself as a bank, custodian, broker-dealer, investment adviser, payment institution, settlement provider or regulated exchange.',
             ],
           },
           {
-            heading: '3. Non-custodial positioning',
+            heading: 'Non-custodial boundary',
             paragraphs: [
-              'Axis One is described as non-custodial global decision infrastructure for governed capital execution. AX1 Structura Ltd does not hold, custody, transfer, or guarantee the movement of funds through the public website. Release logic and governance workflows are separate from capital custody and provider execution.',
+              'Axis One is designed as non-custodial capital-governance infrastructure. The public website does not hold, custody, transfer, settle, manage or guarantee client capital. Any capital movement would be executed by an appropriately authorised external financial provider under the relevant arrangement.',
             ],
           },
           {
-            heading: '4. No regulated status claim',
+            heading: 'Product and interface descriptions',
             paragraphs: [
-              'Unless expressly stated in a separate written agreement or regulatory disclosure, AX1 Structura Ltd is not presenting itself as a bank, custodian, broker-dealer, investment adviser, payment institution, settlement provider, or regulated exchange. No part of this website should be read as such a claim.',
+              'References to gates, evidence, validators, release readiness, decision records and authority describe product concepts and workflows. Screens and programme states shown on the website are illustrative and are not customer data, proof of deployment or a guarantee of legal or financial outcomes.',
             ],
           },
           {
-            heading: '5. Platform descriptions',
+            heading: 'Calculators and estimates',
             paragraphs: [
-              'References to gates, release readiness, evidence, validators, decision records, and capital governance are descriptions of platform workflows and product concepts. They are not guarantees of legal, financial, or investment outcomes for any party.',
+              'Calculator outputs are directional estimates based on information entered by the user and stated assumptions. They are not valuations, forecasts, promises of savings or recommendations. Inputs, overlaps, timing and project circumstances can materially change any result.',
             ],
           },
           {
-            heading: '6. No guarantee of outcomes',
+            heading: 'Independent research and benchmarks',
             paragraphs: [
-              'Axis One does not guarantee project success, investment returns, settlement outcomes, capital availability, or the elimination of risk. Past descriptions of use cases or workflows do not imply future results.',
+              'Third-party statistics and practice benchmarks are attributed to their original sources and may cover different sectors, geographies, project types, methods and intervention scopes. They are not Axis One results, are not applied automatically to calculator outputs and do not imply affiliation, endorsement or guaranteed performance.',
             ],
           },
           {
-            heading: '7. Forward-looking statements',
+            heading: 'Decision support and human authority',
             paragraphs: [
-              'The Axis One website may include references to roadmap items, future features, private launch timelines, certification roadmaps, or future liquidity concepts. These are subject to change without notice and should not be treated as commitments or guarantees.',
+              'Axis One is intended to organise authorised records and present decision context. It does not autonomously approve or reject capital action, replace human judgement, make an investment decision or guarantee settlement. The responsible authorised person retains decision authority.',
             ],
           },
           {
-            heading: '8. Axis One intelligence system',
+            heading: 'Roadmap and certification statements',
             paragraphs: [
-              'The Axis One intelligence system helps authorised users understand recorded execution state, evidence coverage, unresolved commitments and decision context within the platform.',
-              'Its outputs do not replace human judgement, validation, legal review, financial advice, investment advice or the authority of the responsible decision-maker. Axis One does not autonomously approve or reject capital action, move funds, guarantee settlement or make investment decisions.',
-              'Platform intelligence should be understood as decision support based on the records available to the authorised user, not as a final recommendation or regulated advice.',
+              'References to future features, launch plans or certification preparation are forward-looking and may change. Axis One does not claim SOC 2, ISO 27001 or another third-party certification unless the achievement is expressly and separately stated after independent completion.',
             ],
           },
           {
-            heading: '9. Certification disclaimer',
+            heading: 'No guarantee of outcomes',
             paragraphs: [
-              'References to audit readiness, certification roadmap, or security preparation on the Axis One website do not mean AX1 Structura Ltd is currently SOC 2, ISO 27001, or otherwise certified unless expressly and separately stated.',
-            ],
-          },
-          {
-            heading: '10. Contact',
-            paragraphs: [
-              'AX1 Structura Ltd',
-              '66 Paul Street, London EC2A 4NA, England',
-              'info@ax1.capital',
+              'AX1 Structura Ltd does not guarantee project success, investment returns, capital availability, settlement, the elimination of risk or any particular commercial result from use of website information or a future product deployment.',
             ],
           },
         ]}
