@@ -6,6 +6,10 @@ import type { PackageName } from '../features/package-inquiry/packageInquiry';
 
 const principleIcons = [Waypoints, Fingerprint, Scale, ShieldCheck];
 
+// Keep short articles and prepositions with the word they introduce. This
+// prevents translated display copy from leaving one or two letters on a line.
+const displayText = (value: string) => value.replace(/(^|\s)([\p{L}\p{N}]{1,2})\s+(?=\S)/gu, '$1$2\u00a0');
+
 export default function LocalizedOverviewPage({ onOpenContact }: PageProps) {
   const { pathname } = useLocation();
   const locale = localeFromPath(pathname);
@@ -18,7 +22,7 @@ export default function LocalizedOverviewPage({ onOpenContact }: PageProps) {
           <div className="localized-frame localized-hero-grid">
             <div className="localized-hero-copy">
               <span className="localized-kicker">{copy.page.eyebrow}</span>
-              <h1>{copy.page.title}</h1>
+              <h1>{displayText(copy.page.title)}</h1>
               <p>{copy.page.intro}</p>
               <div className="localized-actions">
                 <a className="button button-primary" href="#decision-brief">{copy.page.primary}<ArrowRight size={15} /></a>
@@ -40,7 +44,7 @@ export default function LocalizedOverviewPage({ onOpenContact }: PageProps) {
           <div className="localized-frame">
             <header className="localized-section-head">
               <span className="localized-kicker">{copy.page.whyEyebrow}</span>
-              <h2>{copy.page.whyTitle}</h2>
+              <h2>{displayText(copy.page.whyTitle)}</h2>
               <p>{copy.page.whyBody}</p>
             </header>
             <div className="localized-principles">
@@ -56,7 +60,7 @@ export default function LocalizedOverviewPage({ onOpenContact }: PageProps) {
           <div className="localized-frame localized-system-grid">
             <div>
               <span className="localized-kicker">{copy.page.systemEyebrow}</span>
-              <h2>{copy.page.systemTitle}</h2>
+              <h2>{displayText(copy.page.systemTitle)}</h2>
               <p>{copy.page.systemBody}</p>
             </div>
             <ol>
@@ -69,7 +73,7 @@ export default function LocalizedOverviewPage({ onOpenContact }: PageProps) {
           <div className="localized-frame">
             <header className="localized-section-head">
               <span className="localized-kicker">{copy.page.deploymentEyebrow}</span>
-              <h2>{copy.page.deploymentTitle}</h2>
+              <h2>{displayText(copy.page.deploymentTitle)}</h2>
               <p>{copy.page.deploymentBody}</p>
             </header>
             <div className="localized-packages">
@@ -81,14 +85,14 @@ export default function LocalizedOverviewPage({ onOpenContact }: PageProps) {
         <section className="localized-boundary" id="trust">
           <div className="localized-frame localized-boundary-grid">
             <span className="localized-kicker">{copy.page.boundaryEyebrow}</span>
-            <h2>{copy.page.boundaryTitle}</h2>
+            <h2>{displayText(copy.page.boundaryTitle)}</h2>
             <p>{copy.page.boundaryBody}</p>
           </div>
         </section>
 
         <section className="localized-cta" id="decision-brief">
           <div className="localized-frame localized-cta-grid">
-            <div><span className="localized-kicker">{copy.page.ctaEyebrow}</span><h2>{copy.page.ctaTitle}</h2><p>{copy.page.ctaBody}</p></div>
+            <div><span className="localized-kicker">{copy.page.ctaEyebrow}</span><h2>{displayText(copy.page.ctaTitle)}</h2><p>{copy.page.ctaBody}</p></div>
             <button className="button button-primary" type="button" onClick={() => onOpenContact({ source: `localized_cta_${locale}` })}>{copy.page.cta}<ArrowRight size={15} /></button>
           </div>
         </section>

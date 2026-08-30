@@ -26,6 +26,7 @@ import logo from '../assets/ax1-logo.svg';
 import { trackAX1Event } from '../utils/analytics';
 import type { PackageName } from '../features/package-inquiry/packageInquiry';
 import SystemVisual from './SystemVisual';
+import { BrandedSelect } from './BrandedSelect';
 import { isLocalizedLanding, localeCodes, localeContent, localeFromPath, localeHome, type LocaleCode } from '../i18n';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -174,13 +175,16 @@ export function Header(_props: PageProps) {
           {localized ? <a href={sectionPath('trust')}>{copy.nav.trust}</a> : <Link to="/trust">{copy.nav.trust}</Link>}
           {localized ? <a href={sectionPath('deployment')}>{copy.nav.deployment}</a> : <Link to="/deployment">{copy.nav.deployment}</Link>}
         </div>
-        <label className="locale-select locale-select-desktop">
+        <div className="locale-select locale-select-desktop">
           <Globe size={14} aria-hidden="true" />
-          <span className="sr-only">Language</span>
-          <select value={locale} onChange={(event) => changeLocale(event.target.value as LocaleCode)} aria-label="Language">
-            {localeCodes.map((code) => <option key={code} value={code}>{localeContent[code].label}</option>)}
-          </select>
-        </label>
+          <BrandedSelect
+            value={locale}
+            options={localeCodes.map((code) => ({ value: code, label: localeContent[code].label }))}
+            onChange={changeLocale}
+            ariaLabel="Language"
+            className="locale-branded-select"
+          />
+        </div>
         <a className="nav-cta" href={sectionPath('decision-brief')} onClick={() => trackAX1Event('primary_cta_selected', { location: 'navigation', action: 'decision_brief' })}>{copy.nav.frame} <ArrowRight size={13} /></a>
         <button
           className="nav-menu-toggle"
@@ -215,7 +219,7 @@ export function Header(_props: PageProps) {
             {localized ? <a href={sectionPath('trust')} onClick={closeMobileMenu}>{copy.nav.trust}</a> : <Link to="/trust" onClick={closeMobileMenu}>{copy.nav.trust}</Link>}
             {localized ? <a href={sectionPath('deployment')} onClick={closeMobileMenu}>{copy.nav.deployment}</a> : <Link to="/deployment" onClick={closeMobileMenu}>{copy.nav.deployment}</Link>}
             <div className="mobile-nav-divider" />
-            <label className="locale-select locale-select-mobile"><Globe size={15} aria-hidden="true" /><select value={locale} onChange={(event) => changeLocale(event.target.value as LocaleCode)} aria-label="Language">{localeCodes.map((code) => <option key={code} value={code}>{localeContent[code].label}</option>)}</select></label>
+            <div className="locale-select locale-select-mobile"><Globe size={15} aria-hidden="true" /><BrandedSelect value={locale} options={localeCodes.map((code) => ({ value: code, label: localeContent[code].label }))} onChange={changeLocale} ariaLabel="Language" className="locale-branded-select" /></div>
             <a className="mobile-nav-request" href={sectionPath('decision-brief')} onClick={closeMobileMenu}>{copy.nav.frame}</a>
           </div>
         </div>,
