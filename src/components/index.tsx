@@ -26,6 +26,7 @@ import logo from '../assets/ax1-logo.svg';
 import { trackAX1Event } from '../utils/analytics';
 import type { PackageName } from '../features/package-inquiry/packageInquiry';
 import SystemVisual from './SystemVisual';
+import { isLocalizedLanding, localeCodes, localeContent, localeFromPath, localeHome, type LocaleCode } from '../i18n';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -129,6 +130,14 @@ export function Button({ children, variant = 'primary', onClick, to }: { childre
 export function Header(_props: PageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { pathname } = useLocation();
+  const locale = localeFromPath(pathname);
+  const copy = localeContent[locale];
+  const localized = isLocalizedLanding(pathname);
+  const homePath = localeHome(locale);
+  const sectionPath = (id: string, englishPath?: string) => localized ? `${homePath}#${id}` : (englishPath ?? `/#${id}`);
+  const changeLocale = (nextLocale: LocaleCode) => {
+    window.location.assign(localeHome(nextLocale));
+  };
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -153,29 +162,36 @@ export function Header(_props: PageProps) {
 
   return (
     <>
-    <a className="skip-link" href="#main-content">Skip to main content</a>
+    <a className="skip-link" href="#main-content">{copy.nav.skip}</a>
     <header className="header">
       <nav className="nav" aria-label="Primary navigation">
-        <Link to="/" className="logo-link" aria-label="Axis One home"><Logo /></Link>
-        <div className="nav-tag"><span />Capital governance infrastructure</div>
+        <Link to={homePath} className="logo-link" aria-label={`Axis One · ${copy.footer.home}`}><Logo /></Link>
+        <div className="nav-tag"><span />{copy.page.eyebrow}</div>
         <div className="nav-links">
-          <a href="/#why-ax1">Why Axis One</a>
-          <Link to="/system">System</Link>
-          <a href="/#decision-exposure">Decision exposure</a>
-          <Link to="/trust">Trust</Link>
-          <Link to="/deployment">Deployment</Link>
+          <a href={sectionPath('why-ax1')}>{copy.nav.why}</a>
+          {localized ? <a href={sectionPath('system')}>{copy.nav.system}</a> : <Link to="/system">{copy.nav.system}</Link>}
+          <a href={sectionPath('decision-exposure')}>{copy.nav.exposure}</a>
+          {localized ? <a href={sectionPath('trust')}>{copy.nav.trust}</a> : <Link to="/trust">{copy.nav.trust}</Link>}
+          {localized ? <a href={sectionPath('deployment')}>{copy.nav.deployment}</a> : <Link to="/deployment">{copy.nav.deployment}</Link>}
         </div>
-        <a className="nav-cta" href="/#decision-brief" onClick={() => trackAX1Event('primary_cta_selected', { location: 'navigation', action: 'decision_brief' })}>Frame a decision <ArrowRight size={13} /></a>
+        <label className="locale-select locale-select-desktop">
+          <Globe size={14} aria-hidden="true" />
+          <span className="sr-only">Language</span>
+          <select value={locale} onChange={(event) => changeLocale(event.target.value as LocaleCode)} aria-label="Language">
+            {localeCodes.map((code) => <option key={code} value={code}>{localeContent[code].label}</option>)}
+          </select>
+        </label>
+        <a className="nav-cta" href={sectionPath('decision-brief')} onClick={() => trackAX1Event('primary_cta_selected', { location: 'navigation', action: 'decision_brief' })}>{copy.nav.frame} <ArrowRight size={13} /></a>
         <button
           className="nav-menu-toggle"
           type="button"
-          aria-label="Open navigation menu"
+          aria-label={copy.nav.menu}
           aria-expanded={mobileMenuOpen}
           aria-controls="mobile-nav-panel"
           onClick={() => setMobileMenuOpen((current) => !current)}
         >
           <Menu size={18} />
-          Menu
+          {copy.nav.menu}
         </button>
       </nav>
     </header>
@@ -186,20 +202,21 @@ export function Header(_props: PageProps) {
             id="mobile-nav-panel"
             role="dialog"
             aria-modal="true"
-            aria-label="Mobile navigation"
+            aria-label={copy.nav.navigation}
             onMouseDown={(event) => event.stopPropagation()}
           >
             <div className="mobile-nav-head">
-              <span>Navigation</span>
-              <button type="button" onClick={closeMobileMenu} aria-label="Close navigation menu"><X size={16} /></button>
+              <span>{copy.nav.navigation}</span>
+              <button type="button" onClick={closeMobileMenu} aria-label={copy.nav.close}><X size={16} /></button>
             </div>
-            <a href="/#why-ax1" onClick={closeMobileMenu}>Why Axis One</a>
-            <Link to="/system" onClick={closeMobileMenu}>System</Link>
-            <a href="/#decision-exposure" onClick={closeMobileMenu}>Decision exposure</a>
-            <Link to="/trust" onClick={closeMobileMenu}>Trust</Link>
-            <Link to="/deployment" onClick={closeMobileMenu}>Deployment</Link>
+            <a href={sectionPath('why-ax1')} onClick={closeMobileMenu}>{copy.nav.why}</a>
+            {localized ? <a href={sectionPath('system')} onClick={closeMobileMenu}>{copy.nav.system}</a> : <Link to="/system" onClick={closeMobileMenu}>{copy.nav.system}</Link>}
+            <a href={sectionPath('decision-exposure')} onClick={closeMobileMenu}>{copy.nav.exposure}</a>
+            {localized ? <a href={sectionPath('trust')} onClick={closeMobileMenu}>{copy.nav.trust}</a> : <Link to="/trust" onClick={closeMobileMenu}>{copy.nav.trust}</Link>}
+            {localized ? <a href={sectionPath('deployment')} onClick={closeMobileMenu}>{copy.nav.deployment}</a> : <Link to="/deployment" onClick={closeMobileMenu}>{copy.nav.deployment}</Link>}
             <div className="mobile-nav-divider" />
-            <a className="mobile-nav-request" href="/#decision-brief" onClick={closeMobileMenu}>Frame a decision</a>
+            <label className="locale-select locale-select-mobile"><Globe size={15} aria-hidden="true" /><select value={locale} onChange={(event) => changeLocale(event.target.value as LocaleCode)} aria-label="Language">{localeCodes.map((code) => <option key={code} value={code}>{localeContent[code].label}</option>)}</select></label>
+            <a className="mobile-nav-request" href={sectionPath('decision-brief')} onClick={closeMobileMenu}>{copy.nav.frame}</a>
           </div>
         </div>,
         document.body,
@@ -209,6 +226,12 @@ export function Header(_props: PageProps) {
 }
 
 export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
+  const { pathname } = useLocation();
+  const locale = localeFromPath(pathname);
+  const copy = localeContent[locale];
+  const localized = isLocalizedLanding(pathname);
+  const homePath = localeHome(locale);
+  const sectionPath = (id: string) => localized ? `${homePath}#${id}` : `/#${id}`;
   return (
     <footer className="footer">
       <div className="footer-signal" aria-hidden="true"><i /><i /><i /></div>
@@ -216,17 +239,17 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
         <div className="footer-masthead">
           <nav className="footer-nav footer-nav-masthead" aria-label="Footer navigation">
             <div>
-              <strong>Explore</strong>
-              <Link to="/">Home</Link>
-              <a href="/#why-ax1">Why Axis One</a>
-              <Link to="/system">System</Link>
-              <a href="/#decision-exposure">Decision exposure</a>
+              <strong>{copy.footer.explore}</strong>
+              <Link to={homePath}>{copy.footer.home}</Link>
+              <a href={sectionPath('why-ax1')}>{copy.nav.why}</a>
+              {localized ? <a href={sectionPath('system')}>{copy.nav.system}</a> : <Link to="/system">{copy.nav.system}</Link>}
+              <a href={sectionPath('decision-exposure')}>{copy.nav.exposure}</a>
             </div>
             <div>
-              <strong>Company</strong>
-              <Link to="/deployment">Deployment</Link>
-              <Link to="/trust">Trust</Link>
-              <Link to="/founder">Founder</Link>
+              <strong>{copy.footer.company}</strong>
+              {localized ? <a href={sectionPath('deployment')}>{copy.nav.deployment}</a> : <Link to="/deployment">{copy.nav.deployment}</Link>}
+              {localized ? <a href={sectionPath('trust')}>{copy.nav.trust}</a> : <Link to="/trust">{copy.nav.trust}</Link>}
+              <Link to="/founder" lang="en">{copy.footer.founder}</Link>
               <button
                 className="footer-nav-contact"
                 type="button"
@@ -234,17 +257,17 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
                   trackAX1Event('primary_cta_selected', { location: 'footer_navigation', action: 'contact' });
                   onOpenContact({ source: 'footer_navigation_email' });
                 }}
-              >Email Axis One</button>
+              >{copy.footer.email}</button>
             </div>
           </nav>
-          <button className="footer-cta" type="button" onClick={() => { trackAX1Event('primary_cta_selected', { location: 'footer_masthead', action: 'contact' }); onOpenContact({ source: 'footer_masthead' }); }}>Contact Axis One <ArrowRight size={14} /></button>
+          <button className="footer-cta" type="button" onClick={() => { trackAX1Event('primary_cta_selected', { location: 'footer_masthead', action: 'contact' }); onOpenContact({ source: 'footer_masthead' }); }}>{copy.footer.contact} <ArrowRight size={14} /></button>
         </div>
 
         <div className="footer-main">
           <section className="footer-brand" aria-labelledby="footer-brand-title">
-            <span>Capital governance infrastructure</span>
-            <h2 id="footer-brand-title">Capital, <span>governed by</span> execution.</h2>
-            <p>Axis One connects committed capital to verified milestones, attributable evidence and controlled decision states.</p>
+            <span>{copy.footer.kicker}</span>
+            <h2 id="footer-brand-title">{copy.footer.title}</h2>
+            <p>{copy.footer.body}</p>
           </section>
 
           <Link to="/" className="footer-brand-signal" aria-label="Axis One, Global decision infrastructure, home">
@@ -252,7 +275,7 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
           </Link>
 
           <aside className="footer-company" aria-label="Company information">
-            <span>Operating company</span>
+            <span>{copy.footer.operatingCompany}</span>
             <strong>AX1 Structura Ltd</strong>
             <p>66 Paul Street<br />London EC2A 4NA<br />England</p>
             <small>Registered in England and Wales<br />Company No. 17151320</small>
@@ -260,12 +283,13 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
         </div>
 
         <div className="footer-boundary">
-          <span>Non-custodial by design</span>
-          <p>Axis One does not hold, transfer, manage or guarantee client capital. Authorised external financial providers execute any transfer.</p>
+          <span>{copy.footer.nonCustodial}</span>
+          <p>{copy.footer.boundary}</p>
         </div>
 
         <div className="footer-bottom">
-          <span>© 2026 AX1 Structura Ltd. All rights reserved.</span>
+          <span>© 2026 AX1 Structura Ltd. {copy.footer.rights}</span>
+          {localized && <span className="footer-language-note">{copy.footer.englishNotice}</span>}
           <nav aria-label="Legal navigation">
             <Link to="/privacy">Privacy</Link>
             <Link to="/cookies">Cookies</Link>
@@ -323,7 +347,7 @@ export function ModalShell({ children, onClose, className = '', labelledBy }: { 
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [onClose]);
 
-  return (
+  return createPortal(
     <div className="modal-backdrop" onMouseDown={onClose}>
       <motion.div
         ref={shellRef}
@@ -340,7 +364,8 @@ export function ModalShell({ children, onClose, className = '', labelledBy }: { 
         <button className="modal-close" type="button" onClick={onClose} aria-label="Close"><X size={19} /></button>
         {children}
       </motion.div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

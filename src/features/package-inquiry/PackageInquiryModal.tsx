@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, CheckCircle2, Copy, LockKeyhole, Mail } from 'lucide-react';
 import { ModalShell } from '../../components';
 import { trackAX1Event } from '../../utils/analytics';
+import { inquiryLanguageNotice, localeContent, localeFromPath } from '../../i18n';
 import {
   buildPackageInquiry,
   buildPackageInquiryEmail,
@@ -39,6 +40,7 @@ const PACKAGE_CONTEXT: Record<PackageName, { number: string; scope: string; desc
 };
 
 export function PackageInquiryModal({ packageName, source, onClose }: PackageInquiryModalProps) {
+  const locale = localeFromPath(window.location.pathname);
   const selectedScope = packageName ?? 'General Axis One inquiry';
   const context = packageName ? PACKAGE_CONTEXT[packageName] : {
     number: 'AX1',
@@ -133,7 +135,8 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
 
   return (
     <ModalShell onClose={onClose} className="modal-shell-package-inquiry" labelledBy="package-inquiry-title">
-      <div className="package-inquiry-modal">
+      {locale !== 'en-gb' && <p className="package-inquiry-language" lang={localeContent[locale].htmlLang} dir={localeContent[locale].dir}>{inquiryLanguageNotice[locale]}</p>}
+      <div className="package-inquiry-modal" lang="en-GB" dir="ltr">
         <header className="package-inquiry-header">
           <span className="package-inquiry-eyebrow">{packageName ? `Deployment inquiry · ${packageName}` : 'General inquiry'}</span>
           <h2 id="package-inquiry-title">{context.headline}</h2>

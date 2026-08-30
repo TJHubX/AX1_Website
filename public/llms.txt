@@ -13,6 +13,21 @@ Axis One is non-custodial. It does not hold, transfer, settle, manage or guarant
 - [Trust](https://ax1-website.pages.dev/trust): Permissioned access, product boundaries, collaboration model and current security position.
 - [Founder](https://ax1-website.pages.dev/founder): Tania Jokic and the operating problem behind Axis One.
 
+## Localised discovery pages
+
+- [English (US)](https://ax1-website.pages.dev/en-us)
+- [Español](https://ax1-website.pages.dev/es)
+- [Deutsch](https://ax1-website.pages.dev/de)
+- [Italiano](https://ax1-website.pages.dev/it)
+- [Português](https://ax1-website.pages.dev/pt)
+- [Français](https://ax1-website.pages.dev/fr)
+- [Čeština](https://ax1-website.pages.dev/cs)
+- [Magyar](https://ax1-website.pages.dev/hu)
+- [Srpski](https://ax1-website.pages.dev/sr)
+- [العربية](https://ax1-website.pages.dev/ar)
+
+The UK English homepage is the default and `x-default` version. Locale pages provide translated product positioning and link to the English source legal documents.
+
 ## Legal and factual boundaries
 
 - [Privacy](https://ax1-website.pages.dev/privacy)
