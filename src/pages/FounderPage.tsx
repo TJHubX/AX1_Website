@@ -1,61 +1,148 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import portrait from '../assets/founder-portrait.webp';
-import {
-  Badge, Button, FinalCTA, Footer,
-  fade, PageProps,
-} from '../components';
+import { Button, Footer, PageProps } from '../components';
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+const operatingSignals = [
+  {
+    index: '01',
+    title: 'Current execution was difficult to see.',
+    body: 'Activity could be described, but the present delivery position was rarely held in one verifiable context.',
+  },
+  {
+    index: '02',
+    title: 'Evidence and ownership were fragmented.',
+    body: 'Documents, conversations and responsibilities moved independently of the decision they were meant to support.',
+  },
+  {
+    index: '03',
+    title: 'Decision readiness depended on interpretation.',
+    body: 'Decision-makers received reports, but not always a governed basis for deciding whether capital should move next.',
+  },
+];
+
+const decisionBasis = [
+  ['Evidence', 'Current and attributable'],
+  ['Conditions', 'Evaluated consistently'],
+  ['Responsibility', 'Visible in context'],
+  ['Authority', 'Explicit and human'],
+];
 
 export default function FounderPage({ onOpenContact }: PageProps) {
   const openDecisionBrief = () => { window.location.href = '/#decision-brief'; };
+
   return (
-    <main>
-      <section className="section founder-page">
-        <motion.div className="founder-story" {...fade}>
-          <Badge>The Origin</Badge>
-          <h1>Structural Alignment.</h1>
-          <p>Axis One was not built from a product idea. It came from a problem I kept running into across capital and execution.</p>
-          <p>Working closely with investors, brokers, operators and partners, and being directly involved in execution, one pattern became impossible to ignore:</p>
-          <blockquote className="major-quote">Capital is available.<br /><span>Trust is not.</span></blockquote>
-          <p>Strong projects were not moving forward. Not because they lacked potential, but because investors could not rely on what they were being told.</p>
-          <p>Execution lived across fragmented tools, conversations, documents and assumptions, with no reliable way to verify what was actually happening.</p>
-          <h3>There was no clear proof. No consistent accountability.</h3>
-          <p>Decisions were made in boardrooms, often far from the reality of delivery. And when things broke, there was no system to understand where or why.</p>
-          <p>At that point, it became clear this was not just an operational issue. It was a structural gap. Axis One was built to address that gap.</p>
-          <div className="founder-shift"><span>The Fundamental Shift</span><h2>What if proven execution became the basis for the next capital decision?</h2><p>That is what Axis One enables: progress is evidenced, responsibility is visible, readiness is governed and authorised stakeholders act from the same execution record.</p></div>
-          <div className="founder-deterministic">
-            <span className="founder-det-label">Architecture Philosophy</span>
-            <h3>Why readiness had to be structured and explainable.</h3>
-            <p>Early in the design process, one question shaped every architectural decision: what does it mean for a system to be trustworthy, not in theory, but in practice, under real execution pressure?</p>
-            <p>The answer was not better reporting. It was not more dashboards, or smarter analytics, or faster communication. Those things exist. They did not solve the problem.</p>
-            <p>The problem was that outcomes depended on interpretation. Every report could be read differently. Every milestone could be framed differently. Every delay had an explanation. There was no ground truth.</p>
-            <div className="founder-det-callout">
-              <p>A trustworthy governance system evaluates agreed conditions consistently. If required evidence or validation is missing, the workflow remains blocked. If the conditions are satisfied, the system shows that the decision is ready, and the authorised person remains responsible for deciding what happens next.</p>
-            </div>
-            <p>That distinction between reporting and governed evaluation is what Axis One is built around. Evidence, validation, responsibility and authority are not loose context. They remain connected to the decision they support.</p>
-            <p>This matters most when pressure is high, when relationships are strained, and when the gap between what was promised and what was delivered becomes visible. In those moments, a process built on scattered interpretation becomes difficult to defend. A structured, attributable record holds its context.</p>
-            <p>That is why Axis One had to be structured and explainable. Not to remove human judgement, but to ensure that the conditions informing a capital decision are clear, agreed, attributable and visible when the decision is made.</p>
+    <main className="cg-founder-page">
+      <section className="founder-editorial-hero" aria-labelledby="founder-title">
+        <div className="cg-shell founder-editorial-hero-grid">
+          <div className="founder-editorial-copy">
+            <span className="founder-editorial-eyebrow"><i aria-hidden="true" /> Founder / Origin</span>
+            <h1 id="founder-title">Built from a structural gap.</h1>
+            <p className="founder-editorial-lead">Axis One was not built from a product idea. It came from a recurring problem at the point where capital decisions met the reality of execution.</p>
+            <blockquote>Capital can be available while decision-grade trust is not.</blockquote>
           </div>
-          <p>Axis One is not another reporting layer. It is global decision infrastructure through which execution, evidence, stakeholders and capital decisions remain connected.</p>
-          <blockquote className="closing-quote">“Capital needs more than a compelling strategy. It needs execution that decision-makers can trust.”</blockquote>
-          <div className="actions"><Button onClick={openDecisionBrief}>Frame a Capital Decision</Button><Button variant="ghost" to="/system">See How Axis One Works</Button></div>
-        </motion.div>
-        <motion.div className="founder-sticky" {...fade}>
-          <img src={portrait} alt="Tania Jokic, Founder & CEO" loading="eager" decoding="async" />
-          <div><span>Founder & CEO</span><strong>Tania Jokic</strong><small>AX1 Structura Ltd</small></div>
-        </motion.div>
+
+          <figure className="founder-editorial-portrait">
+            <div className="founder-editorial-portrait-frame">
+              <img src={portrait} alt="Tania Jokic, Founder and CEO of Axis One" loading="eager" decoding="async" />
+            </div>
+            <figcaption>
+              <span>Founder &amp; CEO</span>
+              <strong>Tania Jokic</strong>
+              <small>AX1 Structura Ltd</small>
+            </figcaption>
+          </figure>
+        </div>
       </section>
-      <FinalCTA
-        onOpenAccess={openDecisionBrief}
-        heading="Explore the system built from this structural gap."
-        subcopy="Axis One connects execution proof, decision authority and the governed record, while external providers remain responsible for custody and transfer."
-        primaryLabel="Frame a Capital Decision"
-        showLogo={false}
-        secondaryLabel="See How Axis One Works"
-        secondaryTo="/system"
-      />
+
+      <section className="founder-pattern" aria-labelledby="founder-pattern-title">
+        <div className="cg-shell founder-pattern-grid">
+          <header className="founder-section-heading">
+            <span>What kept recurring</span>
+            <h2 id="founder-pattern-title">The decision was separated from the reality of delivery.</h2>
+            <p>Working across investors, brokers, operators and partners, one pattern became impossible to ignore: execution lived in one place, evidence in another and the capital decision somewhere else entirely.</p>
+          </header>
+
+          <div className="founder-pattern-list">
+            {operatingSignals.map((signal) => (
+              <article key={signal.index}>
+                <span>{signal.index}</span>
+                <div>
+                  <h3>{signal.title}</h3>
+                  <p>{signal.body}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="founder-governed-shift" aria-labelledby="founder-shift-title">
+        <div className="cg-shell">
+          <header className="founder-shift-heading">
+            <span>The architectural shift</span>
+            <h2 id="founder-shift-title">From reporting to governed evaluation.</h2>
+            <p>Reporting can describe progress. Axis One was designed to keep the evidence, agreed conditions, responsibility and authority connected to the decision they support.</p>
+          </header>
+
+          <div className="founder-shift-grid">
+            <blockquote>What if proven execution became the basis for the next capital decision?</blockquote>
+
+            <div className="founder-decision-basis" aria-label="Axis One decision basis">
+              <div className="founder-decision-basis-head">
+                <span>Decision basis</span>
+                <small>Structured context</small>
+              </div>
+              {decisionBasis.map(([label, value], index) => (
+                <div className="founder-decision-basis-row" key={label}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <strong>{label}</strong>
+                  <p>{value}</p>
+                </div>
+              ))}
+              <div className="founder-decision-basis-foot">
+                <i aria-hidden="true" />
+                Human authority remains explicit.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="founder-principle" aria-labelledby="founder-principle-title">
+        <div className="cg-shell founder-principle-grid">
+          <header className="founder-section-heading">
+            <span>Architecture philosophy</span>
+            <h2 id="founder-principle-title">Structured. Explainable. Deliberately bounded.</h2>
+          </header>
+
+          <div className="founder-principle-copy">
+            <p>A trustworthy governance system should evaluate agreed conditions consistently. If required evidence or validation is missing, the position remains incomplete. If the conditions are satisfied, the system can show that the decision is ready.</p>
+            <p>That does not remove human judgement. It gives the authorised person a clear, attributable basis from which to decide what happens next.</p>
+            <aside>
+              <span>Operating boundary</span>
+              <p>Axis One connects execution, evidence and decision authority. It does not hold, transfer or manage client capital, and it does not replace the authorised decision-maker.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section className="founder-closing" aria-labelledby="founder-closing-title">
+        <div className="cg-shell founder-closing-inner">
+          <span>Founder conviction</span>
+          <blockquote id="founder-closing-title">Capital needs more than a compelling strategy. It needs execution that decision-makers can trust.</blockquote>
+          <div className="founder-closing-footer">
+            <div>
+              <strong>Tania Jokic</strong>
+              <small>Founder &amp; CEO, Axis One</small>
+            </div>
+            <div className="actions">
+              <Button onClick={openDecisionBrief}>Frame a Capital Decision</Button>
+              <Button variant="ghost" to="/system">See How Axis One Works</Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer onOpenContact={onOpenContact} />
     </main>
   );
