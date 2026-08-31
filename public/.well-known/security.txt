@@ -1,0 +1,4 @@
+Contact: mailto:info@ax1.capital
+Expires: 2027-08-31T23:59:59Z
+Canonical: https://ax1.capital/.well-known/security.txt
+Preferred-Languages: en

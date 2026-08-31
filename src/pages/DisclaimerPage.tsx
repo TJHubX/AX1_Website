@@ -1,5 +1,6 @@
 import React from 'react';
-import { Footer, PageProps } from '../components';
+import type { PageProps } from '../components';
+import { Footer } from '../components';
 import LegalPageLayout from '../components/LegalPageLayout';
 
 export default function DisclaimerPage({ onOpenContact }: PageProps) {
@@ -27,7 +28,7 @@ export default function DisclaimerPage({ onOpenContact }: PageProps) {
           {
             heading: 'Non-custodial boundary',
             paragraphs: [
-              'Axis One is designed as non-custodial capital-governance infrastructure. The public website does not hold, custody, transfer, settle, manage or guarantee client capital. Any capital movement would be executed by an appropriately authorised external financial provider under the relevant arrangement.',
+              'Axis One is designed as non-custodial capital-governance infrastructure. The public website does not hold, take custody of, transfer, settle, manage or guarantee client capital. Any capital movement would be executed by an appropriately authorised external financial provider under the relevant arrangement.',
             ],
           },
           {

@@ -56,15 +56,15 @@ export function DecisionDiagnostic() {
     <section className="cg-diagnostic" id="diagnostic" aria-labelledby="cg-diagnostic-title">
       <div className="cg-shell cg-diagnostic-layout">
         <motion.header className="cg-section-heading cg-section-heading-dark cg-diagnostic-heading" {...fade}>
-          <span className="cg-eyebrow">A 60-second test</span>
-          <h2 id="cg-diagnostic-title">Can the next action <span className="cg-diagnostic-keep">be defended</span> without another report?</h2>
+          <span className="cg-eyebrow">Decision readiness assessment</span>
+          <h2 id="cg-diagnostic-title">Does the current decision basis support the next action?</h2>
           <p>Answer four plain questions. No programme data is submitted or stored.</p>
         </motion.header>
 
         <div className="cg-diagnostic-panel">
           <div className="cg-diagnostic-panel-head">
             <div className="cg-diagnostic-panel-title">
-              <span>Decision defence check</span>
+              <span>Decision basis review</span>
               <strong>Four signals of a decision-ready position</strong>
             </div>
             <div className="cg-diagnostic-progress cg-diagnostic-panel-progress">

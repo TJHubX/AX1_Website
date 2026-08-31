@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, CheckCircle2, Copy, LockKeyhole, Mail } from 'lucide-react';
+import { useReducedMotion } from 'motion/react';
 import { ModalShell } from '../../components';
 import { trackAX1Event } from '../../utils/analytics';
 import { inquiryLanguageNotice, localeContent, localeFromPath } from '../../i18n';
@@ -21,9 +22,9 @@ type InquiryErrors = Partial<Record<'fullName' | 'workEmail' | 'organisation', s
 const PACKAGE_CONTEXT: Record<PackageName, { number: string; scope: string; description: string; headline: string }> = {
   'AX1.Pilot': {
     number: '01',
-    scope: 'One live decision',
-    description: 'Establish a credible operating result around one approaching capital decision.',
-    headline: 'Discuss one live decision.',
+    scope: 'One approaching decision',
+    description: 'Establish the initial governed decision model around one approaching capital decision.',
+    headline: 'Discuss one approaching decision.',
   },
   'AX1.Core': {
     number: '02',
@@ -34,19 +35,20 @@ const PACKAGE_CONTEXT: Record<PackageName, { number: string; scope: string; desc
   'AX1.Enterprise': {
     number: '03',
     scope: 'Multiple programmes',
-    description: 'Extend a proven governance pattern across a portfolio or operating environment.',
+    description: 'Extend an established governance model across a portfolio or operating environment.',
     headline: 'Discuss a multi-programme deployment.',
   },
 };
 
 export function PackageInquiryModal({ packageName, source, onClose }: PackageInquiryModalProps) {
+  const reduceMotion = useReducedMotion();
   const locale = localeFromPath(window.location.pathname);
-  const selectedScope = packageName ?? 'General Axis One inquiry';
+  const selectedScope = packageName ?? 'General Axis One enquiry';
   const context = packageName ? PACKAGE_CONTEXT[packageName] : {
     number: 'AX1',
-    scope: 'General conversation',
+    scope: 'General enquiry',
     description: 'Discuss an approaching decision, operating challenge or the most appropriate Axis One scope.',
-    headline: 'Start the right Axis One conversation.',
+    headline: 'Discuss the appropriate Axis One scope.',
   };
   const [errors, setErrors] = useState<InquiryErrors>({});
   const [draftValues, setDraftValues] = useState<PackageInquiryValues>({
@@ -64,12 +66,12 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
   const preparedHeadingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
+    const timeout = window.setTimeout(() => {
       if (preparedValues) preparedHeadingRef.current?.focus();
       else fullNameRef.current?.focus();
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, [preparedValues]);
+    }, reduceMotion ? 0 : 220);
+    return () => window.clearTimeout(timeout);
+  }, [preparedValues, reduceMotion]);
 
   const validate = (values: PackageInquiryValues): InquiryErrors => {
     const next: InquiryErrors = {};
@@ -138,14 +140,16 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
       {locale !== 'en-gb' && <p className="package-inquiry-language" lang={localeContent[locale].htmlLang} dir={localeContent[locale].dir}>{inquiryLanguageNotice[locale]}</p>}
       <div className="package-inquiry-modal" lang="en-GB" dir="ltr">
         <header className="package-inquiry-header">
-          <span className="package-inquiry-eyebrow">{packageName ? `Deployment inquiry · ${packageName}` : 'General inquiry'}</span>
-          <h2 id="package-inquiry-title">{context.headline}</h2>
+          <span className="package-inquiry-eyebrow">{packageName ? `Deployment enquiry · ${packageName}` : 'General enquiry'}</span>
+          <h2 id="package-inquiry-title">
+            {packageName ? context.headline : <>Discuss the appropriate <span className="package-inquiry-brand-name">Axis One</span> scope.</>}
+          </h2>
           <p>Share enough context for a useful first discussion. No request is sent from this website.</p>
         </header>
 
-        <div className="package-inquiry-scope" aria-label={`Selected inquiry scope: ${selectedScope}`}>
+        <div className="package-inquiry-scope" aria-label={`Selected enquiry scope: ${selectedScope}`}>
           <span>{context.number}</span>
-          <div><small>{packageName ? 'Selected scope' : 'Inquiry route'}</small><strong>{selectedScope}</strong></div>
+          <div><small>{packageName ? 'Selected scope' : 'Enquiry route'}</small><strong>{selectedScope}</strong></div>
           <p><b>{context.scope}</b>{context.description}</p>
         </div>
 
@@ -154,22 +158,22 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
             <CheckCircle2 size={28} aria-hidden="true" />
             <div>
               <span>Ready for your review</span>
-              <h3 ref={preparedHeadingRef} tabIndex={-1}>Your {packageName ?? 'Axis One'} inquiry is prepared.</h3>
+              <h3 ref={preparedHeadingRef} tabIndex={-1}>Your {packageName ?? 'Axis One'} enquiry is prepared.</h3>
               <p>Choose how to continue. Nothing has been submitted or stored by Axis One.</p>
             </div>
-            <pre aria-label="Prepared inquiry" tabIndex={0}>{buildPackageInquiry(preparedValues)}</pre>
+            <pre aria-label="Prepared enquiry" tabIndex={0}>{buildPackageInquiry(preparedValues)}</pre>
             <div className="package-inquiry-actions">
               <button type="button" className="package-inquiry-primary" onClick={handleEmail}>
-                Open in your email<Mail size={16} />
+                Open email draft<Mail size={16} />
               </button>
               <button type="button" className="package-inquiry-secondary" onClick={handleCopy}>
-                {copyState === 'copied' ? 'Inquiry copied' : 'Copy inquiry'}<Copy size={16} />
+                {copyState === 'copied' ? 'Enquiry copied' : 'Copy enquiry'}<Copy size={16} />
               </button>
-              <button type="button" className="package-inquiry-edit" onClick={handleEdit}>Edit inquiry</button>
+              <button type="button" className="package-inquiry-edit" onClick={handleEdit}>Edit enquiry</button>
             </div>
             <p className="package-inquiry-status" aria-live="polite">
-              {copyState === 'copied' && 'The inquiry is ready to paste into your preferred channel.'}
-              {copyState === 'error' && 'Copy was unavailable. Use “Open in your email” or select the text above.'}
+              {copyState === 'copied' && 'The enquiry is ready to paste into your preferred channel.'}
+              {copyState === 'error' && 'Copy was unavailable. Use “Open email draft” or select the text above.'}
             </p>
           </div>
         ) : (
@@ -221,7 +225,7 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
               {errors.organisation && <em id="package-inquiry-organisation-error">{errors.organisation}</em>}
             </label>
             <label className="package-inquiry-field is-wide">
-              <span>What would you like to explore? <small>Optional</small></span>
+              <span>What would you like to discuss? <small>Optional</small></span>
               <textarea name="context" defaultValue={draftValues.context} maxLength={1500} placeholder="The approaching decision, operating scope or question you would like to discuss. Please do not include confidential information." />
             </label>
             <div className="package-inquiry-privacy">
@@ -229,7 +233,7 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
               <p><strong>Private until you choose to send.</strong>Your entries remain in this browser and are used only to prepare an email you can review. <a href="/privacy" target="_blank" rel="noopener noreferrer">Read the Privacy Policy.</a></p>
             </div>
             <button type="submit" className="package-inquiry-primary is-wide">
-              Review the inquiry<ArrowRight size={16} />
+              Review the enquiry<ArrowRight size={16} />
             </button>
           </form>
         )}

@@ -8,7 +8,7 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "noEmit": true,
     "types": ["vite/client"]
   },

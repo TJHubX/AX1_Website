@@ -268,15 +268,15 @@ export function buildCalculationSummary(
     : 'calculated but excluded from combined exposure';
 
   return [
-    'Axis One Capital Value Protection Calculator',
+    'Axis One Capital Decision Exposure Calculator',
     `Capital under execution: ${formatCurrency(input.capitalUnderExecution as number, currency)}`,
     `Cost-overrun exposure: ${formatCurrency(result.costOverrunExposure, currency)} (${overrunBasis})`,
     `Delayed capital: ${formatCurrency(result.delayedCapital, currency)}`,
     `Delay carrying cost: ${formatCurrency(result.delayCarryingCost, currency)} (${delayStatus})`,
     `Identified execution exposure: ${formatCurrency(result.identifiedExecutionExposure, currency)}`,
-    `Value of each 1% improvement: ${formatCurrency(result.valueOfOnePercent, currency)}`,
+    `Value represented by each 1% reduction in identified exposure: ${formatCurrency(result.valueOfOnePercent, currency)}`,
     `Selected scenario: ${input.selectedImprovementPercent}% reduction in identified exposure`,
-    `Illustrative value potentially protected: ${formatCurrency(result.selectedValueProtected, currency)}`,
+    `Illustrative exposure reduction: ${formatCurrency(result.selectedValueProtected, currency)}`,
     `Assumptions: ${input.capitalAffectedByDelayPercent}% of capital affected by delay, ${input.averageDelayMonths} months average delay, ${input.annualCarryingRatePercent}% annual carrying rate. Currency changes display only; no FX conversion.`,
     'Disclaimer: This is an illustrative scenario based on the inputs supplied. It is not a guarantee, accounting valuation or predicted Axis One result. Validate material assumptions with Finance and the programme team.',
   ].join('\n');

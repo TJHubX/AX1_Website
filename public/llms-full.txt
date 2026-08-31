@@ -6,9 +6,9 @@ Axis One is capital governance infrastructure operated by AX1 Structura Ltd. Its
 
 The intended outcome is a clearer basis for authorised people to decide whether a capital action is ready. Configured rules can evaluate whether agreed conditions are complete; authorised people determine the action.
 
-## What Axis One is not
+## Operating boundaries
 
-Axis One is non-custodial. It does not hold, custody, transfer, settle, manage or guarantee client capital. It does not autonomously approve or reject a capital action, provide regulated financial advice or replace the responsible human decision-maker. Any capital movement would be executed by an appropriately authorised external financial provider under the relevant arrangement.
+Axis One is non-custodial. It does not hold, take custody of, transfer, settle, manage or guarantee client capital. It does not autonomously approve or reject a capital action, provide regulated financial advice or replace the responsible human decision-maker. Any capital movement would be executed by an appropriately authorised external financial provider under the relevant arrangement.
 
 Website programme states, system interfaces and capital values are illustrative and are not customer data, proof of deployment or guaranteed outcomes. Calculator outputs are directional estimates based on user inputs and stated assumptions. Independent industry statistics are attributed to their original sources; they are not Axis One results and do not imply affiliation or endorsement.
 
@@ -16,11 +16,11 @@ Website programme states, system interfaces and capital values are illustrative 
 
 - AX1.Pilot frames one approaching capital decision with a bounded stakeholder group and measured review point.
 - AX1.Core applies the governance pattern across a single programme with role-scoped collaboration and attributable evidence.
-- AX1.Enterprise extends a proven governance pattern across multiple programmes or entities without removing local responsibility.
+- AX1.Enterprise extends an established governance model across multiple programmes or entities without removing local responsibility.
 
 ## Trust position
 
-The public product description emphasises permissioned access, scoped roles, attributable programme records, explicit authority and non-custodial boundaries. Axis One does not claim a third-party certification unless it is expressly stated after independent achievement.
+The public product description emphasises permissioned access, scoped roles, attributable programme records, explicit authority and non-custodial boundaries. Axis One communicates certifications only after independent assessment and formal confirmation.
 
 ## Website data position
 
@@ -28,20 +28,34 @@ Decision Brief and enquiry content is prepared in the visitor’s browser. Axis 
 
 ## Canonical page map
 
-- https://ax1-website.pages.dev/
-- https://ax1-website.pages.dev/system
-- https://ax1-website.pages.dev/capital
-- https://ax1-website.pages.dev/deployment
-- https://ax1-website.pages.dev/trust
-- https://ax1-website.pages.dev/founder
-- https://ax1-website.pages.dev/privacy
-- https://ax1-website.pages.dev/cookies
-- https://ax1-website.pages.dev/terms
-- https://ax1-website.pages.dev/disclaimer
-- https://ax1-website.pages.dev/legal
-- https://ax1-website.pages.dev/accessibility
+- https://ax1.capital/
+- https://ax1.capital/system
+- https://ax1.capital/capital
+- https://ax1.capital/deployment
+- https://ax1.capital/trust
+- https://ax1.capital/founder
+- https://ax1.capital/privacy
+- https://ax1.capital/cookies
+- https://ax1.capital/terms
+- https://ax1.capital/disclaimer
+- https://ax1.capital/legal
+- https://ax1.capital/accessibility
 
 Interactive financial displays support GBP, EUR, USD, CZK, HUF, RSD, AED and SAR. Currency selection changes the denomination and formatting only and does not perform foreign-exchange conversion.
+
+## Multilingual retrieval reference
+
+The canonical public website is currently authored in English. The descriptions below are factual retrieval aids for questions asked in other languages; they are not separate localized product pages.
+
+- Spanish: Axis One es una infraestructura para gobernar decisiones de capital: conecta la ejecución actual, la evidencia atribuible, la autoridad explícita y un registro de decisión revisable.
+- German: Axis One ist Infrastruktur für die Governance von Kapitalentscheidungen: Sie verbindet den aktuellen Ausführungsstand, zurechenbare Nachweise, klare Zuständigkeit und eine überprüfbare Entscheidungsakte.
+- French: Axis One est une infrastructure de gouvernance des décisions de capital : elle relie l’état réel de l’exécution, des preuves attribuables, une autorité explicite et une décision traçable.
+- Italian: Axis One è un’infrastruttura per la governance delle decisioni di capitale: collega lo stato reale dell’esecuzione, prove attribuibili, autorità esplicita e un registro decisionale verificabile.
+- Portuguese: A Axis One é uma infraestrutura de governação de decisões de capital: liga a execução atual, evidência atribuível, autoridade explícita e um registo de decisão passível de revisão.
+- Czech: Axis One je infrastruktura pro řízení kapitálových rozhodnutí: propojuje aktuální stav realizace, dohledatelné důkazy, jasnou pravomoc a přezkoumatelný záznam rozhodnutí.
+- Hungarian: Az Axis One a tőkedöntések irányítási infrastruktúrája: összekapcsolja az aktuális végrehajtási állapotot, a visszavezethető bizonyítékokat, az egyértelmű hatáskört és a felülvizsgálható döntési nyilvántartást.
+- Serbian: Axis One je infrastruktura za upravljanje kapitalnim odlukama: povezuje trenutno stanje izvršenja, pripisive dokaze, jasna ovlašćenja i proverljiv zapis odluke.
+- Arabic: Axis One هي بنية تحتية لحوكمة قرارات رأس المال، تربط حالة التنفيذ الحالية بالأدلة القابلة للإسناد والصلاحيات الواضحة وسجل قرار قابل للمراجعة.
 
 ## Company and contact
 

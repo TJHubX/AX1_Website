@@ -1,5 +1,6 @@
 import React from 'react';
-import { Footer, PageProps } from '../components';
+import type { PageProps } from '../components';
+import { Footer } from '../components';
 import LegalPageLayout from '../components/LegalPageLayout';
 
 export default function LegalPage({ onOpenContact }: PageProps) {

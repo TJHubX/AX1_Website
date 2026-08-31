@@ -11,7 +11,7 @@ const briefValues: DecisionBriefValues = {
   capitalAffected: '12400000',
   currency: 'EUR',
   conditions: 'Execution evidence is current and authority is confirmed.',
-  evidenceLocation: 'Split across tools and stakeholders',
+  evidenceLocation: 'Distributed across tools and stakeholders',
   workEmail: 'decision.owner@example.com',
   context: 'Illustrative context only.',
 };
@@ -41,7 +41,7 @@ test('Decision Brief includes the decision, date, capital, evidence and boundary
   assert.match(brief, /Authorise the next infrastructure release/);
   assert.match(brief, /2026-10-14/);
   assert.match(brief, /€12400000 EUR/);
-  assert.match(brief, /Split across tools and stakeholders/);
+  assert.match(brief, /Distributed across tools and stakeholders/);
   assert.match(brief, /does not authorise a capital action/i);
 });
 
@@ -68,16 +68,16 @@ test('package inquiry preserves the selected scope and supplied context', () => 
 
 test('package inquiry email is inspectable before the mail client opens', () => {
   const email = buildPackageInquiryEmail(packageInquiryValues);
-  assert.match(email.subject, /^AX1\.Pilot deployment inquiry/);
+  assert.match(email.subject, /^AX1\.Pilot deployment enquiry/);
   assert.equal(email.body, buildPackageInquiry(packageInquiryValues));
 });
 
 test('general inquiry uses a general Axis One subject', () => {
   const email = buildPackageInquiryEmail({
     ...packageInquiryValues,
-    packageName: 'General Axis One inquiry',
+    packageName: 'General Axis One enquiry',
   });
-  assert.equal(email.subject, 'Axis One inquiry — Example Infrastructure Programme');
-  assert.match(email.body, /^AXIS ONE INQUIRY\n/);
-  assert.doesNotMatch(email.body, /DEPLOYMENT INQUIRY/);
+  assert.equal(email.subject, 'Axis One enquiry: Example Infrastructure Programme');
+  assert.match(email.body, /^AXIS ONE ENQUIRY\n/);
+  assert.doesNotMatch(email.body, /DEPLOYMENT ENQUIRY/);
 });

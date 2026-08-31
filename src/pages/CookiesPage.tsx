@@ -1,5 +1,6 @@
 import React from 'react';
-import { Footer, PageProps } from '../components';
+import type { PageProps } from '../components';
+import { Footer } from '../components';
 import LegalPageLayout from '../components/LegalPageLayout';
 
 export default function CookiesPage({ onOpenContact }: PageProps) {
@@ -9,7 +10,7 @@ export default function CookiesPage({ onOpenContact }: PageProps) {
         label="Cookies"
         title="Cookie Policy"
         lastUpdated="30 August 2026"
-        intro="This policy describes the current use of cookies and similar technologies on the public Axis One website. The short version: Axis One does not currently set non-essential analytics or advertising cookies."
+        intro="This policy describes the current use of cookies and similar technologies on the public Axis One website. Axis One does not currently set non-essential analytics or advertising cookies."
         onContact={() => onOpenContact({ source: 'cookie_policy' })}
         sections={[
           {

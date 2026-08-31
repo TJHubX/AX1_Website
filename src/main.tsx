@@ -1,76 +1,103 @@
-﻿import React, { Suspense, useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+﻿import React, { useEffect } from 'react';
+import { createRoot, hydrateRoot } from 'react-dom/client';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 import { MotionConfig } from 'motion/react';
-import { Header, type ContactIntent } from './components';
-import { PackageInquiryModal } from './features/package-inquiry/PackageInquiryModal';
-import '@fontsource-variable/inter';
+import type { PageProps } from './components';
+import { SiteApp, type RouteComponents } from './SiteApp';
+import { NOT_FOUND_METADATA, PAGE_METADATA, normalizePath } from './pageMetadata';
+import './fonts.css';
 import './styles.css';
 
-const HomePage = React.lazy(() => import('./pages/HomePage'));
-const SystemPage = React.lazy(() => import('./pages/SystemPage'));
-const CapitalPage = React.lazy(() => import('./pages/CapitalPage'));
-const DeploymentPage = React.lazy(() => import('./pages/DeploymentPage'));
-const FounderPage = React.lazy(() => import('./pages/FounderPage'));
-const PrivacyPage = React.lazy(() => import('./pages/PrivacyPage'));
-const CookiesPage = React.lazy(() => import('./pages/CookiesPage'));
-const TermsPage = React.lazy(() => import('./pages/TermsPage'));
-const DisclaimerPage = React.lazy(() => import('./pages/DisclaimerPage'));
-const TrustPage = React.lazy(() => import('./pages/TrustPage'));
-const LegalPage = React.lazy(() => import('./pages/LegalPage'));
-const AccessibilityPage = React.lazy(() => import('./pages/AccessibilityPage'));
-const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
+type RouteModule = { default: React.ComponentType<PageProps> };
+type RouteImporter = () => Promise<RouteModule>;
 
-const PAGE_METADATA: Record<string, { title: string; description: string }> = {
-  '/': {
-    title: 'Axis One | Capital Governance Infrastructure',
-    description: 'Axis One connects committed capital to verified milestones, attributable evidence and controlled decision states.',
-  },
-  '/system': {
-    title: 'Axis One System | Capital Governance Infrastructure',
-    description: 'See how Axis One connects execution, evidence, validation, authority and controlled capital decision states.',
-  },
-  '/capital': {
-    title: 'Decision Exposure | Axis One Capital Governance',
-    description: 'Model cost-overrun, delay and decision exposure while preserving human decision authority and controlled capital action.',
-  },
-  '/deployment': {
-    title: 'Deployment | Axis One Capital Governance',
-    description: 'Start with AX1.Pilot, then expand through AX1.Core or AX1.Enterprise after a credible operating result.',
-  },
-  '/trust': {
-    title: 'Trust, Security & Governance | Axis One',
-    description: 'Review Axis One product boundaries, permissioned collaboration model, attributable records and non-custodial approach.',
-  },
-  '/founder': {
-    title: 'Tania Jokic, Founder | Axis One',
-    description: 'Why Axis One was built to connect proven execution, stakeholder authority and governed capital decisions.',
-  },
-  '/privacy': {
-    title: 'Privacy Policy | Axis One',
-    description: 'How AX1 Structura Ltd handles personal information connected with the Axis One public website and enquiries.',
-  },
-  '/cookies': {
-    title: 'Cookie Policy | Axis One',
-    description: 'The current cookie and similar-technology position for the Axis One public website.',
-  },
-  '/terms': {
-    title: 'Terms of Use | Axis One',
-    description: 'Terms governing access to and use of the public Axis One website operated by AX1 Structura Ltd.',
-  },
-  '/disclaimer': {
-    title: 'Website Disclaimer | Axis One',
-    description: 'Important boundaries concerning Axis One website content, product descriptions, benchmarks and decision-support materials.',
-  },
-  '/legal': {
-    title: 'Legal Notice | Axis One',
-    description: 'Company, operator and legal information for Axis One and AX1 Structura Ltd.',
-  },
-  '/accessibility': {
-    title: 'Accessibility Statement | Axis One',
-    description: 'The Axis One accessibility approach, current status, supported features and feedback channel.',
-  },
-};
+const routeImporters = {
+  home: () => import('./pages/HomePage'),
+  system: () => import('./pages/SystemPage'),
+  capital: () => import('./pages/CapitalPage'),
+  deployment: () => import('./pages/DeploymentPage'),
+  founder: () => import('./pages/FounderPage'),
+  privacy: () => import('./pages/PrivacyPage'),
+  cookies: () => import('./pages/CookiesPage'),
+  terms: () => import('./pages/TermsPage'),
+  disclaimer: () => import('./pages/DisclaimerPage'),
+  trust: () => import('./pages/TrustPage'),
+  legal: () => import('./pages/LegalPage'),
+  accessibility: () => import('./pages/AccessibilityPage'),
+  notFound: () => import('./pages/NotFoundPage'),
+} satisfies Record<string, RouteImporter>;
+
+const staleRouteChunkPattern = /Failed to fetch dynamically imported module|error loading dynamically imported module|Importing a module script failed|Unable to preload CSS|ChunkLoadError|Loading chunk .* failed|\bLoad failed\b/i;
+
+async function loadRoute(importer: RouteImporter): Promise<RouteModule> {
+  const reloadKey = `ax1:route-chunk-reload:${window.location.pathname}`;
+  try {
+    const route = await importer();
+    try {
+      window.sessionStorage.removeItem(reloadKey);
+    } catch {
+      // Storage can be unavailable in restricted browser modes.
+    }
+    return route;
+  } catch (error) {
+    const message = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+    let alreadyReloaded = true;
+    try {
+      alreadyReloaded = window.sessionStorage.getItem(reloadKey) === '1';
+      if (!alreadyReloaded) window.sessionStorage.setItem(reloadKey, '1');
+    } catch {
+      // Storage can be unavailable in restricted browser modes. Avoid a reload loop.
+    }
+    if (staleRouteChunkPattern.test(message) && !alreadyReloaded) {
+      window.location.reload();
+      return new Promise<RouteModule>(() => undefined);
+    }
+    throw error;
+  }
+}
+
+const lazyRoute = (importer: RouteImporter) => React.lazy(() => loadRoute(importer));
+const HomePage = lazyRoute(routeImporters.home);
+const SystemPage = lazyRoute(routeImporters.system);
+const CapitalPage = lazyRoute(routeImporters.capital);
+const DeploymentPage = lazyRoute(routeImporters.deployment);
+const FounderPage = lazyRoute(routeImporters.founder);
+const PrivacyPage = lazyRoute(routeImporters.privacy);
+const CookiesPage = lazyRoute(routeImporters.cookies);
+const TermsPage = lazyRoute(routeImporters.terms);
+const DisclaimerPage = lazyRoute(routeImporters.disclaimer);
+const TrustPage = lazyRoute(routeImporters.trust);
+const LegalPage = lazyRoute(routeImporters.legal);
+const AccessibilityPage = lazyRoute(routeImporters.accessibility);
+const NotFoundPage = lazyRoute(routeImporters.notFound);
+
+function PrimaryRoutePreloader() {
+  useEffect(() => {
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    if (connection?.saveData || connection?.effectiveType?.includes('2g')) return;
+
+    const preload = () => {
+      void Promise.allSettled([
+        routeImporters.system(),
+        routeImporters.capital(),
+        routeImporters.deployment(),
+        routeImporters.trust(),
+        routeImporters.founder(),
+      ]);
+    };
+    const idleWindow = window as Window & typeof globalThis & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+    if (idleWindow.requestIdleCallback) {
+      const handle = idleWindow.requestIdleCallback(preload, { timeout: 2500 });
+      return () => idleWindow.cancelIdleCallback?.(handle);
+    }
+    const handle = window.setTimeout(preload, 1800);
+    return () => window.clearTimeout(handle);
+  }, []);
+  return null;
+}
 
 function PageLoader() {
   return (
@@ -116,19 +143,11 @@ function ScrollToTop() {
 function PageMetadata() {
   const { pathname } = useLocation();
   useEffect(() => {
-    const normalizedPath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
-    const fallback = {
-      title: 'Axis One | Capital Governance Infrastructure',
-      description: 'Capital governance infrastructure connecting proven execution to governed capital action in a non-custodial, permissioned environment.',
-    };
+    const normalizedPath = normalizePath(pathname);
     const isKnownPage = Boolean(PAGE_METADATA[normalizedPath]);
-    const metadata = PAGE_METADATA[normalizedPath] ?? {
-      ...fallback,
-      title: 'Page not found | Axis One',
-      description: 'The requested Axis One page could not be found.',
-    };
+    const metadata = PAGE_METADATA[normalizedPath] ?? NOT_FOUND_METADATA;
     const canonicalPath = isKnownPage ? normalizedPath : window.location.pathname;
-    const canonicalUrl = `https://ax1-website.pages.dev${canonicalPath === '/' ? '/' : canonicalPath}`;
+    const canonicalUrl = `https://ax1.capital${canonicalPath === '/' ? '/' : canonicalPath}`;
     document.title = metadata.title;
     document.documentElement.lang = 'en-GB';
     document.documentElement.dir = 'ltr';
@@ -163,14 +182,17 @@ function PageMetadata() {
       name: metadata.title,
       description: metadata.description,
       inLanguage: 'en-GB',
-      isPartOf: { '@id': 'https://ax1-website.pages.dev/#website' },
-      about: { '@id': 'https://ax1-website.pages.dev/#organization' },
+      isPartOf: { '@id': 'https://ax1.capital/#website' },
+      about: { '@id': 'https://ax1.capital/#organization' },
     };
+    if (['/', '/system', '/capital', '/deployment', '/trust'].includes(normalizedPath)) {
+      pageSchema.mainEntity = { '@id': 'https://ax1.capital/#service' };
+    }
     if (isKnownPage && normalizedPath !== '/') {
       pageSchema.breadcrumb = {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ax1-website.pages.dev/' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ax1.capital/' },
           { '@type': 'ListItem', position: 2, name: metadata.title.split(' | ')[0], item: canonicalUrl },
         ],
       };
@@ -180,41 +202,40 @@ function PageMetadata() {
   return null;
 }
 
+const pages: RouteComponents = {
+  home: HomePage,
+  system: SystemPage,
+  capital: CapitalPage,
+  deployment: DeploymentPage,
+  founder: FounderPage,
+  privacy: PrivacyPage,
+  cookies: CookiesPage,
+  terms: TermsPage,
+  disclaimer: DisclaimerPage,
+  trust: TrustPage,
+  legal: LegalPage,
+  accessibility: AccessibilityPage,
+  notFound: NotFoundPage,
+};
+
 function App() {
-  const [contactIntent, setContactIntent] = useState<ContactIntent | null>(null);
-  const pageProps = {
-    onOpenAccess: () => { window.location.href = '/#decision-brief'; },
-    onOpenContact: (intent: ContactIntent = {}) => setContactIntent(intent),
-  };
   return (
     <MotionConfig reducedMotion="user">
       <BrowserRouter>
+        <PrimaryRoutePreloader />
         <ScrollToTop />
         <PageMetadata />
-        <Header {...pageProps} />
-        <div id="main-content" tabIndex={-1}>
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<HomePage {...pageProps} />} />
-            <Route path="/system" element={<SystemPage {...pageProps} />} />
-            <Route path="/capital" element={<CapitalPage {...pageProps} />} />
-            <Route path="/deployment" element={<DeploymentPage {...pageProps} />} />
-            <Route path="/founder" element={<FounderPage {...pageProps} />} />
-            <Route path="/privacy" element={<PrivacyPage {...pageProps} />} />
-            <Route path="/cookies" element={<CookiesPage {...pageProps} />} />
-            <Route path="/terms" element={<TermsPage {...pageProps} />} />
-            <Route path="/disclaimer" element={<DisclaimerPage {...pageProps} />} />
-            <Route path="/trust" element={<TrustPage {...pageProps} />} />
-            <Route path="/legal" element={<LegalPage {...pageProps} />} />
-            <Route path="/accessibility" element={<AccessibilityPage {...pageProps} />} />
-            <Route path="*" element={<NotFoundPage {...pageProps} />} />
-          </Routes>
-        </Suspense>
-        </div>
-        {contactIntent && <PackageInquiryModal packageName={contactIntent.packageName} source={contactIntent.source} onClose={() => setContactIntent(null)} />}
+        <SiteApp pages={pages} loadingFallback={<PageLoader />} />
       </BrowserRouter>
     </MotionConfig>
   );
 }
 
-createRoot(document.getElementById('root')!).render(<App />);
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Axis One application root was not found.');
+
+if (rootElement.hasChildNodes()) {
+  hydrateRoot(rootElement, <App />);
+} else {
+  createRoot(rootElement).render(<App />);
+}

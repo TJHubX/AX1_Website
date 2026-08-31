@@ -48,7 +48,7 @@ function calendarDays(viewDate: Date) {
 export function BrandedDatePicker({ id, value, onChange, ariaLabel, invalid = false }: BrandedDatePickerProps) {
   const rootRef = React.useRef<HTMLDivElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
-  const selected = parseIsoDate(value);
+  const selected = React.useMemo(() => parseIsoDate(value), [value]);
   const today = React.useMemo(() => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -58,7 +58,7 @@ export function BrandedDatePicker({ id, value, onChange, ariaLabel, invalid = fa
 
   React.useEffect(() => {
     if (open) setViewDate(selected ?? today);
-  }, [open, value]);
+  }, [open, selected, today]);
 
   React.useEffect(() => {
     const onPointerDown = (event: PointerEvent) => {

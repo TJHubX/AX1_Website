@@ -1,4 +1,5 @@
 import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Calculator, Check, Clock3, Eye, EyeOff, Plus, TriangleAlert } from 'lucide-react';
 import { BrandedSelect } from '../../components/BrandedSelect';
 import { currencyOptions, formatMoney, type CurrencyCode } from '../../currency';
@@ -32,8 +33,8 @@ const visibilityCopy: Record<EvidenceVisibility, { title: string; copy: string }
     copy: 'Review which evidence, ownership or authority conditions still need to be assembled for the decision.',
   },
   no: {
-    title: 'This is governance latency.',
-    copy: 'Frame the evidence, authority and permitted action before capital pressure turns reconstruction into the control process.',
+    title: 'The decision basis is not immediately available.',
+    copy: 'Frame the evidence, authority and permitted action before the decision is taken under time pressure.',
   },
 };
 
@@ -117,15 +118,15 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
       <div className="cg-shell">
         <header className="cg-section-heading cg-section-heading-dark">
           <span className="cg-eyebrow"><Calculator size={15} /> Capital decision exposure</span>
-          <h2 id="decision-exposure-title">How much capital is waiting while the decision basis is rebuilt?</h2>
-          <p>Use three figures to expose the minimum visible carrying burden. This is not a savings promise or an ROI forecast.</p>
+          <h2 id="decision-exposure-title">Estimate the exposure associated with decision latency.</h2>
+          <p>Use three figures to calculate the minimum visible carrying burden. This is not a savings promise or an ROI forecast.</p>
         </header>
 
         <div className="cg-exposure-workspace">
           <form className="cg-exposure-inputs" onSubmit={(event) => event.preventDefault()}>
             <div className="cg-exposure-form-head">
               <span>01</span>
-              <div><strong>Frame the decision</strong><small>Use a live decision or a realistic scenario.</small></div>
+              <div><strong>Frame the decision</strong><small>Use an approaching decision or a realistic scenario.</small></div>
             </div>
 
             <div className="cg-exposure-field">
@@ -161,7 +162,7 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
           <div className="cg-exposure-results" aria-live="polite">
             <div className="cg-exposure-form-head">
               <span>02</span>
-              <div><strong>See the visible burden</strong><small>Capital × annual rate × days ÷ 365</small></div>
+              <div><strong>Review the quantified exposure</strong><small>Capital × annual rate × days ÷ 365</small></div>
             </div>
             <div className="cg-result-primary">
               <span>Minimum visible carrying burden</span>
@@ -186,7 +187,7 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
         <div className="cg-evidence-check">
           <div>
             <span className="cg-step-index">03</span>
-            <h3>Can the current decision basis be opened now?</h3>
+            <h3>Is the current decision basis immediately available?</h3>
           </div>
           <div className="cg-choice-group" role="group" aria-label="Current decision basis visibility">
             {(['yes', 'partly', 'no'] as EvidenceVisibility[]).map((choice) => (
@@ -201,13 +202,13 @@ export function DecisionExposureSnapshot({ onUseScenario }: Props) {
             <p><strong>{visibility.title}</strong>{visibility.copy}</p>
           </div>
           <button className="cg-button cg-button-primary cg-use-scenario" type="button" onClick={() => { trackAX1Event('decision_exposure_scenario_used', { currency, delay_days: days, evidence_visibility: evidenceVisibility }); onUseScenario(buildScenario()); }}>
-            Use this scenario in a decision brief <ArrowRight size={16} />
+            Use this scenario in a Decision Brief <ArrowRight size={16} />
           </button>
         </div>
 
         <div className="cg-exposure-footer">
           <p className="cg-exposure-boundary">Illustrative decision-exposure estimate. It excludes delay impacts beyond the entered carrying rate, opportunity cost, disputes, rework and unverified assumptions. Axis One does not guarantee savings or delivery outcomes.</p>
-          <a href="/capital">Open the full exposure model <ArrowRight size={14} /></a>
+          <Link to="/capital">Open the full exposure model <ArrowRight size={14} /></Link>
         </div>
       </div>
     </section>

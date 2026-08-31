@@ -279,7 +279,7 @@ export function CapitalValueProtectionCalculator({
     }
   };
 
-  const fullMoney = (value: number) => formatCurrency(value, currency);
+  const fullMoney = React.useCallback((value: number) => formatCurrency(value, currency), [currency]);
   const compactMoney = (value: number) => formatCompactCurrency(value, currency);
   const optionalRows = result ? [
     inputs.includeOptionalReworkCost && { label: 'Rework, claims or dispute cost', value: inputs.optionalReworkCost as number },
@@ -291,11 +291,11 @@ export function CapitalValueProtectionCalculator({
   React.useEffect(() => {
     const timer = window.setTimeout(() => {
       setLiveMessage(result
-        ? `Estimated identified exposure ${fullMoney(result.identifiedExecutionExposure)}. Every one percent improvement is worth approximately ${fullMoney(result.valueOfOnePercent)}.`
+        ? `Estimated identified exposure ${fullMoney(result.identifiedExecutionExposure)}. Each one percent reduction in identified exposure represents approximately ${fullMoney(result.valueOfOnePercent)}.`
         : 'The estimate is incomplete. Complete the required fields to calculate a result.');
     }, 450);
     return () => window.clearTimeout(timer);
-  }, [result, currency]);
+  }, [fullMoney, result]);
 
   const scrollToTarget = (targetId: string, focusTarget = false) => {
     const target = document.getElementById(targetId);
@@ -312,17 +312,17 @@ export function CapitalValueProtectionCalculator({
       {showContext && <article className="cvp-story" id="capital-performance">
         <div className="cvp-story-layout">
           <div className="cvp-story-copy">
-            <Badge>Capital performance</Badge>
-            <h2 id="capital-performance-heading">Capital is approved once.<br />Its value is won or lost through execution.</h2>
+            <Badge>Capital under execution</Badge>
+            <h2 id="capital-performance-heading">Capital remains exposed throughout execution.</h2>
             <p>The investment decision is only the beginning. Value can continue to erode after approval when milestones, evidence, ownership, risk and capital-release decisions are managed across disconnected processes.</p>
-            <p>Teams spend time reconciling information instead of acting on it. Approvals slow down. Risks remain open without clear ownership. Contingency is consumed without a complete view of execution. Capital decisions can move forward before delivery is sufficiently proven.</p>
+            <p>Teams spend time reconciling information instead of acting on it. Approvals slow down. Risks remain open without clear ownership. Contingency is consumed without a complete view of execution. Capital decisions can move forward before the evidence of delivery is sufficiently current.</p>
           </div>
 
           <div className="cvp-story-definition">
             <span className="cvp-story-definition-kicker">Capital execution gap</span>
             <h3>What is disconnected capital execution?</h3>
             <p className="cvp-story-definition-lede">Disconnected capital execution is the gap between capital approval and verified delivery.</p>
-            <p className="cvp-story-definition-detail">It occurs when the people making decisions, the teams executing the work and the evidence proving progress do not operate through the same governed system.</p>
+            <p className="cvp-story-definition-detail">It occurs when the people making decisions, the teams executing the work and the evidence of progress do not operate through the same governed system.</p>
             <div className="cvp-problem-cards">
               <article><b>01</b><div><strong>Fragmented evidence</strong><p>Progress information is spread across documents, meetings, emails and disconnected systems.</p></div></article>
               <article><b>02</b><div><strong>Delayed decisions</strong><p>Decision-makers do not receive complete, current and decision-ready information at the right moment.</p></div></article>
@@ -335,14 +335,14 @@ export function CapitalValueProtectionCalculator({
           <span>The pattern is documented across the industry</span>
           <div>
             <p>Research from McKinsey, BCG, Accenture, PwC, Deloitte and EY examines different aspects of the same capital-performance problem: fragmented information, delayed decisions, weak governance, insufficient evidence and value lost during execution.</p>
-            <strong>The external research demonstrates the scale of the issue. It does not determine the result of your calculation.</strong>
+            <strong>External research provides context on capital-project underperformance. It does not determine the result of your calculation.</strong>
           </div>
         </div>
 
         <div className="cvp-story-transition">
           <div>
-            <span>From industry context to your exposure</span>
-            <h3>The problem is documented.<br />The estimate should be yours.</h3>
+            <span>From external context to organisation-specific exposure</span>
+            <h3>External evidence provides context.<br />Your inputs determine the estimate.</h3>
             <p>Benchmarks cannot tell you what disconnected execution may be costing your organisation. Your capital exposure depends on your portfolio, overruns, delays and financial assumptions.</p>
           </div>
           <div className="cvp-story-action">
@@ -350,11 +350,11 @@ export function CapitalValueProtectionCalculator({
             <ul>
               <li>Value exposed to cost overruns</li>
               <li>Carrying cost of delayed capital</li>
-              <li>What every 1% reduction could represent</li>
+              <li>What each 1% reduction in identified exposure could represent</li>
             </ul>
-            <strong>No consulting benchmark is applied automatically.</strong>
+            <strong>No external benchmark is applied automatically.</strong>
             <div className="cvp-story-buttons">
-              <Button onClick={() => scrollToTarget('capital-under-execution', true)}>Estimate my capital exposure</Button>
+              <Button onClick={() => scrollToTarget('capital-under-execution', true)}>Estimate capital exposure</Button>
               <button type="button" onClick={() => scrollToTarget('independent-evidence', true)}>Explore the independent research <ChevronDown size={14} /></button>
             </div>
             <small className="cvp-story-privacy"><LockKeyhole size={13} />Calculated in your browser. Your financial inputs are not submitted or stored.</small>
@@ -365,9 +365,9 @@ export function CapitalValueProtectionCalculator({
       <div className="decision-value-shell cvp-shell" id="decision-cost">
         <header className="cvp-intro">
           <div className="cvp-intro-copy">
-            <Badge>Capital value protection calculator</Badge>
+            <Badge>Capital decision exposure calculator</Badge>
             <h2 id="decision-cost-title">Where is capital value currently exposed?</h2>
-            <p>Enter your portfolio figures to estimate the value exposed to overruns and delay. Then test transparent reduction scenarios without treating them as guaranteed Axis One savings.</p>
+            <p>Enter your portfolio figures to estimate the value exposed to overruns and delay. Then test transparent reduction scenarios without treating them as predicted Axis One outcomes.</p>
           </div>
           <div className="cvp-intro-actions">
             <div className="cvp-currency">
@@ -584,7 +584,7 @@ export function CapitalValueProtectionCalculator({
 
           <aside className="cvp-results" aria-labelledby="cvp-results-title">
             <div className="cvp-results-head">
-              <div><span>Your capital execution picture</span><h3 id="cvp-results-title">See the parts before the total</h3></div>
+              <div><span>Capital exposure summary</span><h3 id="cvp-results-title">Review the components before the total</h3></div>
               <small className="cvp-basis-tag">{isExample ? 'Example' : 'Your estimate'}</small>
             </div>
 
@@ -606,14 +606,14 @@ export function CapitalValueProtectionCalculator({
               </div>
 
               <div className="cvp-one-percent">
-                <span>Every 1% improvement is worth approximately</span>
+                <span>Each 1% reduction in identified exposure represents</span>
                 <strong>{fullMoney(result.valueOfOnePercent)}</strong>
                 <small>One percent of the identified exposure, not a predicted Axis One result.</small>
               </div>
 
               <div className="cvp-scenario">
                 <div className="cvp-scenario-title">
-                  <span>Test an improvement</span>
+                  <span>Model a reduction scenario</span>
                   <label className="cvp-custom-improvement">
                     <span>Custom</span>
                     <input
@@ -631,7 +631,7 @@ export function CapitalValueProtectionCalculator({
                     <b>%</b>
                   </label>
                 </div>
-                <div className="cvp-scenario-buttons" role="group" aria-label="Improvement scenarios">
+                <div className="cvp-scenario-buttons" role="group" aria-label="Reduction scenarios">
                   {IMPROVEMENT_SCENARIOS.map((percentage) => <button
                     key={percentage}
                     type="button"
@@ -641,19 +641,19 @@ export function CapitalValueProtectionCalculator({
                   >{percentage}%</button>)}
                 </div>
                 <label className="cvp-range" htmlFor="cvp-improvement-range">
-                  <span>Custom reduction in identified exposure <small>1% to 25%</small></span>
+                    <span>Reduction in identified exposure <small>1% to 25%</small></span>
                   <input id="cvp-improvement-range" type="range" min="1" max="25" step="1" value={inputs.selectedImprovementPercent} onChange={(event) => setImprovement(Number(event.target.value))} />
                 </label>
                 <div className="cvp-selected-value">
                   <strong>{compactMoney(result.selectedValueProtected)}</strong>
-                  <span>Illustrative value potentially protected at a {inputs.selectedImprovementPercent}% reduction in identified exposure</span>
+                  <span>Illustrative exposure reduction at a {inputs.selectedImprovementPercent}% scenario</span>
                 </div>
                 <div className="cvp-scenario-table" aria-label="Scenario comparison">
                   {IMPROVEMENT_SCENARIOS.map((percentage) => <div key={percentage} className={inputs.selectedImprovementPercent === percentage ? 'is-selected' : ''}><span>{percentage}%</span><strong>{fullMoney(result.scenarioValues[percentage])}</strong></div>)}
                 </div>
               </div>
 
-              <p className="cvp-result-notice">This scenario applies your selected improvement percentage to the exposure identified from your inputs. It is not a guarantee, accounting valuation or predicted Axis One result.</p>
+              <p className="cvp-result-notice">This scenario applies your selected reduction percentage to the exposure identified from your inputs. It is not a guarantee, accounting valuation or predicted Axis One result.</p>
 
               <div className="cvp-basis-list">
                 <span>Estimate basis</span>
@@ -682,7 +682,7 @@ export function CapitalValueProtectionCalculator({
               <article><span>01</span><strong>Cost-overrun exposure</strong><p>Percentage mode: capital under execution × cost-overrun percentage. Known amount mode: the amount entered by the user.</p></article>
               <article><span>02</span><strong>Delay carrying cost</strong><p>Capital under execution × portion affected by delay × annual carrying rate × delay months / 12.</p></article>
               <article><span>03</span><strong>Optional observed costs</strong><p>Only direct, explicitly enabled values are added to the combined identified exposure.</p></article>
-              <article><span>04</span><strong>Illustrative value protected</strong><p>Identified execution exposure × the selected improvement percentage.</p></article>
+              <article><span>04</span><strong>Illustrative exposure reduction</strong><p>Identified execution exposure × the selected reduction percentage.</p></article>
             </div>
             <div className="cvp-safeguard">
               <ShieldAlert size={18} />
@@ -698,7 +698,7 @@ export function CapitalValueProtectionCalculator({
 
         <section className="cvp-evidence" id="independent-evidence" tabIndex={-1} aria-labelledby="cvp-evidence-heading">
           <div className="cvp-evidence-head">
-            <div><span>Independent industry evidence</span><h3 id="cvp-evidence-heading">The problem is documented.<br />The estimate is yours.</h3></div>
+            <div><span>Independent industry evidence</span><h3 id="cvp-evidence-heading">Independent evidence provides context.<br />Your inputs determine the estimate.</h3></div>
             <p>Independent research consistently connects capital-project underperformance with fragmented information, delayed decisions, weak governance and inadequate evidence. The calculator above uses the visitor's own data. The research below provides context and is not automatically included in the estimate.</p>
           </div>
 
@@ -783,7 +783,7 @@ export function CapitalValueProtectionCalculator({
         </section>
 
         <div className="cvp-cta">
-          <div><CircleDollarSign size={22} /><span><strong>Validate this against a live capital programme</strong><small>Use the estimate as a starting point. Axis One can help structure the milestones, evidence, ownership and release controls behind a live capital decision.</small></span></div>
+          <div><CircleDollarSign size={22} /><span><strong>Review this estimate against a current capital programme</strong><small>Use the estimate as a starting point for structuring the milestones, evidence, ownership and release controls behind a current capital decision.</small></span></div>
           <div className="cvp-cta-actions">
             <Button onClick={onOpenAccess}>Prepare a Decision Brief</Button>
             <button type="button" className="cvp-copy-button" onClick={copySummary} disabled={!result}>

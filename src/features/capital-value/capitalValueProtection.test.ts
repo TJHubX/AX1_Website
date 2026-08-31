@@ -192,7 +192,7 @@ test('copy summary contains the calculation, assumptions and disclaimer', () => 
   const summary = buildCalculationSummary(input, result, 'GBP');
   assert.match(summary, /Capital under execution: £100,000,000/);
   assert.match(summary, /Identified execution exposure: £11,000,000/);
-  assert.match(summary, /Value of each 1% improvement: £110,000/);
+  assert.match(summary, /Value represented by each 1% reduction in identified exposure: £110,000/);
   assert.match(summary, /10% reduction in identified exposure/);
   assert.match(summary, /not a guarantee/i);
   assert.doesNotMatch(summary, /NaN|Infinity/);
@@ -205,7 +205,7 @@ test('copy summary states when calculated delay cost is excluded', () => {
   const summary = buildCalculationSummary(input, result, 'GBP');
   assert.match(summary, /Delay carrying cost: £1,000,000 \(calculated but excluded from combined exposure\)/);
   assert.match(summary, /Identified execution exposure: £10,000,000/);
-  assert.match(summary, /Value of each 1% improvement: £100,000/);
+  assert.match(summary, /Value represented by each 1% reduction in identified exposure: £100,000/);
 });
 
 test('evidence records retain official HTTPS sources and accessible titles', () => {

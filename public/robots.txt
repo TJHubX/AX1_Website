@@ -7,4 +7,16 @@ Allow: /
 User-agent: ChatGPT-User
 Allow: /
 
-Sitemap: https://ax1-website.pages.dev/sitemap.xml
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+Sitemap: https://ax1.capital/sitemap.xml

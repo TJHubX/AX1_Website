@@ -1,5 +1,6 @@
 import React from 'react';
-import { Footer, PageProps } from '../components';
+import type { PageProps } from '../components';
+import { Footer } from '../components';
 import LegalPageLayout from '../components/LegalPageLayout';
 
 export default function PrivacyPage({ onOpenContact }: PageProps) {
@@ -16,7 +17,7 @@ export default function PrivacyPage({ onOpenContact }: PageProps) {
             heading: 'Controller and contact',
             paragraphs: [
               'AX1 Structura Ltd is the controller for personal information covered by this policy. The company is registered in England and Wales under company number 17151320, with its registered office at 66 Paul Street, London EC2A 4NA, England.',
-              'Privacy questions and rights requests can be sent to info@ax1.capital.',
+              <>Privacy questions and rights requests can be sent to <a href="mailto:info@ax1.capital?subject=Data%20protection%20request">info@ax1.capital</a>. Please use the subject “Data protection request” so it can be identified promptly.</>,
             ],
           },
           {
@@ -36,34 +37,51 @@ export default function PrivacyPage({ onOpenContact }: PageProps) {
           {
             heading: 'Purposes and lawful bases',
             paragraphs: [
-              'We use information to respond to enquiries, consider potential engagements, maintain correspondence, operate and secure the website, keep appropriate business records and meet legal obligations.',
-              'Depending on the context, the lawful basis may be taking steps at your request before a contract, our legitimate interests in operating and developing the business, consent where it is specifically requested, or compliance with a legal obligation.',
+              'We identify a lawful basis for each purpose before using personal information. The current website and enquiry purposes are mapped as follows:',
+            ],
+            bullets: [
+              'Responding to an enquiry and considering an engagement: taking steps at your request before entering a contract and, where appropriate, our legitimate interest in responding to relevant business enquiries.',
+              'Maintaining professional correspondence and relationship records: our legitimate interest in managing business relationships and preserving an accurate record of material communications.',
+              'Delivering and securing the website: our legitimate interest in operating a reliable and secure public service, and compliance with a legal obligation where a specific security or record-keeping duty applies.',
+              'Establishing, exercising or defending legal rights and meeting statutory duties: compliance with a legal obligation or our legitimate interest in protecting the company’s legal position, as applicable.',
             ],
           },
           {
             heading: 'Sharing and service providers',
             paragraphs: [
-              'Information may be shared with service providers that support website hosting, security, business email and professional advice, but only where needed for the relevant purpose. We may also disclose information where required by law, to protect legal rights or in connection with a corporate transaction.',
+              'Cloudflare supports website hosting, delivery and security. Namecheap PrivateEmail processes a message only after you choose to send it. Information may also be shared with professional advisers where needed for the relevant purpose. We require providers acting as processors to protect personal information and use it only on documented instructions.',
+              'We may disclose information where required by law, where necessary to protect legal rights, or in connection with a corporate transaction subject to appropriate confidentiality and data-protection safeguards.',
               'AX1 Structura Ltd does not sell personal information.',
             ],
           },
           {
             heading: 'International transfers',
             paragraphs: [
-              'Some providers may process information outside the United Kingdom. Where UK data-protection law requires it, we use an applicable adequacy decision, approved contractual safeguards or another lawful transfer mechanism.',
+              'Some providers may process information outside the United Kingdom. Where UK data-protection law requires it, we rely on an applicable adequacy regulation, the UK International Data Transfer Agreement or Addendum, or another permitted safeguard, together with a transfer-risk assessment where required.',
+              <>You can ask for further information about the safeguard relevant to your information by emailing <a href="mailto:info@ax1.capital?subject=International%20transfer%20safeguards">info@ax1.capital</a>.</>,
             ],
           },
           {
             heading: 'Retention',
             paragraphs: [
-              'We keep personal information only for as long as reasonably needed for the purpose for which it was obtained, including enquiry follow-up, relationship management, security, record-keeping and legal requirements. Retention periods depend on the nature of the communication and any resulting relationship.',
+              'Information typed into the Decision Brief or enquiry tools is not retained by Axis One unless you choose to send it. Enquiry correspondence that does not progress to an engagement is reviewed and normally deleted within 24 months of the last meaningful contact.',
+              'Where an engagement or contractual relationship is established, material correspondence and business records are normally kept for the relationship and for up to six years afterwards where needed for contractual, accounting or legal purposes. Hosting and security records are retained only for the period required to operate and protect the website, according to the provider configuration and our documented retention schedule.',
+              'A legal hold, active dispute or statutory requirement may justify a longer period. When information is no longer needed, it is deleted or irreversibly anonymised.',
             ],
           },
           {
             heading: 'Your rights',
             paragraphs: [
-              'Subject to applicable law and any exemptions, you may ask for access, correction, deletion, restriction, portability or objection to processing. You may withdraw consent where processing relies on consent. You also have the right to complain to the UK Information Commissioner’s Office at ico.org.uk.',
-              'We may need to verify your identity before acting on a request.',
+              'Subject to applicable law and any exemptions, you may ask for access to your personal information, correction, deletion, restriction, portability or an explanation of how it is used. You may also object to processing as described separately below.',
+              <>Send a request to <a href="mailto:info@ax1.capital?subject=Data%20protection%20request">info@ax1.capital</a>. We respond without undue delay and normally within one calendar month. We may ask only for information reasonably needed to verify your identity or authority. You also have the right to complain to the <a href="https://ico.org.uk/make-a-complaint/data-protection-complaints/" target="_blank" rel="noopener noreferrer">UK Information Commissioner’s Office</a>.</>,
+            ],
+          },
+          {
+            heading: 'Your right to object',
+            emphasis: true,
+            paragraphs: [
+              <>You have the right to object at any time to our use of your personal information where we rely on legitimate interests. Tell us what processing you object to by emailing <a href="mailto:info@ax1.capital?subject=Objection%20to%20processing">info@ax1.capital</a>. We will stop the relevant processing unless we can demonstrate compelling legitimate grounds that override your interests, rights and freedoms, or the information is needed to establish, exercise or defend legal claims.</>,
+              'If personal information is ever used for direct marketing, you may object at any time and that use will stop. The current public website does not operate behavioural advertising or marketing profiling.',
             ],
           },
           {

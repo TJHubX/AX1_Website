@@ -1,6 +1,7 @@
 import React from 'react';
 import portrait from '../assets/founder-portrait.webp';
-import { Button, Footer, PageProps } from '../components';
+import type { PageProps } from '../components';
+import { Button, Footer } from '../components';
 
 const operatingSignals = [
   {
@@ -35,9 +36,9 @@ export default function FounderPage({ onOpenContact }: PageProps) {
       <section className="founder-editorial-hero" aria-labelledby="founder-title">
         <div className="cg-shell founder-editorial-hero-grid">
           <div className="founder-editorial-copy">
-            <span className="founder-editorial-eyebrow"><i aria-hidden="true" /> Founder / Origin</span>
+            <span className="founder-editorial-eyebrow"><i aria-hidden="true" /> Founder</span>
             <h1 id="founder-title">Built from a structural gap.</h1>
-            <p className="founder-editorial-lead">Axis One was not built from a product idea. It came from a recurring problem at the point where capital decisions met the reality of execution.</p>
+            <p className="founder-editorial-lead">Axis One emerged from a recurring operating problem where capital decisions became separated from current execution.</p>
             <blockquote>Capital can be available while decision-grade trust is not.</blockquote>
           </div>
 
@@ -59,7 +60,7 @@ export default function FounderPage({ onOpenContact }: PageProps) {
           <header className="founder-section-heading">
             <span>What kept recurring</span>
             <h2 id="founder-pattern-title">The decision was separated from the reality of delivery.</h2>
-            <p>Working across investors, brokers, operators and partners, one pattern became impossible to ignore: execution lived in one place, evidence in another and the capital decision somewhere else entirely.</p>
+            <p>Across investors, brokers, operators and partners, the same structural separation recurred: execution lived in one place, evidence in another and the capital decision somewhere else entirely.</p>
           </header>
 
           <div className="founder-pattern-list">
@@ -85,7 +86,7 @@ export default function FounderPage({ onOpenContact }: PageProps) {
           </header>
 
           <div className="founder-shift-grid">
-            <blockquote>What if proven execution became the basis for the next capital decision?</blockquote>
+            <blockquote>Current, attributable execution should form the basis of the next capital decision.</blockquote>
 
             <div className="founder-decision-basis" aria-label="Axis One decision basis">
               <div className="founder-decision-basis-head">
@@ -111,8 +112,8 @@ export default function FounderPage({ onOpenContact }: PageProps) {
       <section className="founder-principle" aria-labelledby="founder-principle-title">
         <div className="cg-shell founder-principle-grid">
           <header className="founder-section-heading">
-            <span>Architecture philosophy</span>
-            <h2 id="founder-principle-title">Structured. Explainable. Deliberately bounded.</h2>
+            <span>Design principle</span>
+            <h2 id="founder-principle-title">Structured for clarity. Explicit in its boundaries.</h2>
           </header>
 
           <div className="founder-principle-copy">
@@ -129,15 +130,15 @@ export default function FounderPage({ onOpenContact }: PageProps) {
       <section className="founder-closing" aria-labelledby="founder-closing-title">
         <div className="cg-shell founder-closing-inner">
           <span>Founder conviction</span>
-          <blockquote id="founder-closing-title">Capital needs more than a compelling strategy. It needs execution that decision-makers can trust.</blockquote>
+          <blockquote id="founder-closing-title">Capital decisions require more than strategic intent. They require a current, attributable basis in execution.</blockquote>
           <div className="founder-closing-footer">
             <div>
               <strong>Tania Jokic</strong>
               <small>Founder, Axis One</small>
             </div>
             <div className="actions">
-              <Button onClick={openDecisionBrief}>Frame a Capital Decision</Button>
-              <Button variant="ghost" to="/system">See How Axis One Works</Button>
+              <Button onClick={openDecisionBrief}>Frame a capital decision</Button>
+              <Button variant="ghost" to="/system">See how Axis One works</Button>
             </div>
           </div>
         </div>

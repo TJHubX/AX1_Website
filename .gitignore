@@ -3,6 +3,9 @@ dist/
 build/
 coverage/
 .test-dist/
+test-results/
+playwright-report/
+.ssr-dist/
 .DS_Store
 *.log
 .env*

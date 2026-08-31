@@ -76,7 +76,7 @@ export function AX1MilestoneTrace({
       window.removeEventListener('scroll', scheduleUpdate);
       window.removeEventListener('resize', scheduleUpdate);
     };
-  }, [followScroll, items.length]);
+  }, [activeIndex, followScroll, items.length]);
 
   return (
     <div

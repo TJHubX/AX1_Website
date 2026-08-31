@@ -4,8 +4,9 @@ import { Link, NavLink } from 'react-router-dom';
 
 export interface LegalSection {
   heading: string;
-  paragraphs: string[];
+  paragraphs: React.ReactNode[];
   bullets?: string[];
+  emphasis?: boolean;
 }
 
 interface LegalPageLayoutProps {
@@ -104,11 +105,11 @@ export default function LegalPageLayout({
 
             <div className="legal-sections">
               {sections.map((section, index) => (
-                <section className="legal-section" id={sectionId(section.heading, index)} key={section.heading}>
+                <section className={`legal-section${section.emphasis ? ' is-emphasis' : ''}`} id={sectionId(section.heading, index)} key={section.heading}>
                   <div className="legal-section-number">{String(index + 1).padStart(2, '0')}</div>
                   <div>
                     <h2>{section.heading}</h2>
-                    {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                    {section.paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{paragraph}</p>)}
                     {section.bullets && section.bullets.length > 0 && (
                       <ul>
                         {section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
@@ -123,7 +124,7 @@ export default function LegalPageLayout({
               <div>
                 <span>Questions about this document?</span>
                 <h2 id="legal-contact-title">Contact Axis One</h2>
-                <p>Open a prepared enquiry in the website, then choose whether to copy it or send it through your own email client.</p>
+                <p>Prepare an enquiry on this website, then choose whether to copy it or open it in your email client.</p>
               </div>
               <button type="button" onClick={onContact}><Mail size={16} aria-hidden="true" /> Start an enquiry <ArrowRight size={14} aria-hidden="true" /></button>
             </section>

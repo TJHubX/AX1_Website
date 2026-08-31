@@ -23,7 +23,7 @@ export function calculateDiagnosticResult(answers: DiagnosticAnswer[]): Diagnost
     return {
       state: 'governed',
       label: 'Governed basis',
-      headline: 'The next decision appears accessible and defensible.',
+      headline: 'The next decision appears accessible and well supported.',
       explanation: 'The operating question is whether that basis remains current as execution changes and whether authority stays explicit.',
       nextStep: 'Test the capital exposure around the decision',
       score,
@@ -45,8 +45,8 @@ export function calculateDiagnosticResult(answers: DiagnosticAnswer[]): Diagnost
     state: 'reconstructed',
     label: 'Reconstructed basis',
     headline: 'The decision is likely being governed through preparation work.',
-    explanation: 'When proof and authority have to be assembled for the meeting, delay and control risk become part of the operating model.',
-    nextStep: 'Expose the cost of waiting',
+    explanation: 'When evidence and authority are assembled only for the meeting, the decision process becomes dependent on reconstruction.',
+    nextStep: 'Assess the exposure associated with delay',
     score,
   };
 }

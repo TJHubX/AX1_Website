@@ -43,6 +43,7 @@ function formatCapitalInput(value: string) {
 }
 
 function recipientEmail() {
+  if (typeof document === 'undefined') return 'info@ax1.capital';
   return document.documentElement.dataset.ax1Email || 'info@ax1.capital';
 }
 
@@ -88,7 +89,7 @@ export function DecisionBriefSection({ scenario }: Props) {
     if (!values.capitalAffected.trim()) next.capitalAffected = 'Add the approximate capital affected.';
     else if (!Number.isFinite(Number(values.capitalAffected)) || Number(values.capitalAffected) <= 0) next.capitalAffected = 'Enter a positive amount.';
     if (!values.conditions.trim()) next.conditions = 'Describe what must be true before capital moves.';
-    if (!values.evidenceLocation) next.evidenceLocation = 'Select where the proof is today.';
+    if (!values.evidenceLocation) next.evidenceLocation = 'Select where the current evidence is held.';
     if (!values.workEmail.trim()) next.workEmail = 'Enter a work email.';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.workEmail)) next.workEmail = 'Enter a valid email address.';
     setErrors(next);
@@ -102,7 +103,7 @@ export function DecisionBriefSection({ scenario }: Props) {
       return;
     }
     setPreview(buildDecisionEmail(values));
-    setStatus('Brief prepared below. Review and edit it before copying or opening email.');
+    setStatus('Brief prepared below. Review and edit it before copying or opening an email draft.');
     trackAX1Event('decision_brief_prepared', {
       evidence_position: values.evidenceLocation,
       scenario_included: Boolean(scenario),
@@ -151,7 +152,7 @@ export function DecisionBriefSection({ scenario }: Props) {
         <div className="cg-brief-copy cg-brief-editorial">
           <div className="cg-brief-intro cg-brief-intro-panel">
             <span className="cg-eyebrow"><Mail size={15} /> Decision Brief</span>
-            <h2 id="decision-brief-title">Bring the next capital decision, not a requirements list.</h2>
+            <h2 id="decision-brief-title">Frame the next capital decision in governed terms.</h2>
           </div>
           <div className="cg-brief-meta">
             <p>Frame one approaching action. Review the generated brief on this page, edit it if needed, then choose whether to copy it or open your email client.</p>
@@ -160,7 +161,7 @@ export function DecisionBriefSection({ scenario }: Props) {
                 <ShieldCheck size={16} aria-hidden="true" />
                 <span>Prepared in your browser</span>
                 <i aria-hidden="true">·</i>
-                <span>Sent only when you choose</span>
+                <span>Nothing is sent by this website</span>
               </div>
               <div className="cg-brief-recipient-actions">
                 <a
@@ -168,7 +169,7 @@ export function DecisionBriefSection({ scenario }: Props) {
                   onClick={() => trackAX1Event('decision_brief_email_opened', { location: 'recipient_link' })}
                 >
                   <Mail size={14} aria-hidden="true" />
-                  Open email app
+                  Open email draft
                   <ExternalLink size={13} aria-hidden="true" />
                 </a>
                 <button type="button" onClick={copyRecipient}>
@@ -188,7 +189,7 @@ export function DecisionBriefSection({ scenario }: Props) {
             <ol className="cg-form-progress" aria-label="Decision Brief stages">
               <li className={preview ? 'is-complete' : 'is-current'} aria-current={!preview ? 'step' : undefined}><span>01</span><strong>Frame</strong></li>
               <li className={preview ? 'is-current' : ''} aria-current={preview ? 'step' : undefined}><span>02</span><strong>Review</strong></li>
-              <li><span>03</span><strong>Send</strong></li>
+              <li><span>03</span><strong>Continue</strong></li>
             </ol>
             <label className={errors.decision ? 'is-invalid' : ''} htmlFor={ids.decision}>
               <span>What capital decision is approaching?</span>
@@ -208,23 +209,23 @@ export function DecisionBriefSection({ scenario }: Props) {
               </div>
             </div>
             <label className={errors.conditions ? 'is-invalid' : ''} htmlFor={ids.conditions}>
-              <span>What must be true before it moves?</span>
+              <span>What conditions must be satisfied before capital moves?</span>
               <textarea id={ids.conditions} rows={3} value={values.conditions} onChange={(event) => update('conditions', event.target.value)} placeholder="The outcome, evidence and authority conditions that must be satisfied" />
               {errors.conditions && <small>{errors.conditions}</small>}
             </label>
             <div className="cg-brief-form-row">
               <div className={`cg-brief-field ${errors.evidenceLocation ? 'is-invalid' : ''}`.trim()}>
-                <label htmlFor={ids.evidenceLocation}>Where is the proof today?</label>
+                <label htmlFor={ids.evidenceLocation}>Where is the current evidence?</label>
                 <BrandedSelect
                   id={ids.evidenceLocation}
                   value={values.evidenceLocation}
                   invalid={Boolean(errors.evidenceLocation)}
-                  ariaLabel="Where the proof is today"
+                  ariaLabel="Where the current evidence is held"
                   options={[
                     { value: '', label: 'Select current position' },
-                    { value: 'Open in one current system', label: 'Open in one current system' },
-                    { value: 'Split across tools and stakeholders', label: 'Split across tools and stakeholders' },
-                    { value: 'Rebuilt for each decision meeting', label: 'Rebuilt for each decision meeting' },
+                    { value: 'Available in one current system', label: 'Available in one current system' },
+                    { value: 'Distributed across tools and stakeholders', label: 'Distributed across tools and stakeholders' },
+                    { value: 'Reconstructed for each decision meeting', label: 'Reconstructed for each decision meeting' },
                     { value: 'Not consistently available', label: 'Not consistently available' },
                   ]}
                   onChange={(nextLocation) => update('evidenceLocation', nextLocation)}
@@ -248,11 +249,11 @@ export function DecisionBriefSection({ scenario }: Props) {
 
           {preview && (
             <section className="cg-brief-preview" aria-labelledby="cg-brief-preview-title">
-              <div className="cg-brief-preview-head"><div><span>Step 02</span><h3 id="cg-brief-preview-title">Review the email before anything opens.</h3></div><button type="button" onClick={() => setPreview(null)}><ArrowLeft size={15} />Edit inputs</button></div>
+              <div className="cg-brief-preview-head"><div><span>Step 02</span><h3 id="cg-brief-preview-title">Review the email draft before anything opens.</h3></div><button type="button" onClick={() => setPreview(null)}><ArrowLeft size={15} />Edit inputs</button></div>
               <label htmlFor={ids.subject}><span>Email subject</span><input id={ids.subject} value={preview.subject} onChange={(event) => updatePreview('subject', event.target.value)} /></label>
               <label htmlFor={ids.body}><span>Email body</span><textarea id={ids.body} rows={22} value={preview.body} onChange={(event) => updatePreview('body', event.target.value)} /></label>
-              <div className="cg-brief-preview-actions"><button className="cg-button cg-button-secondary" type="button" onClick={copyBrief}><Copy size={16} />Copy brief</button><button className="cg-button cg-button-primary" type="button" onClick={openEmail}><ExternalLink size={16} />Open email</button></div>
-              <p>Nothing is sent automatically. Your email client opens only when you select “Open email”.</p>
+              <div className="cg-brief-preview-actions"><button className="cg-button cg-button-secondary" type="button" onClick={copyBrief}><Copy size={16} />Copy brief</button><button className="cg-button cg-button-primary" type="button" onClick={openEmail}><ExternalLink size={16} />Open email draft</button></div>
+              <p>Nothing is sent automatically. Your email client opens only when you select “Open email draft”.</p>
             </section>
           )}
         </div>

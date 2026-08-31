@@ -221,15 +221,16 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
       <div className="footer-signal" aria-hidden="true"><i /><i /><i /></div>
       <div className="footer-frame">
         <div className="footer-masthead">
-          <nav className="footer-nav footer-nav-masthead" aria-label="Footer navigation">
-            <div>
+          <nav className="footer-nav footer-nav-masthead footer-nav-two-row" aria-label="Footer navigation">
+            <div className="footer-nav-explore">
               <strong>{copy.footer.explore}</strong>
               <Link to="/">{copy.footer.home}</Link>
               <a href={sectionPath('why-ax1')}>{copy.nav.why}</a>
+              <Link to="/capital">{copy.footer.fullExposure}</Link>
               <Link to="/system">{copy.nav.system}</Link>
               <a href={sectionPath('decision-exposure')}>{copy.nav.exposure}</a>
             </div>
-            <div>
+            <div className="footer-nav-company">
               <strong>{copy.footer.company}</strong>
               <Link to="/deployment">{copy.nav.deployment}</Link>
               <Link to="/trust">{copy.nav.trust}</Link>
@@ -254,7 +255,7 @@ export function Footer({ onOpenContact }: Pick<PageProps, 'onOpenContact'>) {
             <p>{copy.footer.body}</p>
           </section>
 
-          <Link to="/" className="footer-brand-signal" aria-label="Axis One, Global decision infrastructure, home">
+          <Link to="/" className="footer-brand-signal" aria-label="Axis One capital governance infrastructure, home">
             <SystemVisual compact />
           </Link>
 
@@ -301,7 +302,7 @@ export function ModalShell({ children, onClose, className = '', labelledBy }: { 
     shellRef.current?.focus();
     return () => {
       document.body.style.overflow = previousOverflow;
-      returnFocusRef.current?.focus();
+      returnFocusRef.current?.focus({ preventScroll: true });
     };
   }, []);
 
@@ -331,7 +332,13 @@ export function ModalShell({ children, onClose, className = '', labelledBy }: { 
   }, [onClose]);
 
   return createPortal(
-    <div className="modal-backdrop" onMouseDown={onClose}>
+    <motion.div
+      className="modal-backdrop"
+      initial={reduceMotion ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={reduceMotion ? { duration: 0 } : { duration: 0.18, ease: 'easeOut' }}
+      onMouseDown={onClose}
+    >
       <motion.div
         ref={shellRef}
         className={`modal-shell ${className}`.trim()}
@@ -339,15 +346,15 @@ export function ModalShell({ children, onClose, className = '', labelledBy }: { 
         aria-modal="true"
         aria-labelledby={labelledBy}
         tabIndex={-1}
-        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 28, scale: 0.98 }}
-        animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: reduceMotion ? 0.15 : 0.28 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
         onMouseDown={(event) => event.stopPropagation()}
       >
         <button className="modal-close" type="button" onClick={onClose} aria-label="Close"><X size={19} /></button>
         {children}
       </motion.div>
-    </div>,
+    </motion.div>,
     document.body,
   );
 }
@@ -443,7 +450,7 @@ export function RequestAccessModal({ onClose }: ModalProps) {
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
-      const order: Array<[keyof AccessErrors, React.RefObject<HTMLElement>]> = [
+      const order: Array<[keyof AccessErrors, React.RefObject<HTMLElement | null>]> = [
         ['fullName', fullNameRef],
         ['workEmail', workEmailRef],
         ['organization', organizationRef],
@@ -510,7 +517,7 @@ export function RequestAccessModal({ onClose }: ModalProps) {
         <>
           <div className="modal-title">
             <h2 id="request-access-title">Frame a Capital Decision</h2>
-            <p>Bring the next capital decision, not a requirements list.</p>
+            <p>Frame the next capital decision in governed terms.</p>
           </div>
           <form className="access-form" onSubmit={handleSubmit} noValidate aria-labelledby="request-access-title">
             <label className={fieldClass('fullName')}>

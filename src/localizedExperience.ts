@@ -9,7 +9,7 @@ export type LocalizedExperienceCopy = {
 };
 
 const en: LocalizedExperienceCopy = {
-  diagnostic: { eyebrow: 'A 60-second test', title: 'Is the next capital decision ready to be defended?', body: 'Test the decision basis before urgency turns missing context into exposure.', question: 'Question', yes: 'Yes', partial: 'Partly', no: 'No', result: 'Decision readiness', complete: 'Answer each question to reveal the current position.' },
+  diagnostic: { eyebrow: 'Decision readiness assessment', title: 'Is the next capital decision ready to be defended?', body: 'Assess the decision basis before urgency turns missing context into exposure.', question: 'Question', yes: 'Yes', partial: 'Partly', no: 'No', result: 'Decision readiness', complete: 'Answer each question to reveal the current position.' },
   exposure: { eyebrow: 'Capital decision exposure', title: 'Make the cost of decision delay visible.', body: 'This indicative view isolates the carrying exposure while a capital decision remains unresolved.', capital: 'Capital affected', days: 'Days unresolved', rate: 'Annual carrying rate', result: 'Indicative carrying exposure' },
   states: { eyebrow: 'State has consequence', title: 'A decision state should change what can happen next.', body: 'Clear state language distinguishes readiness from the human authority to act.', actions: ['Release', 'Conditional release', 'Hold', 'Stop / review'] },
   roles: { eyebrow: 'Permissioned collaboration', title: 'One programme reality. Different responsibilities.', body: 'Shared context does not mean shared authority. Each participant sees the decision through the responsibility they hold.', labels: ['Capital owner', 'Execution owner', 'Assurance & audit'] },
