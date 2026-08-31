@@ -49,8 +49,8 @@ The controller should record the named internal owner and approval date below. C
 
 ## Immediate controller confirmations
 
-1. Retain the applicable Namecheap PrivateEmail contract/DPA, sub-processor, transfer, security and deletion evidence.
-2. Confirm that the Cloudflare self-serve terms and current Data Processing Addendum apply to the AX1 account.
+1. Retain dated AX1 account evidence for the publicly verified Namecheap Private Email DPA and complete the processing-location, sub-processor, security and deletion review.
+2. Retain dated AX1 account evidence showing that the publicly verified Cloudflare self-serve terms and DPA v6.4 apply to the AX1 account.
 3. Name the accountable director and operational privacy owner.
 4. Confirm that the public retention periods match actual mailbox and records-management practice.
 
