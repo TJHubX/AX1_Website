@@ -28,6 +28,11 @@ Interactive currency displays support GBP, EUR, USD, CZK, HUF, RSD, AED and SAR.
 
 AX1 Structura Ltd is registered in England and Wales, company number 17151320. Registered office: 66 Paul Street, London EC2A 4NA, England. Contact: info@ax1.capital.
 
+Authoritative LinkedIn profiles:
+
+- [Axis One company profile](https://www.linkedin.com/company/ax1-capital/)
+- [Tania Jokic, Founder](https://www.linkedin.com/in/tania-jokic-business-strategy-investments/)
+
 Website enquiry and Decision Brief tools prepare a `mailto:` message in the visitor's browser. They open the visitor's configured email application only after the visitor chooses to do so; the website does not submit or send the message automatically.
 
 For a fuller factual reference, see [llms-full.txt](https://ax1.capital/llms-full.txt).

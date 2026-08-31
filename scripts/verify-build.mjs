@@ -65,8 +65,19 @@ const sitemap = await readFile(join('dist', 'sitemap.xml'), 'utf8');
 const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 assert.deepEqual(sitemapUrls.sort(), routes.map((route) => route === '/' ? `${origin}/` : `${origin}${route}`).sort());
 
-await stat(join('dist', 'llms.txt'));
-await stat(join('dist', 'llms-full.txt'));
+const home = await readFile(routeFile('/'), 'utf8');
+assert.ok(home.includes('https://www.linkedin.com/company/ax1-capital/'), 'Organisation LinkedIn identity is missing from schema');
+assert.ok(home.includes('https://www.linkedin.com/in/tania-jokic-business-strategy-investments/'), 'Founder LinkedIn identity is missing from schema');
+
+const llms = await readFile(join('dist', 'llms.txt'), 'utf8');
+const llmsFull = await readFile(join('dist', 'llms-full.txt'), 'utf8');
+for (const identityUrl of [
+  'https://www.linkedin.com/company/ax1-capital/',
+  'https://www.linkedin.com/in/tania-jokic-business-strategy-investments/',
+]) {
+  assert.ok(llms.includes(identityUrl), `${identityUrl} is missing from llms.txt`);
+  assert.ok(llmsFull.includes(identityUrl), `${identityUrl} is missing from llms-full.txt`);
+}
 await stat(join('dist', 'robots.txt'));
 const securityTxt = await readFile(join('dist', '.well-known', 'security.txt'), 'utf8');
 assert.match(securityTxt, /^Contact: mailto:info@ax1\.capital$/m);
