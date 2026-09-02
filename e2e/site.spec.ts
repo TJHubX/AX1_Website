@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 const routes = [
-  '/', '/system', '/capital', '/deployment', '/trust', '/founder',
+  '/', '/system', '/capital', '/release-pilot', '/deployment', '/trust', '/founder',
   '/privacy', '/cookies', '/terms', '/disclaimer', '/legal', '/accessibility',
 ];
 
@@ -17,8 +17,20 @@ for (const route of routes) {
       'href',
       route === '/' ? 'https://ax1.capital/' : `https://ax1.capital${route}`,
     );
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      'content',
+      route === '/release-pilot' ? 'noindex, follow' : 'index, follow, max-image-preview:large',
+    );
   });
 }
+
+test('the legacy capital release URL redirects permanently', async ({ page }) => {
+  const response = await page.goto('/capital-release');
+  const redirectedFrom = response?.request().redirectedFrom();
+  expect(redirectedFrom).not.toBeNull();
+  expect((await redirectedFrom?.response())?.status()).toBe(301);
+  await expect(page).toHaveURL(/\/release-pilot$/);
+});
 
 test('unknown routes return an actual 404 document', async ({ page }) => {
   const response = await page.goto('/this-page-does-not-exist');
@@ -46,7 +58,7 @@ test('the enquiry modal opens, traps the workflow, and closes with Escape', asyn
 
 test('representative pages have no serious automated accessibility violations', async ({ page }) => {
   const failures: string[] = [];
-  for (const route of ['/', '/trust', '/privacy']) {
+  for (const route of ['/', '/release-pilot', '/trust', '/privacy', '/this-page-does-not-exist']) {
     await page.goto(route, { waitUntil: 'networkidle' });
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
@@ -84,5 +96,36 @@ test.describe('mobile layout', () => {
     expect(box!.width).toBeLessThanOrEqual(390);
     expect(box!.y).toBeGreaterThanOrEqual(0);
     expect(box!.height).toBeLessThanOrEqual(844);
+  });
+
+  test('the capital release pilot and its enquiry remain inside the viewport', async ({ page }) => {
+    await page.goto('/release-pilot', { waitUntil: 'networkidle' });
+    const dimensions = await page.evaluate(() => ({
+      clientWidth: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+    }));
+    expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth + 1);
+    await expect(page.getByRole('navigation', { name: 'Capital release landing page navigation' })).toBeVisible();
+    await page.getByRole('button', { name: /Discuss your next release/i }).first().click();
+    const dialog = page.getByRole('dialog');
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByLabel(/Type of capital/i)).toBeVisible();
+    await expect(dialog.getByLabel(/Expected decision date/i)).toBeVisible();
+    const box = await dialog.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.x).toBeGreaterThanOrEqual(0);
+    expect(box!.width).toBeLessThanOrEqual(390);
+    expect(box!.y).toBeGreaterThanOrEqual(0);
+    expect(box!.height).toBeLessThanOrEqual(844);
+  });
+
+  test('the 404 page has no horizontal overflow', async ({ page }) => {
+    const response = await page.goto('/this-page-does-not-exist');
+    expect(response?.status()).toBe(404);
+    const dimensions = await page.evaluate(() => ({
+      clientWidth: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+    }));
+    expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth + 1);
   });
 });

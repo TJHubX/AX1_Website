@@ -45,6 +45,11 @@ const server = createServer(async (request, response) => {
     response.end();
     return;
   }
+  if (url.pathname === '/capital-release' || url.pathname === '/capital-release/') {
+    response.writeHead(301, { Location: '/release-pilot' });
+    response.end();
+    return;
+  }
 
   const path = await existingFile(decodeURIComponent(url.pathname));
   if (!path) {

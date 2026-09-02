@@ -4,9 +4,10 @@ import { join } from 'node:path';
 
 const origin = 'https://ax1.capital';
 const routes = [
-  '/', '/system', '/capital', '/deployment', '/trust', '/founder',
+  '/', '/system', '/capital', '/release-pilot', '/deployment', '/trust', '/founder',
   '/privacy', '/cookies', '/terms', '/disclaimer', '/legal', '/accessibility',
 ];
+const sitemapRoutes = routes.filter((route) => route !== '/release-pilot');
 
 const routeFile = (route) => route === '/' ? join('dist', 'index.html') : join('dist', `${route.slice(1)}.html`);
 const attr = (html, pattern, label) => {
@@ -28,7 +29,8 @@ for (const route of routes) {
   assert.equal((html.match(/<footer\b/g) ?? []).length, 1, `${route} must have exactly one footer`);
   assert.equal((html.match(/id="ax1-page-schema"/g) ?? []).length, 1, `${route} must have exactly one page schema`);
   assert.equal(attr(html, /<link rel="canonical" href="([^"]+)"/, `${route} canonical`), canonical);
-  assert.match(attr(html, /<meta name="robots" content="([^"]+)"/, `${route} robots`), /^index, follow/);
+  const expectedRobots = route === '/release-pilot' ? /^noindex, follow$/ : /^index, follow/;
+  assert.match(attr(html, /<meta name="robots" content="([^"]+)"/, `${route} robots`), expectedRobots);
 
   const title = attr(html, /<title>([^<]+)<\/title>/, `${route} title`);
   const description = attr(html, /<meta name="description" content="([^"]+)"/, `${route} description`);
@@ -54,6 +56,8 @@ assert.match(notFound, /<meta name="robots" content="noindex, nofollow"/);
 
 const redirects = await readFile(join('dist', '_redirects'), 'utf8');
 assert.ok(!redirects.includes('/* /index.html 200'), 'SPA catch-all would turn missing pages into soft 404s');
+assert.match(redirects, /^\/capital-release \/release-pilot 301$/m, 'Legacy capital release route must redirect permanently');
+assert.match(redirects, /^\/capital-release\/ \/release-pilot 301$/m, 'Trailing-slash capital release route must redirect permanently');
 
 const headers = await readFile(join('dist', '_headers'), 'utf8');
 for (const requiredHeader of ['Content-Security-Policy:', 'Permissions-Policy:', 'Strict-Transport-Security:', 'X-Content-Type-Options:']) {
@@ -63,7 +67,7 @@ assert.ok(headers.includes('X-Robots-Tag: noindex, nofollow'), 'Pages preview do
 
 const sitemap = await readFile(join('dist', 'sitemap.xml'), 'utf8');
 const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-assert.deepEqual(sitemapUrls.sort(), routes.map((route) => route === '/' ? `${origin}/` : `${origin}${route}`).sort());
+assert.deepEqual(sitemapUrls.sort(), sitemapRoutes.map((route) => route === '/' ? `${origin}/` : `${origin}${route}`).sort());
 
 const home = await readFile(routeFile('/'), 'utf8');
 assert.ok(home.includes('https://www.linkedin.com/company/ax1-capital/'), 'Organisation LinkedIn identity is missing from schema');

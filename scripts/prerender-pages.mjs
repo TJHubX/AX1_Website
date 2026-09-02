@@ -7,7 +7,7 @@ const serverBundlePath = resolve('.ssr-dist', 'entry-server.js');
 const serverBundle = await import(pathToFileURL(serverBundlePath).href);
 const { render, PAGE_METADATA, PUBLIC_PATHS, NOT_FOUND_METADATA } = serverBundle;
 const template = await readFile(join('dist', 'index.html'), 'utf8');
-const productRoutes = new Set(['/', '/system', '/capital', '/deployment', '/trust']);
+const productRoutes = new Set(['/', '/system', '/capital', '/release-pilot', '/deployment', '/trust']);
 
 const escapeAttribute = (value) => value
   .replaceAll('&', '&amp;')
@@ -70,7 +70,7 @@ try {
     const metadata = PAGE_METADATA[pathname];
     const markup = render(pathname);
     const outputPath = pathname === '/' ? join('dist', 'index.html') : join('dist', `${pathname.slice(1)}.html`);
-    await writeFile(outputPath, prepareHtml(pathname, metadata, markup), 'utf8');
+    await writeFile(outputPath, prepareHtml(pathname, metadata, markup, metadata.robots), 'utf8');
   }
 
   const notFoundMarkup = render('/404');

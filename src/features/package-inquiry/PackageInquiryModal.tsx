@@ -22,9 +22,9 @@ type InquiryErrors = Partial<Record<'fullName' | 'workEmail' | 'organisation', s
 const PACKAGE_CONTEXT: Record<PackageName, { number: string; scope: string; description: string; headline: string }> = {
   'AX1.Pilot': {
     number: '01',
-    scope: 'One approaching decision',
-    description: 'Establish the initial governed decision model around one approaching capital decision.',
-    headline: 'Discuss one approaching decision.',
+    scope: 'One live milestone decision',
+    description: 'Test one defined capital allocation through one live milestone Gate.',
+    headline: 'Discuss one approaching milestone decision.',
   },
   'AX1.Core': {
     number: '02',
@@ -43,7 +43,10 @@ const PACKAGE_CONTEXT: Record<PackageName, { number: string; scope: string; desc
 export function PackageInquiryModal({ packageName, source, onClose }: PackageInquiryModalProps) {
   const reduceMotion = useReducedMotion();
   const locale = localeFromPath(window.location.pathname);
+  const isCapitalReleasePilot = packageName === 'AX1.Pilot' && source?.startsWith('capital_release_');
   const selectedScope = packageName ?? 'General Axis One enquiry';
+  const displayScope = isCapitalReleasePilot ? 'Capital Release Pilot' : selectedScope;
+  const preparedLabel = isCapitalReleasePilot ? 'Capital Release Pilot' : packageName ?? 'Axis One';
   const context = packageName ? PACKAGE_CONTEXT[packageName] : {
     number: 'AX1',
     scope: 'General enquiry',
@@ -53,9 +56,12 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
   const [errors, setErrors] = useState<InquiryErrors>({});
   const [draftValues, setDraftValues] = useState<PackageInquiryValues>({
     packageName: selectedScope,
+    campaign: isCapitalReleasePilot ? 'capital-release-pilot' : undefined,
     fullName: '',
     workEmail: '',
     organisation: '',
+    capitalType: '',
+    decisionDate: '',
     context: '',
   });
   const [preparedValues, setPreparedValues] = useState<PackageInquiryValues | null>(null);
@@ -78,7 +84,11 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
     if (!values.fullName) next.fullName = 'Please enter your name.';
     if (!values.workEmail) next.workEmail = 'Work email is required.';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.workEmail)) next.workEmail = 'Enter a valid work email address.';
-    if (!values.organisation) next.organisation = 'Organisation or programme is required.';
+    if (!values.organisation) {
+      next.organisation = isCapitalReleasePilot
+        ? 'Organisation or fund is required.'
+        : 'Organisation or programme is required.';
+    }
     return next;
   };
 
@@ -87,9 +97,12 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
     const form = new FormData(event.currentTarget);
     const values: PackageInquiryValues = {
       packageName: selectedScope,
+      campaign: isCapitalReleasePilot ? 'capital-release-pilot' : undefined,
       fullName: String(form.get('fullName') ?? '').trim(),
       workEmail: String(form.get('workEmail') ?? '').trim(),
       organisation: String(form.get('organisation') ?? '').trim(),
+      capitalType: String(form.get('capitalType') ?? '').trim(),
+      decisionDate: String(form.get('decisionDate') ?? '').trim(),
       context: String(form.get('context') ?? '').trim(),
     };
     setDraftValues(values);
@@ -140,16 +153,16 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
       {locale !== 'en-gb' && <p className="package-inquiry-language" lang={localeContent[locale].htmlLang} dir={localeContent[locale].dir}>{inquiryLanguageNotice[locale]}</p>}
       <div className="package-inquiry-modal" lang="en-GB" dir="ltr">
         <header className="package-inquiry-header">
-          <span className="package-inquiry-eyebrow">{packageName ? `Deployment enquiry · ${packageName}` : 'General enquiry'}</span>
+          <span className="package-inquiry-eyebrow">{isCapitalReleasePilot ? 'Capital Release Pilot' : packageName ? `Deployment enquiry · ${packageName}` : 'General enquiry'}</span>
           <h2 id="package-inquiry-title">
             {packageName ? context.headline : <>Discuss the appropriate <span className="package-inquiry-brand-name">Axis One</span> scope.</>}
           </h2>
-          <p>Share enough context for a useful first discussion. No request is sent from this website.</p>
+          <p>{isCapitalReleasePilot ? 'Share enough context to assess whether one approaching allocation and milestone decision fits the pilot. No request is sent from this website.' : 'Share enough context for a useful first discussion. No request is sent from this website.'}</p>
         </header>
 
-        <div className="package-inquiry-scope" aria-label={`Selected enquiry scope: ${selectedScope}`}>
+        <div className="package-inquiry-scope" aria-label={`Selected enquiry scope: ${displayScope}`}>
           <span>{context.number}</span>
-          <div><small>{packageName ? 'Selected scope' : 'Enquiry route'}</small><strong>{selectedScope}</strong></div>
+          <div><small>{packageName ? 'Selected scope' : 'Enquiry route'}</small><strong>{displayScope}</strong></div>
           <p><b>{context.scope}</b>{context.description}</p>
         </div>
 
@@ -158,7 +171,7 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
             <CheckCircle2 size={28} aria-hidden="true" />
             <div>
               <span>Ready for your review</span>
-              <h3 ref={preparedHeadingRef} tabIndex={-1}>Your {packageName ?? 'Axis One'} enquiry is prepared.</h3>
+              <h3 ref={preparedHeadingRef} tabIndex={-1}>Your {preparedLabel} enquiry is prepared.</h3>
               <p>Choose how to continue. Nothing has been submitted or stored by Axis One.</p>
             </div>
             <pre aria-label="Prepared enquiry" tabIndex={0}>{buildPackageInquiry(preparedValues)}</pre>
@@ -210,23 +223,33 @@ export function PackageInquiryModal({ packageName, source, onClose }: PackageInq
               {errors.workEmail && <em id="package-inquiry-email-error">{errors.workEmail}</em>}
             </label>
             <label className={fieldClass('organisation', true)}>
-              <span>Organisation or programme <small>Required</small></span>
+              <span>{isCapitalReleasePilot ? 'Organisation or fund' : 'Organisation or programme'} <small>Required</small></span>
               <input
                 ref={organisationRef}
                 name="organisation"
                 autoComplete="organization"
                 defaultValue={draftValues.organisation}
                 maxLength={180}
-                placeholder="Organisation, fund or programme name"
+                placeholder={isCapitalReleasePilot ? 'Organisation or fund name' : 'Organisation, fund or programme name'}
                 aria-required="true"
                 aria-invalid={Boolean(errors.organisation)}
                 aria-describedby={errors.organisation ? 'package-inquiry-organisation-error' : undefined}
               />
               {errors.organisation && <em id="package-inquiry-organisation-error">{errors.organisation}</em>}
             </label>
+            {isCapitalReleasePilot && <>
+              <label className="package-inquiry-field">
+                <span>Type of capital <small>Optional</small></span>
+                <input name="capitalType" defaultValue={draftValues.capitalType} maxLength={120} placeholder="Growth capital, private credit, project finance" />
+              </label>
+              <label className="package-inquiry-field">
+                <span>Expected decision date <small>Optional</small></span>
+                <input name="decisionDate" type="date" defaultValue={draftValues.decisionDate} />
+              </label>
+            </>}
             <label className="package-inquiry-field is-wide">
-              <span>What would you like to discuss? <small>Optional</small></span>
-              <textarea name="context" defaultValue={draftValues.context} maxLength={1500} placeholder="The approaching decision, operating scope or question you would like to discuss. Please do not include confidential information." />
+              <span>{isCapitalReleasePilot ? 'Approaching allocation and milestone decision' : 'What would you like to discuss?'} <small>Optional</small></span>
+              <textarea name="context" defaultValue={draftValues.context} maxLength={1500} placeholder={isCapitalReleasePilot ? 'Briefly describe the capital allocation, milestone and expected decision. Please do not include confidential information.' : 'The approaching decision, operating scope or question you would like to discuss. Please do not include confidential information.'} />
             </label>
             <div className="package-inquiry-privacy">
               <LockKeyhole size={16} aria-hidden="true" />

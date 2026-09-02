@@ -7,6 +7,7 @@ import { PAGE_METADATA, PUBLIC_PATHS, NOT_FOUND_METADATA } from './pageMetadata'
 import HomePage from './pages/HomePage';
 import SystemPage from './pages/SystemPage';
 import CapitalPage from './pages/CapitalPage';
+import CapitalReleasePage from './pages/CapitalReleasePage';
 import DeploymentPage from './pages/DeploymentPage';
 import FounderPage from './pages/FounderPage';
 import PrivacyPage from './pages/PrivacyPage';
@@ -22,6 +23,7 @@ const pages: RouteComponents = {
   home: HomePage,
   system: SystemPage,
   capital: CapitalPage,
+  capitalRelease: CapitalReleasePage,
   deployment: DeploymentPage,
   founder: FounderPage,
   privacy: PrivacyPage,

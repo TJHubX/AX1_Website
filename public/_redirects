@@ -18,3 +18,5 @@
 /sr/* / 301
 /ar / 301
 /ar/* / 301
+/capital-release /release-pilot 301
+/capital-release/ /release-pilot 301

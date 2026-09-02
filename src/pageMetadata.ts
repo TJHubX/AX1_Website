@@ -1,6 +1,7 @@
 export type PageMetadata = {
   title: string;
   description: string;
+  robots?: string;
 };
 
 export const PAGE_METADATA: Record<string, PageMetadata> = {
@@ -15,6 +16,11 @@ export const PAGE_METADATA: Record<string, PageMetadata> = {
   '/capital': {
     title: 'Decision Exposure | Axis One Capital Governance',
     description: 'Model cost-overrun, delay and decision exposure while preserving human decision authority and controlled capital action.',
+  },
+  '/release-pilot': {
+    title: 'Capital Release Pilot | Axis One',
+    description: 'Bring milestone conditions, supporting evidence, approval rights and exceptions into one reviewable basis for release, conditional release, hold or stop with Axis One.',
+    robots: 'noindex, follow',
   },
   '/deployment': {
     title: 'Deployment | Axis One Capital Governance',

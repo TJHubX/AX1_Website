@@ -72,6 +72,22 @@ test('package inquiry email is inspectable before the mail client opens', () => 
   assert.equal(email.body, buildPackageInquiry(packageInquiryValues));
 });
 
+test('capital release pilot enquiry uses the focused campaign scope', () => {
+  const values: PackageInquiryValues = {
+    ...packageInquiryValues,
+    campaign: 'capital-release-pilot',
+    capitalType: 'Growth capital',
+    decisionDate: '2026-10-14',
+  };
+  const inquiry = buildPackageInquiry(values);
+  const email = buildPackageInquiryEmail(values);
+  assert.match(inquiry, /^AXIS ONE CAPITAL RELEASE PILOT\n/);
+  assert.match(inquiry, /Selected scope: Capital Release Pilot/);
+  assert.match(inquiry, /Type of capital: Growth capital/);
+  assert.match(inquiry, /Expected decision date: 2026-10-14/);
+  assert.equal(email.subject, 'Axis One Capital Release Pilot: Example Infrastructure Programme');
+});
+
 test('general inquiry uses a general Axis One subject', () => {
   const email = buildPackageInquiryEmail({
     ...packageInquiryValues,

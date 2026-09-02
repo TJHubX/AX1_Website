@@ -1,12 +1,14 @@
 import React, { Suspense, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Header, type ContactIntent, type PageProps } from './components';
 import { PackageInquiryModal } from './features/package-inquiry/PackageInquiryModal';
+import { normalizePath } from './pageMetadata';
 
 export type RouteComponents = {
   home: React.ComponentType<PageProps>;
   system: React.ComponentType<PageProps>;
   capital: React.ComponentType<PageProps>;
+  capitalRelease: React.ComponentType<PageProps>;
   deployment: React.ComponentType<PageProps>;
   founder: React.ComponentType<PageProps>;
   privacy: React.ComponentType<PageProps>;
@@ -25,6 +27,9 @@ type SiteAppProps = {
 };
 
 export function SiteApp({ pages, loadingFallback = null }: SiteAppProps) {
+  const { pathname } = useLocation();
+  const normalizedPath = normalizePath(pathname);
+  const usesCampaignHeader = normalizedPath === '/release-pilot' || normalizedPath === '/capital-release';
   const [contactIntent, setContactIntent] = useState<ContactIntent | null>(null);
   const pageProps: PageProps = {
     onOpenAccess: () => { window.location.href = '/#decision-brief'; },
@@ -35,6 +40,7 @@ export function SiteApp({ pages, loadingFallback = null }: SiteAppProps) {
     home: HomePage,
     system: SystemPage,
     capital: CapitalPage,
+    capitalRelease: CapitalReleasePage,
     deployment: DeploymentPage,
     founder: FounderPage,
     privacy: PrivacyPage,
@@ -49,13 +55,15 @@ export function SiteApp({ pages, loadingFallback = null }: SiteAppProps) {
 
   return (
     <>
-      <Header {...pageProps} />
+      {!usesCampaignHeader && <Header {...pageProps} />}
       <div id="main-content" tabIndex={-1}>
         <Suspense fallback={loadingFallback}>
           <Routes>
             <Route path="/" element={<HomePage {...pageProps} />} />
             <Route path="/system" element={<SystemPage {...pageProps} />} />
             <Route path="/capital" element={<CapitalPage {...pageProps} />} />
+            <Route path="/release-pilot" element={<CapitalReleasePage {...pageProps} />} />
+            <Route path="/capital-release" element={<Navigate to="/release-pilot" replace />} />
             <Route path="/deployment" element={<DeploymentPage {...pageProps} />} />
             <Route path="/founder" element={<FounderPage {...pageProps} />} />
             <Route path="/privacy" element={<PrivacyPage {...pageProps} />} />

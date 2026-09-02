@@ -15,6 +15,7 @@ const routeImporters = {
   home: () => import('./pages/HomePage'),
   system: () => import('./pages/SystemPage'),
   capital: () => import('./pages/CapitalPage'),
+  capitalRelease: () => import('./pages/CapitalReleasePage'),
   deployment: () => import('./pages/DeploymentPage'),
   founder: () => import('./pages/FounderPage'),
   privacy: () => import('./pages/PrivacyPage'),
@@ -60,6 +61,7 @@ const lazyRoute = (importer: RouteImporter) => React.lazy(() => loadRoute(import
 const HomePage = lazyRoute(routeImporters.home);
 const SystemPage = lazyRoute(routeImporters.system);
 const CapitalPage = lazyRoute(routeImporters.capital);
+const CapitalReleasePage = lazyRoute(routeImporters.capitalRelease);
 const DeploymentPage = lazyRoute(routeImporters.deployment);
 const FounderPage = lazyRoute(routeImporters.founder);
 const PrivacyPage = lazyRoute(routeImporters.privacy);
@@ -161,7 +163,7 @@ function PageMetadata() {
     document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', metadata.description);
     document.querySelector('meta[name="robots"]')?.setAttribute(
       'content',
-      isKnownPage ? 'index, follow, max-image-preview:large' : 'noindex, nofollow',
+      isKnownPage ? (metadata.robots ?? 'index, follow, max-image-preview:large') : 'noindex, nofollow',
     );
 
     document.querySelectorAll('link[data-ax1-hreflang], meta[data-ax1-og-locale]').forEach((element) => element.remove());
@@ -185,7 +187,7 @@ function PageMetadata() {
       isPartOf: { '@id': 'https://ax1.capital/#website' },
       about: { '@id': 'https://ax1.capital/#organization' },
     };
-    if (['/', '/system', '/capital', '/deployment', '/trust'].includes(normalizedPath)) {
+    if (['/', '/system', '/capital', '/release-pilot', '/deployment', '/trust'].includes(normalizedPath)) {
       pageSchema.mainEntity = { '@id': 'https://ax1.capital/#service' };
     }
     if (isKnownPage && normalizedPath !== '/') {
@@ -206,6 +208,7 @@ const pages: RouteComponents = {
   home: HomePage,
   system: SystemPage,
   capital: CapitalPage,
+  capitalRelease: CapitalReleasePage,
   deployment: DeploymentPage,
   founder: FounderPage,
   privacy: PrivacyPage,
