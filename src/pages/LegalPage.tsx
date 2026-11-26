@@ -9,14 +9,15 @@ export default function LegalPage({ onOpenContact }: PageProps) {
       <LegalPageLayout
         label="Legal"
         title="Legal Notice"
-        lastUpdated="30 August 2026"
+        lastUpdated="26 November 2026"
         intro="Formal company, operator and legal information for the Axis One public website."
         onContact={() => onOpenContact({ source: 'legal_notice' })}
         sections={[
           {
             heading: 'Company details',
             paragraphs: [
-              'AX1 Structura Ltd is a company registered in England and Wales under company number 17151320. Its registered office is 66 Paul Street, London EC2A 4NA, England.',
+              'AX1 Structura Ltd is a private limited company registered in England and Wales under company number 17151320. Its registered office is 66 Paul Street, London EC2A 4NA, England.',
+              <>Company information is available from the official <a href="https://find-and-update.company-information.service.gov.uk/company/17151320" target="_blank" rel="noopener noreferrer">Companies House register</a>.</>,
             ],
           },
           {
@@ -46,7 +47,8 @@ export default function LegalPage({ onOpenContact }: PageProps) {
           {
             heading: 'Order of documents',
             paragraphs: [
-              'This notice forms part of the Axis One legal suite. If a separate written agreement is signed for a product evaluation, pilot or other engagement, that agreement governs the relevant relationship and takes precedence to the extent of any conflict.',
+              'This notice forms part of the Axis One legal suite. If a separate written agreement is signed for a product evaluation, pilot or other engagement, it governs the relevant contractual relationship to the extent of any conflict, subject to applicable mandatory law and rights that cannot be waived.',
+              <>Our <a href="/privacy">Privacy Policy</a> describes personal-information processing and rights, including how to object to direct marketing or raise a data-protection complaint. Nothing in a website or commercial agreement overrides statutory data-protection or electronic-communications rights.</>,
             ],
           },
         ]}

@@ -1,5 +1,7 @@
 # DPIA screening record
 
+> **November 2026 scope update:** This record documents the August public-website baseline. For subsequent business-development processing, see the [November 2026 scope and control addendum](./november-2026-b2b-and-website-review.md). That addendum records current findings, proposed controls and open controller approvals. Historical restrictions are not a finding that later processing was approved.
+
 Processing: current Axis One public website and website-originated enquiries
 
 Screening date: 30 August 2026

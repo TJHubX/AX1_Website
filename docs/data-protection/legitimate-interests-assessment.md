@@ -1,5 +1,7 @@
 # Legitimate-interests assessment
 
+> **November 2026 scope update:** This record documents the August public-website baseline. For subsequent business-development processing, see the [November 2026 scope and control addendum](./november-2026-b2b-and-website-review.md). That addendum records current findings, proposed controls and open controller approvals. Historical restrictions are not a finding that later processing was approved.
+
 Assessment: current public website and relevant business enquiries
 
 Controller: AX1 Structura Ltd

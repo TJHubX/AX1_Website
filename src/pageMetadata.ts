@@ -36,7 +36,7 @@ export const PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/privacy': {
     title: 'Privacy Policy | Axis One',
-    description: 'How AX1 Structura Ltd handles personal information connected with the Axis One public website and enquiries.',
+    description: 'How AX1 Structura Ltd handles personal information connected with its public website, enquiries, professional contacts and business development.',
   },
   '/cookies': {
     title: 'Cookie Policy | Axis One',

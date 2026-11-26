@@ -9,14 +9,15 @@ export default function CookiesPage({ onOpenContact }: PageProps) {
       <LegalPageLayout
         label="Cookies"
         title="Cookie Policy"
-        lastUpdated="30 August 2026"
-        intro="This policy describes the current use of cookies and similar technologies on the public Axis One website. Axis One does not currently set non-essential analytics or advertising cookies."
+        lastUpdated="26 November 2026"
+        intro="This policy describes the current use of cookies and similar storage and access technologies on the public Axis One website, and the controls required before any additional tracking is introduced."
         onContact={() => onOpenContact({ source: 'cookie_policy' })}
         sections={[
           {
             heading: 'Current position',
             paragraphs: [
-              'The public Axis One website does not currently use advertising cookies, cross-site tracking pixels or a non-essential browser analytics provider. It does not set cookies to build marketing profiles.',
+              'Axis One has not deployed a public-website advertising or business visitor identification integration for marketing profiling or automated sales outreach. Local interface events may be generated as part of the website code; they are not currently connected by Axis One to a public-site visitor-identification or outreach system.',
+              'Cloudflare may process routine technical request information and aggregate service statistics. This does not mean that Axis One identifies individual visitors or companies from their browsing activity. The Privacy Policy explains the related processing.',
               'The Decision Brief and enquiry tools prepare information locally in your browser. Entries are not transferred to Axis One unless you choose to send them through your own email client.',
             ],
           },
@@ -29,7 +30,7 @@ export default function CookiesPage({ onOpenContact }: PageProps) {
           {
             heading: 'Local browser state',
             paragraphs: [
-              'Interactive interface state may exist temporarily while a page is open. The current public site does not use localStorage or sessionStorage to create a persistent marketing or analytics profile.',
+              'Interactive interface state may exist temporarily while a page is open. Session storage may be used as a short-lived, one-time recovery guard if a website code update fails to load correctly. It is not used for a persistent marketing or analytics profile.',
             ],
           },
           {
@@ -39,9 +40,12 @@ export default function CookiesPage({ onOpenContact }: PageProps) {
             ],
           },
           {
-            heading: 'Future changes and consent',
+            heading: 'Analytics, tracking and privacy choices',
             paragraphs: [
-              'If Axis One introduces non-essential analytics or similar technology, this policy will be updated and an appropriate consent control will be provided before that technology is activated where required by law.',
+              'Cookies, local storage, tags, tracking pixels and other technologies can store or access information on a device. Cookie-free operation does not in itself determine whether consent or another legal requirement applies.',
+              'Before introducing any additional technology, we will identify its purpose, provider, information used and relevant lifetime. Where applicable law requires consent, the technology will remain inactive until valid consent is obtained and users can refuse or withdraw that consent as easily as they can give it.',
+              'If a limited statistical-measurement exception is available under applicable law, we will use it only when its conditions are met, including clear information and a simple, free means of objecting where required. We will not use a statistical-measurement exception to justify marketing visitor identification or profiling.',
+              <>For information about professional communications and separate email measurement, see our <a href="/privacy">Privacy Policy</a>. This Cookie Policy does not grant permission to send or track direct marketing.</>,
             ],
           },
           {

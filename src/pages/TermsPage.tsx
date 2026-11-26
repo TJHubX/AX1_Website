@@ -9,7 +9,7 @@ export default function TermsPage({ onOpenContact }: PageProps) {
       <LegalPageLayout
         label="Terms"
         title="Terms of Use"
-        lastUpdated="30 August 2026"
+        lastUpdated="26 November 2026"
         intro="These terms govern access to and use of the public Axis One website. They do not replace any separate written product or commercial agreement."
         onContact={() => onOpenContact({ source: 'terms_of_use' })}
         sections={[
@@ -30,6 +30,7 @@ export default function TermsPage({ onOpenContact }: PageProps) {
             paragraphs: [
               'Decision Brief and enquiry content is generated in your browser from information you choose to enter. You are responsible for checking that content before copying or sending it and for ensuring you are authorised to share it.',
               'Sending an enquiry does not create a client relationship, guarantee a response, confirm product access or constitute acceptance of proposed commercial terms.',
+              <>Our <a href="/privacy">Privacy Policy</a> and <a href="/cookies">Cookie Policy</a> describe personal-information processing and website technologies. Use of this website or submission of an enquiry does not itself constitute consent to unrelated direct marketing or non-essential tracking.</>,
             ],
           },
           {
@@ -70,13 +71,13 @@ export default function TermsPage({ onOpenContact }: PageProps) {
           {
             heading: 'Liability',
             paragraphs: [
-              'Nothing in these terms excludes liability that cannot lawfully be excluded. Subject to that limitation, AX1 Structura Ltd is not liable for indirect or consequential loss arising solely from reliance on the public website, or for loss caused by third-party services outside its control.',
+              'Nothing in these terms excludes or restricts liability for fraud or fraudulent misrepresentation, death or personal injury caused by negligence, or any other liability or statutory right that cannot lawfully be excluded or restricted. Subject to those limitations and applicable law, AX1 Structura Ltd is not liable for indirect or consequential loss arising solely from reliance on the public website, or for loss caused by third-party services outside its control.',
             ],
           },
           {
             heading: 'Governing law and changes',
             paragraphs: [
-              'These terms are governed by the laws of England and Wales, and the courts of England and Wales have exclusive jurisdiction. We may update these terms from time to time; the current version and effective date will remain available here.',
+              'These terms are governed by the laws of England and Wales, and the courts of England and Wales have exclusive jurisdiction, subject to any mandatory laws, consumer protections or jurisdictional rights that apply and cannot lawfully be displaced. We may update these terms from time to time; the current version and effective date will remain available here.',
             ],
           },
         ]}

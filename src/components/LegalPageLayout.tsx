@@ -54,7 +54,7 @@ export default function LegalPageLayout({
             <dl>
               <div><dt>Operator</dt><dd>AX1 Structura Ltd</dd></div>
               <div><dt>Updated</dt><dd>{lastUpdated}</dd></div>
-              <div><dt>Jurisdiction</dt><dd>England and Wales</dd></div>
+              <div><dt>Company jurisdiction</dt><dd>England and Wales</dd></div>
             </dl>
           </aside>
         </div>
@@ -100,7 +100,7 @@ export default function LegalPageLayout({
           <article className="legal-document-body">
             <header className="legal-document-intro">
               <span>Current document</span>
-              <p>Read this document together with the other policies in the Axis One legal suite. Product-specific or contractual terms, where agreed in writing, take precedence for that engagement.</p>
+              <p>Read this document together with the other policies in the Axis One legal suite. Separate written terms govern the relevant contractual engagement, subject to mandatory law and statutory rights, including data-protection rights.</p>
             </header>
 
             <div className="legal-sections">
